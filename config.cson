@@ -1,0 +1,181 @@
+"*":
+  "atom-beautify":
+    _analyticsUserId: "96b86dd8-3e97-4bfc-8e50-842a8f3f4da2"
+  "atom-ctags":
+    cmdArgs: "--exclude=node_modules --exclude=lib --exclude=*.html --exclude=*.json --exclude=*.min.js --exclude=zzzz --exclude=migration-from-fork --exclude=dist"
+  "autocomplete-plus": {}
+  core:
+    disabledPackages: [
+      "eslint"
+      "symbols-view"
+      "highlight-selected"
+      "jscs-fixer"
+      "linter-jscs"
+      "linter-jshint"
+    ]
+    ignoredNames: [
+      ".git"
+      ".hg"
+      ".svn"
+      ".DS_Store"
+      "Thumbs.db"
+      ".codekit-cache"
+      "bower_components"
+      "node_modules"
+      "*.svg"
+      "*.ttf"
+      "*.eot"
+      "*.woff"
+      "*.woff2"
+      "*.png"
+      ".tags"
+      ".tags1"
+      ".swp"
+      "Collision-Detection-for-EaselJS"
+      "EaselJS"
+      "EntryArduino"
+      "PreloadJS"
+      "Snap.svg"
+      "SoundJS"
+      "acorn"
+      "angular"
+      "angular-*"
+      "animate"
+      "bootstrap"
+      "closure-compiler"
+      "closure-library"
+      "codemirror"
+      "components-webfontloader"
+      "d3"
+      "es5-shim"
+      "fadeSlider"
+      "html5shiv"
+      "jquery"
+      "jquery-*"
+      "ng-blockUI"
+      "ngStorage"
+      "ngUpload"
+      "requirejs"
+      "socket.io-client"
+      "spinkit"
+      "ui-sortable"
+      "underscore"
+      "velocity"
+      "zeroclipboard"
+    ]
+    openEmptyEditorOnStart: false
+    themes: [
+      "seti-ui"
+      "base16-tomorrow-dark-theme"
+    ]
+  "easy-motion-redux": {}
+  editor:
+    fontFamily: "Monaco"
+    fontSize: 13
+    invisibles: {}
+    nonWordCharacters: "/\\()\"':,.;<>~!@#%^&*|+=[]{}`?"
+    preferredLineLength: 95
+    showIndentGuide: true
+    showInvisibles: true
+    tabLength: 4
+    tabType: "soft"
+  emmet: {}
+  "exception-reporting":
+    userId: "8feaf66b-4b91-6219-1188-d36daba8ec5a"
+  "fuzzy-finder": {}
+  "git-plus": {}
+  "highlight-column": {}
+  "highlight-line":
+    enableBackgroundColor: false
+  "highlight-selected": {}
+  "jscs-fixer": {}
+  jumpy:
+    fontSize: 0.85
+    highContrast: true
+  linter:
+    lintOnChange: false
+    lintOnChangeInterval: 500
+    showErrorPanel: false
+    subtleLinterErrors: [
+      "jshint"
+    ]
+  "linter-eslint":
+    eslintRulesDir: "."
+    useGlobalEslint: true
+  "linter-jscs":
+    verbose: false
+  "linter-jshint":
+    disableWhenNoJshintrcFileInPath: true
+  "linter-lua": {}
+  "local-history":
+    historyStoragePath: "/Users/Naver/Documents/Backup/_atom/local-history"
+  "markdown-preview": {}
+  minimap:
+    displayMinimapOnLeft: true
+  "seti-ui":
+    compactView: true
+    font: "Default Atom Font"
+  "spell-check": {}
+  "toggle-quotes": {}
+  "tree-view":
+    hideIgnoredNames: true
+  "vim-mode":
+    useClipboardAsDefaultRegister: false
+  welcome:
+    showOnStartup: false
+".babel.regexp.source":
+  editor:
+    nonWordCharacters: "/\\()\"':,.;<>~!@#%^&*|+=[]{}`?"
+    preferredLineLength: 95
+    tabLength: 4
+".diff.source":
+  editor:
+    nonWordCharacters: "/\\()\"':,.;<>~!@#%^&*|+=[]{}`?"
+    preferredLineLength: 95
+".git-commit.text":
+  editor:
+    nonWordCharacters: "/\\()\"':,.;<>~!@#%^&*|+=[]{}`?"
+    preferredLineLength: 95
+    tabLength: 4
+".git-config.source":
+  editor:
+    nonWordCharacters: "/\\()\"':,.;<>~!@#%^&*|+=[]{}`?"
+    preferredLineLength: 95
+    tabLength: 4
+".git-rebase.text":
+  editor:
+    nonWordCharacters: "/\\()\"':,.;<>~!@#%^&*|+=[]{}`?"
+    preferredLineLength: 95
+    tabLength: 4
+".go.source":
+  editor:
+    nonWordCharacters: "/\\()\"':,.;<>~!@#%^&*|+=[]{}`?"
+    preferredLineLength: 95
+".gohtml.html.text":
+  editor:
+    nonWordCharacters: "/\\()\"':,.;<>~!@#%^&*|+=[]{}`?"
+    preferredLineLength: 95
+".gotemplate.source":
+  editor:
+    nonWordCharacters: "/\\()\"':,.;<>~!@#%^&*|+=[]{}`?"
+    preferredLineLength: 95
+".js.jsx.source":
+  editor:
+    nonWordCharacters: "/\\()\"':,.;<>~!@#%^&*|+=[]{}`?-…"
+    preferredLineLength: 95
+    tabLength: 4
+".lua.source":
+  editor:
+    tabLength: 4
+".source.toml":
+  editor:
+    nonWordCharacters: "/\\()\"':,.;<>~!@#%^&*|+=[]{}`?"
+    preferredLineLength: 95
+dash:
+  grammars:
+    JavaScript: [
+      "nodejs"
+      "angularjs"
+      "jquery"
+      "javascript"
+    ]

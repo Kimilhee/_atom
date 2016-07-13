@@ -1,0 +1,87 @@
+/*
+ * Your Stylesheet
+ *
+ * This stylesheet is loaded when Atom starts up and is reloaded automatically
+ * when it is changed.
+ *
+ * If you are unfamiliar with LESS, you can read more about it here:
+ * http://www.lesscss.org
+ */
+
+.tree-view {
+
+}
+
+// style the background and foreground colors on the atom-text-editor-element
+// itself
+atom-text-editor {
+
+}
+
+// To style other content in the text editor's shadow DOM, use the ::shadow
+// expression
+atom-text-editor::shadow .cursor {
+
+}
+
+// ------------------------------------------
+// 탭과 Tree의 font 크기 변경.
+// ------------------------------------------
+@tab-font-size: 14px;
+@tree-font-size: 13px;
+html, body, .tab-bar .tab {
+  font-size: @tab-font-size;
+}
+
+html, body, .tree-view {
+  font-size: @tree-font-size;
+}
+
+// ------------------------------------------
+// Jumpy 에서 jump할 곳의 글자를 좀더 선명하게 보이기 위한 세팅.
+// ------------------------------------------
+atom-text-editor::shadow .jumpy {
+    &.label {
+        background-color: orange;
+        color: black;
+        font-weight: bolder;
+    }
+    &.jump {
+    }
+}
+
+// ------------------------------------------
+// Jumpy 를 vim-mode와 함께 쓸 때, 쓰면 좋은 세팅.
+// ------------------------------------------
+// with react:
+.atom-text-editor.vim-mode.command-mode::shadow {
+    .cursors .cursor, .cursors.blink-off .cursor {
+        // background-color: #00ff44; // bright green
+        background-color: #a4c4ff; // bright sky blue // 61 132 203
+        visibility: visible;
+        opacity: .6;
+        border-style: solid;
+        border-width: 1px;
+        //border-color: #ff0000; // bright red
+        color: #FFFFFF; // white
+        border-color: #FFFFFF; // white
+    }
+    .cursors.blink-off .cursor {
+        //visibilaity: hidden; // make hidden for complete blink
+        opacity: .63; // weird subtle little pulse, almost can't see it.
+    }
+}
+
+
+// ------------------------------------------
+// script plugin output style
+// ------------------------------------------
+.script-view {
+  .output pre {
+      font-size: 12px;
+  }
+}
+
+.script-view .line {
+  font-size: 14px;
+}

@@ -1,0 +1,55 @@
+# Your keymap
+#
+# Atom keymaps work similarly to style sheets. Just as style sheets use
+# selectors to apply styles to elements, Atom keymaps use selectors to associate
+# keystrokes with events in specific contexts.
+#
+# You can create a new keybinding in this file by typing "key" and then hitting
+# tab.
+#
+# Here's an example taken from Atom's built-in keymap:
+#
+# 'atom-text-editor':
+#   'enter': 'editor:newline'
+#
+# 'atom-workspace':
+#   'ctrl-shift-p': 'core:move-up'
+#   'ctrl-p': 'core:move-down'
+#
+# You can find more information about keymaps in these guides:
+# * https://atom.io/docs/latest/using-atom-basic-customization#customizing-key-bindings
+# * https://atom.io/docs/latest/behind-atom-keymaps-in-depth
+#
+# This file uses CoffeeScript Object Notation (CSON).
+# If you are unfamiliar with CSON, you can read more about it here:
+# https://github.com/bevry/cson#what-is-cson
+
+
+# autocomplete기본 키맵이 ctrl+space라 Spotlight와 충돌해서 바꿈.
+'atom-pane':
+    'ctrl-.': 'autocomplete-plus:activate'
+    'ctrl-;': 'custom:semicolonize'
+    'cmd-alt-g': 'atom-ctags:rebuild'
+
+'atom-text-editor:not(.mini).vim-mode:not(.insert-mode):not(.jumpy-jump-mode)':
+    ', ,': 'hee:my-copy'
+    ', m': 'hee:my-paste'
+    'space': 'hee:my-space'
+    'ctrl-o': 'hee:nospace-new-line'
+    'ctrl-]': 'atom-ctags:go-to-declaration'
+    'ctrl-shift-t': 'atom-ctags:return-from-declaration'
+    'ctrl-t': 'atom-ctags:return-from-declaration'
+
+# atom-ctags에서도 vim-mode에서 symbol-view단축키 되도록.
+'.platform-darwin atom-pane':
+    'ctrl-]': 'atom-ctags:go-to-declaration'
+    'ctrl-t': 'atom-ctags:return-from-declaration'
+    'ctrl-shift-t': 'atom-ctags:return-from-declaration'
+
+# 앞에 빈칸 없는 new line
+'atom-text-editor':
+    'ctrl-enter': 'hee:nospace-new-line'
+
+# jumpy 단축키
+'atom-workspace atom-text-editor:not(.mini)':
+    'shift-space': 'jumpy:toggle'
