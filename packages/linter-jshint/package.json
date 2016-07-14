@@ -61,8 +61,8 @@
   "homepage": "https://github.com/AtomLinter/linter-jshint#readme",
   "_id": "linter-jshint@2.1.0",
   "_shasum": "8285484b340f906f0e2ddaa25fc6380ee7cf745d",
-  "_resolved": "file:../d-116416-13030-1lre5ek/package.tgz",
-  "_from": "../d-116416-13030-1lre5ek/package.tgz",
+  "_resolved": "file:../d-116614-40978-14rqbd2/package.tgz",
+  "_from": "../d-116614-40978-14rqbd2/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
@@ -83,7 +83,7 @@
       },
       {
         "name": "consistent-env",
-        "version": "1.1.2",
+        "version": "1.2.0",
         "path": "node_modules/atom-linter/node_modules/sb-exec/node_modules/consistent-env/lib/index.js"
       },
       {
@@ -93,7 +93,7 @@
       },
       {
         "name": "sb-npm-path",
-        "version": "1.0.0",
+        "version": "1.0.1",
         "path": "node_modules/atom-linter/node_modules/sb-exec/node_modules/sb-npm-path/lib/index.js"
       },
       {
@@ -258,7 +258,7 @@
       },
       {
         "name": "brace-expansion",
-        "version": "1.1.4",
+        "version": "1.1.5",
         "path": "node_modules/jshint/node_modules/minimatch/node_modules/brace-expansion/index.js"
       },
       {
@@ -792,7 +792,6 @@
         "node_modules/jshint/node_modules/lodash/utility.js",
         "node_modules/jshint/node_modules/minimatch/browser.js",
         "node_modules/jshint/node_modules/minimatch/minimatch.js",
-        "node_modules/jshint/node_modules/minimatch/node_modules/brace-expansion/example.js",
         "node_modules/jshint/node_modules/minimatch/node_modules/brace-expansion/index.js",
         "node_modules/jshint/node_modules/minimatch/node_modules/brace-expansion/node_modules/balanced-match/index.js",
         "node_modules/jshint/node_modules/minimatch/node_modules/brace-expansion/node_modules/concat-map/example/map.js",

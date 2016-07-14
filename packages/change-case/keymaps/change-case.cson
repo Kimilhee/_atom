@@ -10,4 +10,3 @@
 'atom-workspace':
   'cmd-k cmd-c': 'change-case:camel'
   'cmd-k cmd-s': 'change-case:snake'
-  'cmd-k d': 'change-case:param'

@@ -42,8 +42,8 @@
   "homepage": "https://github.com/DavidLGoldberg/jumpy#readme",
   "_id": "jumpy@3.0.3",
   "_shasum": "7e992aa761f4d04923ff3a354c44958e3d0d02cb",
-  "_resolved": "file:../d-116211-5585-qr6xgl/package.tgz",
-  "_from": "../d-116211-5585-qr6xgl/package.tgz",
+  "_resolved": "file:../d-116614-40978-19363xs/package.tgz",
+  "_from": "../d-116614-40978-19363xs/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
@@ -79,7 +79,7 @@
       },
       {
         "name": "es5-ext",
-        "version": "0.10.11",
+        "version": "0.10.12",
         "path": "node_modules/space-pen/node_modules/grim/node_modules/emissary/node_modules/es6-weak-map/node_modules/es5-ext/index.js"
       },
       {
@@ -89,7 +89,7 @@
       },
       {
         "name": "es6-symbol",
-        "version": "3.0.2",
+        "version": "3.1.0",
         "path": "node_modules/space-pen/node_modules/grim/node_modules/emissary/node_modules/es6-weak-map/node_modules/es5-ext/node_modules/es6-symbol/index.js"
       },
       {
@@ -816,7 +816,7 @@
         ],
         "dependencies": {
           "es6-iterator": "2",
-          "es6-symbol": "~3.0.2"
+          "es6-symbol": "~3.1"
         }
       },
       {
@@ -839,7 +839,7 @@
         ],
         "dependencies": {
           "d": "~0.1.1",
-          "es5-ext": "~0.10.10"
+          "es5-ext": "~0.10.11"
         }
       },
       {

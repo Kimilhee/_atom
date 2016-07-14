@@ -85,8 +85,7 @@
   "fuzzy-finder": {}
   "git-plus": {}
   "highlight-column": {}
-  "highlight-line":
-    enableBackgroundColor: false
+  "highlight-line": {}
   "highlight-selected": {}
   "jscs-fixer": {}
   jumpy:

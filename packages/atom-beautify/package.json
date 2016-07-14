@@ -215,8 +215,8 @@
   "homepage": "https://github.com/Glavin001/atom-beautify#readme",
   "_id": "atom-beautify@0.29.9",
   "_shasum": "5ddd8d6cb019bb4d89df2642db00a2923892d426",
-  "_resolved": "file:../d-116613-27864-1xyd28h/package.tgz",
-  "_from": "../d-116613-27864-1xyd28h/package.tgz",
+  "_resolved": "file:../d-116614-40978-3ep6j5/package.tgz",
+  "_from": "../d-116614-40978-3ep6j5/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
@@ -602,7 +602,7 @@
       },
       {
         "name": "jscs",
-        "version": "3.0.6",
+        "version": "3.0.7",
         "path": "node_modules/jscs/lib/checker.js"
       },
       {
@@ -1247,7 +1247,7 @@
       },
       {
         "name": "marko",
-        "version": "3.7.1",
+        "version": "3.7.2",
         "path": "node_modules/marko-prettyprint/node_modules/marko/runtime/marko-runtime.js"
       },
       {
@@ -1322,7 +1322,7 @@
       },
       {
         "name": "property-handlers",
-        "version": "1.0.1",
+        "version": "1.1.0",
         "path": "node_modules/marko-prettyprint/node_modules/marko/node_modules/property-handlers/lib/index.js"
       },
       {
@@ -3238,7 +3238,6 @@
         "node_modules/marko-prettyprint/node_modules/marko/compiler/taglib-finder/package.json",
         "node_modules/marko-prettyprint/node_modules/marko/compiler/taglib-loader/package.json",
         "node_modules/marko-prettyprint/node_modules/marko/compiler/util/package.json",
-        "node_modules/marko-prettyprint/node_modules/marko/coverage/coverage.json",
         "node_modules/marko-prettyprint/node_modules/marko/node_modules/app-module-path/package.json",
         "node_modules/marko-prettyprint/node_modules/marko/node_modules/async-writer/package.json",
         "node_modules/marko-prettyprint/node_modules/marko/node_modules/browser-refresh-client/package.json",
@@ -8519,6 +8518,7 @@
         "node_modules/marko-prettyprint/node_modules/marko/compiler/index.js",
         "node_modules/marko-prettyprint/node_modules/marko/compiler/taglib-finder/index-browser.js",
         "node_modules/marko-prettyprint/node_modules/marko/compiler/taglib-finder/index.js",
+        "node_modules/marko-prettyprint/node_modules/marko/compiler/taglib-loader/DependencyChain.js",
         "node_modules/marko-prettyprint/node_modules/marko/compiler/taglib-loader/Taglib/Attribute.js",
         "node_modules/marko-prettyprint/node_modules/marko/compiler/taglib-loader/Taglib/ImportedVariable.js",
         "node_modules/marko-prettyprint/node_modules/marko/compiler/taglib-loader/Taglib/NestedVariable.js",
@@ -8561,8 +8561,6 @@
         "node_modules/marko-prettyprint/node_modules/marko/compiler/util/resolve.js",
         "node_modules/marko-prettyprint/node_modules/marko/compiler/util/safeVarName.js",
         "node_modules/marko-prettyprint/node_modules/marko/compiler/util/tokenizer.js",
-        "node_modules/marko-prettyprint/node_modules/marko/coverage/lcov-report/prettify.js",
-        "node_modules/marko-prettyprint/node_modules/marko/coverage/lcov-report/sorter.js",
         "node_modules/marko-prettyprint/node_modules/marko/express.js",
         "node_modules/marko-prettyprint/node_modules/marko/hot-reload/index.js",
         "node_modules/marko-prettyprint/node_modules/marko/node-require-browser.js",
@@ -11219,12 +11217,10 @@
           "node_modules/marko-prettyprint/node_modules/marko/compiler",
           "node_modules/marko-prettyprint/node_modules/marko/compiler/ast",
           "node_modules/marko-prettyprint/node_modules/marko/compiler/taglib-finder",
-          "node_modules/marko-prettyprint/node_modules/marko/compiler/taglib-loader/Taglib",
           "node_modules/marko-prettyprint/node_modules/marko/compiler/taglib-loader",
+          "node_modules/marko-prettyprint/node_modules/marko/compiler/taglib-loader/Taglib",
           "node_modules/marko-prettyprint/node_modules/marko/compiler/taglib-lookup",
           "node_modules/marko-prettyprint/node_modules/marko/compiler/util",
-          "node_modules/marko-prettyprint/node_modules/marko/coverage",
-          "node_modules/marko-prettyprint/node_modules/marko/coverage/lcov-report",
           "node_modules/marko-prettyprint/node_modules/marko",
           "node_modules/marko-prettyprint/node_modules/marko/hot-reload",
           "node_modules/marko-prettyprint/node_modules/marko/runtime",

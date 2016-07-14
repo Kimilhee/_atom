@@ -5,7 +5,7 @@
   "description": "Change the case of selected text using node-change-case",
   "repository": {
     "type": "git",
-    "url": "https://github.com/robhurring/atom-change-case.git"
+    "url": "git+https://github.com/robhurring/atom-change-case.git"
   },
   "license": "MIT",
   "author": {
@@ -34,11 +34,11 @@
   "bugs": {
     "url": "https://github.com/robhurring/atom-change-case/issues"
   },
-  "homepage": "https://github.com/robhurring/atom-change-case",
+  "homepage": "https://github.com/robhurring/atom-change-case#readme",
   "_id": "change-case@0.6.0",
   "_shasum": "a87f7d226be32eeb4817a60294be7963090a2544",
-  "_resolved": "file:../d-115523-71244-1rvt3e3/package.tgz",
-  "_from": "../d-115523-71244-1rvt3e3/package.tgz",
+  "_resolved": "file:../d-116614-40978-e8suly/package.tgz",
+  "_from": "../d-116614-40978-e8suly/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
