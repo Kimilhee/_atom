@@ -330,6 +330,17 @@ module.exports =
       command: "lua"
       args: (context) -> [context.filepath]
 
+  'Lua (WoW)':
+    "Selection Based":
+      command: "lua"
+      args: (context) ->
+        code = context.getCode(true)
+        tmpFile = GrammarUtils.createTempFileWithCode(code)
+        [tmpFile]
+    "File Based":
+      command: "lua"
+      args: (context) -> [context.filepath]
+
   Makefile:
     "Selection Based":
       command: "bash"
@@ -486,6 +497,16 @@ module.exports =
     "File Based":
       command: "powershell"
       args: (context) -> [context.filepath.replace /\ /g, "` "]
+
+  Processing:
+    "File Based":
+      command: if GrammarUtils.OperatingSystem.isWindows() then "cmd" else "bash"
+      args: (context) ->
+        if GrammarUtils.OperatingSystem.isWindows()
+          return ['/c processing-java --sketch='+context.filepath.replace("\\"+context.filename,"")+' --run']
+        else
+          return ['-c', 'processing-java --sketch='+context.filepath.replace("/"+context.filename,"")+' --run']
+
 
   Prolog:
     "File Based":

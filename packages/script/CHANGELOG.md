@@ -1,3 +1,11 @@
+## 3.8.3
+
+* Support for Processing
+
+## 3.8.2
+
+* Support for Lua (WoW)
+
 ## 3.8.1
 
 * Fix compilation errors
