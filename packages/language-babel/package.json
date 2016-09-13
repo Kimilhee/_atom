@@ -1,7 +1,7 @@
 {
   "name": "language-babel",
   "main": "./lib/main",
-  "version": "2.32.2",
+  "version": "2.37.1",
   "description": "Babel JavaScript ES201x, React JSX & Flow Grammar & Transpiler",
   "keywords": [
     "es6",
@@ -51,16 +51,16 @@
     "url": "https://github.com/gandm/language-babel/issues"
   },
   "homepage": "https://github.com/gandm/language-babel#readme",
-  "_id": "language-babel@2.32.2",
-  "_shasum": "10f202149bc00427d4771437fc94da9dda221a2e",
-  "_resolved": "file:../d-116712-353-18j0pkj/package.tgz",
-  "_from": "../d-116712-353-18j0pkj/package.tgz",
+  "_id": "language-babel@2.37.1",
+  "_shasum": "b3efd3c9635a12e4fa51759c9f8f5b9ebde9bfc4",
+  "_resolved": "file:../d-116813-1846-ddnshc/package.tgz",
+  "_from": "../d-116813-1846-ddnshc/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
       {
         "name": "babel-core",
-        "version": "6.13.2",
+        "version": "6.14.0",
         "path": "node_modules/babel-core/index.js"
       },
       {
@@ -120,7 +120,7 @@
       },
       {
         "name": "babel-generator",
-        "version": "6.11.4",
+        "version": "6.14.0",
         "path": "node_modules/babel-core/node_modules/babel-generator/lib/index.js"
       },
       {
@@ -165,7 +165,7 @@
       },
       {
         "name": "babel-register",
-        "version": "6.11.6",
+        "version": "6.14.0",
         "path": "node_modules/babel-core/node_modules/babel-register/lib/node.js"
       },
       {
@@ -225,12 +225,12 @@
       },
       {
         "name": "babel-template",
-        "version": "6.9.0",
+        "version": "6.15.0",
         "path": "node_modules/babel-core/node_modules/babel-template/lib/index.js"
       },
       {
         "name": "babel-traverse",
-        "version": "6.13.0",
+        "version": "6.15.0",
         "path": "node_modules/babel-core/node_modules/babel-traverse/lib/index.js"
       },
       {
@@ -255,7 +255,7 @@
       },
       {
         "name": "babel-types",
-        "version": "6.13.0",
+        "version": "6.15.0",
         "path": "node_modules/babel-core/node_modules/babel-types/lib/index.js"
       },
       {
@@ -270,7 +270,7 @@
       },
       {
         "name": "babylon",
-        "version": "6.8.4",
+        "version": "6.9.2",
         "path": "node_modules/babel-core/node_modules/babylon/lib/index.js"
       },
       {
@@ -295,7 +295,7 @@
       },
       {
         "name": "lodash",
-        "version": "4.14.2",
+        "version": "4.15.0",
         "path": "node_modules/babel-core/node_modules/lodash/lodash.js"
       },
       {
@@ -405,12 +405,12 @@
       },
       {
         "name": "esprima",
-        "version": "2.7.2",
+        "version": "2.7.3",
         "path": "node_modules/js-yaml/node_modules/esprima/esprima.js"
       },
       {
         "name": "path-is-inside",
-        "version": "1.0.1",
+        "version": "1.0.2",
         "path": "node_modules/path-is-inside/lib/path-is-inside.js"
       },
       {
@@ -3649,6 +3649,9 @@
         "node_modules/babel-core/node_modules/lodash/_arrayReduce.js",
         "node_modules/babel-core/node_modules/lodash/_arrayReduceRight.js",
         "node_modules/babel-core/node_modules/lodash/_arraySome.js",
+        "node_modules/babel-core/node_modules/lodash/_asciiSize.js",
+        "node_modules/babel-core/node_modules/lodash/_asciiToArray.js",
+        "node_modules/babel-core/node_modules/lodash/_asciiWords.js",
         "node_modules/babel-core/node_modules/lodash/_assignInDefaults.js",
         "node_modules/babel-core/node_modules/lodash/_assignMergeValue.js",
         "node_modules/babel-core/node_modules/lodash/_assignValue.js",
@@ -3819,6 +3822,8 @@
         "node_modules/babel-core/node_modules/lodash/_getView.js",
         "node_modules/babel-core/node_modules/lodash/_getWrapDetails.js",
         "node_modules/babel-core/node_modules/lodash/_hasPath.js",
+        "node_modules/babel-core/node_modules/lodash/_hasUnicode.js",
+        "node_modules/babel-core/node_modules/lodash/_hasUnicodeWord.js",
         "node_modules/babel-core/node_modules/lodash/_hashClear.js",
         "node_modules/babel-core/node_modules/lodash/_hashDelete.js",
         "node_modules/babel-core/node_modules/lodash/_hashGet.js",
@@ -3866,7 +3871,6 @@
         "node_modules/babel-core/node_modules/lodash/_parent.js",
         "node_modules/babel-core/node_modules/lodash/_reEscape.js",
         "node_modules/babel-core/node_modules/lodash/_reEvaluate.js",
-        "node_modules/babel-core/node_modules/lodash/_reHasComplexSymbol.js",
         "node_modules/babel-core/node_modules/lodash/_reInterpolate.js",
         "node_modules/babel-core/node_modules/lodash/_realNames.js",
         "node_modules/babel-core/node_modules/lodash/_reorder.js",
@@ -3889,6 +3893,9 @@
         "node_modules/babel-core/node_modules/lodash/_toKey.js",
         "node_modules/babel-core/node_modules/lodash/_toSource.js",
         "node_modules/babel-core/node_modules/lodash/_unescapeHtmlChar.js",
+        "node_modules/babel-core/node_modules/lodash/_unicodeSize.js",
+        "node_modules/babel-core/node_modules/lodash/_unicodeToArray.js",
+        "node_modules/babel-core/node_modules/lodash/_unicodeWords.js",
         "node_modules/babel-core/node_modules/lodash/_updateWrapDetails.js",
         "node_modules/babel-core/node_modules/lodash/_wrapperClone.js",
         "node_modules/babel-core/node_modules/lodash/add.js",
@@ -4786,15 +4793,15 @@
         ],
         "dependencies": {
           "babel-code-frame": "^6.8.0",
-          "babel-generator": "^6.11.4",
+          "babel-generator": "^6.14.0",
           "babel-helpers": "^6.8.0",
           "babel-messages": "^6.8.0",
-          "babel-template": "^6.9.0",
+          "babel-template": "^6.14.0",
           "babel-runtime": "^6.9.1",
-          "babel-register": "^6.9.0",
-          "babel-traverse": "^6.13.0",
-          "babel-types": "^6.13.0",
-          "babylon": "^6.7.0",
+          "babel-register": "^6.14.0",
+          "babel-traverse": "^6.14.0",
+          "babel-types": "^6.14.0",
+          "babylon": "^6.9.0",
           "convert-source-map": "^1.1.0",
           "debug": "^2.1.1",
           "json5": "^0.4.0",
@@ -4858,7 +4865,7 @@
         "dependencies": {
           "babel-messages": "^6.8.0",
           "babel-runtime": "^6.9.0",
-          "babel-types": "^6.10.2",
+          "babel-types": "^6.14.0",
           "detect-indent": "^3.0.1",
           "lodash": "^4.2.0",
           "source-map": "^0.5.0"
@@ -4915,7 +4922,7 @@
           "node_modules/babel-core/node_modules/babel-register"
         ],
         "dependencies": {
-          "babel-core": "^6.9.0",
+          "babel-core": "^6.14.0",
           "babel-runtime": "^6.11.6",
           "core-js": "^2.4.0",
           "home-or-tmp": "^1.0.0",
@@ -4998,9 +5005,9 @@
           "node_modules/babel-core/node_modules/babel-template"
         ],
         "dependencies": {
-          "babylon": "^6.7.0",
-          "babel-traverse": "^6.9.0",
-          "babel-types": "^6.9.0",
+          "babylon": "^6.9.0",
+          "babel-traverse": "^6.15.0",
+          "babel-types": "^6.15.0",
           "babel-runtime": "^6.9.0",
           "lodash": "^4.2.0"
         }
@@ -5019,8 +5026,8 @@
           "babel-code-frame": "^6.8.0",
           "babel-messages": "^6.8.0",
           "babel-runtime": "^6.9.0",
-          "babel-types": "^6.13.0",
-          "babylon": "^6.7.0",
+          "babel-types": "^6.15.0",
+          "babylon": "^6.9.0",
           "debug": "^2.2.0",
           "globals": "^8.3.0",
           "invariant": "^2.2.0",
@@ -5051,25 +5058,9 @@
         ],
         "dependencies": {
           "babel-runtime": "^6.9.1",
-          "babel-traverse": "^6.13.0",
           "esutils": "^2.0.2",
           "lodash": "^4.2.0",
           "to-fast-properties": "^1.0.1"
-        }
-      },
-      {
-        "paths": [
-          "node_modules/babel-core/node_modules/babylon/bin",
-          "node_modules/babel-core/node_modules/babylon/lib",
-          "node_modules/babel-core/node_modules/babylon/lib/parser",
-          "node_modules/babel-core/node_modules/babylon/lib/plugins",
-          "node_modules/babel-core/node_modules/babylon/lib/plugins/jsx",
-          "node_modules/babel-core/node_modules/babylon/lib/tokenizer",
-          "node_modules/babel-core/node_modules/babylon/lib/util",
-          "node_modules/babel-core/node_modules/babylon"
-        ],
-        "dependencies": {
-          "babel-runtime": "^6.0.0"
         }
       },
       {

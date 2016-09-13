@@ -1,8 +1,7 @@
 "*":
   "atom-beautify":
-    _analyticsUserId: "96b86dd8-3e97-4bfc-8e50-842a8f3f4da2"
     general:
-      _analyticsUserId: "84ea8216-2fa1-4394-9525-132626ed0deb"
+      _analyticsUserId: "96b86dd8-3e97-4bfc-8e50-842a8f3f4da2"
     js: {}
   "atom-ctags":
     cmdArgs: "--exclude=node_modules --exclude=lib --exclude=*.html --exclude=*.json --exclude=*.min.js --exclude=zzzz --exclude=migration-from-fork --exclude=dist --exclude=builds --exclude=webpack --exclude=uploads"
@@ -15,7 +14,6 @@
       "jscs-fixer"
       "linter-jscs"
       "linter-jshint"
-      "language-babel"
     ]
     ignoredNames: [
       ".git"
@@ -75,7 +73,6 @@
   "easy-motion-redux": {}
   editor:
     fontFamily: "Monaco"
-    fontSize: 15
     invisibles: {}
     nonWordCharacters: "/\\()\"':,.;<>~!@#%^&*|+=[]{}`?"
     preferredLineLength: 95

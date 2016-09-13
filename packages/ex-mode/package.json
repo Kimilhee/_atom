@@ -1,7 +1,7 @@
 {
   "name": "ex-mode",
   "main": "./lib/ex-mode",
-  "version": "0.11.0",
+  "version": "0.13.0",
   "description": "Ex for Atom's vim-mode",
   "activationCommands": {
     "atom-workspace": "ex-mode:open"
@@ -45,10 +45,10 @@
     "url": "https://github.com/lloeki/ex-mode/issues"
   },
   "homepage": "https://github.com/lloeki/ex-mode#readme",
-  "_id": "ex-mode@0.11.0",
-  "_shasum": "854670ceaae850fdb0c8eeea8ff2dccab1b55ff2",
-  "_resolved": "file:../d-116712-311-btuzmv/package.tgz",
-  "_from": "../d-116712-311-btuzmv/package.tgz",
+  "_id": "ex-mode@0.13.0",
+  "_shasum": "9dce4f2697546327c4f34f8e0286c0aa20ac33ad",
+  "_resolved": "file:../d-116718-1453-v9m3vc/package.tgz",
+  "_from": "../d-116718-1453-v9m3vc/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
@@ -220,6 +220,7 @@
     ],
     "extensions": {
       ".coffee": [
+        "lib/autocomplete.coffee",
         "lib/command-error.coffee",
         "lib/command.coffee",
         "lib/ex-mode.coffee",

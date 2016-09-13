@@ -1,6 +1,6 @@
 {
   "name": "atom-ctags",
-  "version": "4.5.2",
+  "version": "5.0.0",
   "main": "./lib/main",
   "description": "better autocomplete for atom",
   "keywords": [
@@ -11,7 +11,7 @@
   "dependencies": {
     "q": "^1.1.2",
     "atom-message-panel": "^1.1.1",
-    "ctags": "https://github.com/yongkangchen/node-ctags/archive/3.0.tar.gz",
+    "ctags": "https://github.com/yongkangchen/node-ctags/archive/4.0.tar.gz",
     "atom-space-pen-views": "^2.0.0"
   },
   "repository": {
@@ -34,10 +34,10 @@
     "url": "https://github.com/yongkangchen/atom-ctags/issues"
   },
   "homepage": "https://github.com/yongkangchen/atom-ctags#readme",
-  "_id": "atom-ctags@4.5.2",
-  "_shasum": "f93782829245c5cb26e6af385a1bfb32b286a040",
-  "_resolved": "file:../d-116614-40978-19u4a9z/package.tgz",
-  "_from": "../d-116614-40978-19u4a9z/package.tgz",
+  "_id": "atom-ctags@5.0.0",
+  "_shasum": "42b58567093bd0394fd6939f05c2b0c816ed12ae",
+  "_resolved": "file:../d-116813-1833-1cpd2ew/package.tgz",
+  "_from": "../d-116813-1833-1cpd2ew/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
@@ -130,11 +130,6 @@
         "name": "underscore",
         "version": "1.6.0",
         "path": "node_modules/atom-space-pen-views/node_modules/space-pen/node_modules/underscore-plus/node_modules/underscore/underscore.js"
-      },
-      {
-        "name": "ctags",
-        "version": "2.0.0",
-        "path": "node_modules/ctags/src/ctags.coffee"
       },
       {
         "name": "event-stream",
