@@ -1,9 +1,22 @@
 'use babel'
 
-import { CompositeDisposable, Range } from 'atom'
-import { spawnWorker, showError } from './helpers'
-import escapeHTML from 'escape-html'
-import ruleURI from 'eslint-rule-documentation'
+import Path from 'path'
+// eslint-disable-next-line import/no-extraneous-dependencies, import/extensions
+import { CompositeDisposable, } from 'atom'
+
+import {
+  spawnWorker, showError, idsToIgnoredRules, processESLintMessages,
+  generateDebugString,
+} from './helpers'
+import { getConfigPath } from './worker-helpers'
+import { isConfigAtHomeRoot } from './is-config-at-home-root'
+
+// Configuration
+const scopes = []
+let showRule
+let ignoredRulesWhenModified
+let ignoredRulesWhenFixing
+let disableWhenNoEslintConfig
 
 module.exports = {
   activate() {
@@ -12,42 +25,73 @@ module.exports = {
     this.subscriptions = new CompositeDisposable()
     this.active = true
     this.worker = null
-    this.scopes = []
 
-    this.subscriptions.add(atom.config.observe('linter-eslint.scopes', scopes => {
-      // Remove any old scopes
-      this.scopes.splice(0, this.scopes.length)
-      // Add the current scopes
-      Array.prototype.push.apply(this.scopes, scopes)
-    }))
+    this.subscriptions.add(
+      atom.config.observe('linter-eslint.scopes', (value) => {
+        // Remove any old scopes
+        scopes.splice(0, scopes.length)
+        // Add the current scopes
+        Array.prototype.push.apply(scopes, value)
+      })
+    )
+
     const embeddedScope = 'source.js.embedded.html'
-    this.subscriptions.add(atom.config.observe('linter-eslint.lintHtmlFiles', lintHtmlFiles => {
-      if (lintHtmlFiles) {
-        this.scopes.push(embeddedScope)
-      } else {
-        if (this.scopes.indexOf(embeddedScope) !== -1) {
-          this.scopes.splice(this.scopes.indexOf(embeddedScope), 1)
+    this.subscriptions.add(
+      atom.config.observe('linter-eslint.lintHtmlFiles', (lintHtmlFiles) => {
+        if (lintHtmlFiles) {
+          scopes.push(embeddedScope)
+        } else if (scopes.indexOf(embeddedScope) !== -1) {
+          scopes.splice(scopes.indexOf(embeddedScope), 1)
         }
-      }
-    }))
+      })
+    )
+
     this.subscriptions.add(atom.workspace.observeTextEditors((editor) => {
       editor.onDidSave(() => {
-        if (this.scopes.indexOf(editor.getGrammar().scopeName) !== -1 &&
-            atom.config.get('linter-eslint.fixOnSave')) {
+        const validScope = editor.getCursors().some(cursor =>
+          cursor.getScopeDescriptor().getScopesArray().some(scope =>
+            scopes.includes(scope)))
+        if (validScope && atom.config.get('linter-eslint.fixOnSave')) {
+          const filePath = editor.getPath()
+          const projectPath = atom.project.relativizePath(filePath)[0]
+
+          // Do not try to fix if linting should be disabled
+          const fileDir = Path.dirname(filePath)
+          const configPath = getConfigPath(fileDir)
+          const noProjectConfig = (configPath === null || isConfigAtHomeRoot(configPath))
+          if (noProjectConfig && disableWhenNoEslintConfig) return
+
+          let rules = {}
+          if (Object.keys(ignoredRulesWhenFixing).length > 0) {
+            rules = ignoredRulesWhenFixing
+          }
+
           this.worker.request('job', {
             type: 'fix',
             config: atom.config.get('linter-eslint'),
-            filePath: editor.getPath()
-          }).catch((response) =>
-            atom.notifications.addWarning(response)
-          )
+            rules,
+            filePath,
+            projectPath
+          }).catch((err) => {
+            atom.notifications.addWarning(err.message)
+          })
         }
       })
     }))
+
+    this.subscriptions.add(atom.commands.add('atom-text-editor', {
+      'linter-eslint:debug': async () => {
+        const debugString = await generateDebugString(this.worker)
+        const notificationOptions = { detail: debugString, dismissable: true }
+        atom.notifications.addInfo('linter-eslint debugging information', notificationOptions)
+      }
+    }))
+
     this.subscriptions.add(atom.commands.add('atom-text-editor', {
       'linter-eslint:fix-file': () => {
         const textEditor = atom.workspace.getActiveTextEditor()
         const filePath = textEditor.getPath()
+        const projectPath = atom.project.relativizePath(filePath)[0]
 
         if (!textEditor || textEditor.isModified()) {
           // Abort for invalid or unsaved text editors
@@ -55,16 +99,43 @@ module.exports = {
           return
         }
 
+        let rules = {}
+        if (textEditor.isModified() && Object.keys(ignoredRulesWhenFixing).length > 0) {
+          rules = ignoredRulesWhenFixing
+        }
+
         this.worker.request('job', {
           type: 'fix',
           config: atom.config.get('linter-eslint'),
-          filePath
-        }).then((response) =>
+          rules,
+          filePath,
+          projectPath
+        }).then(response =>
           atom.notifications.addSuccess(response)
-        ).catch((response) =>
-          atom.notifications.addWarning(response)
-        )
+        ).catch((err) => {
+          atom.notifications.addWarning(err.message)
+        })
       }
+    }))
+
+    this.subscriptions.add(
+      atom.config.observe('linter-eslint.showRuleIdInMessage', (value) => {
+        showRule = value
+      })
+    )
+
+    this.subscriptions.add(
+      atom.config.observe('linter-eslint.disableWhenNoEslintConfig', (value) => {
+        disableWhenNoEslintConfig = value
+      })
+    )
+
+    this.subscriptions.add(atom.config.observe('linter-eslint.rulesToSilenceWhileTyping', (ids) => {
+      ignoredRulesWhenModified = idsToIgnoredRules(ids)
+    }))
+
+    this.subscriptions.add(atom.config.observe('linter-eslint.rulesToDisableWhileFixing', (ids) => {
+      ignoredRulesWhenFixing = idsToIgnoredRules(ids)
     }))
 
     const initializeWorker = () => {
@@ -86,69 +157,42 @@ module.exports = {
     this.subscriptions.dispose()
   },
   provideLinter() {
-    const Helpers = require('atom-linter')
     return {
       name: 'ESLint',
-      grammarScopes: this.scopes,
+      grammarScopes: scopes,
       scope: 'file',
       lintOnFly: true,
-      lint: textEditor => {
+      lint: (textEditor) => {
         const text = textEditor.getText()
         if (text.length === 0) {
           return Promise.resolve([])
         }
         const filePath = textEditor.getPath()
-        const showRule = atom.config.get('linter-eslint.showRuleIdInMessage')
+
+        let rules = {}
+        if (textEditor.isModified() && Object.keys(ignoredRulesWhenModified).length > 0) {
+          rules = ignoredRulesWhenModified
+        }
 
         return this.worker.request('job', {
-          contents: text,
           type: 'lint',
+          contents: text,
           config: atom.config.get('linter-eslint'),
-          filePath
-        }).then((response) =>
-          response.map(({ message, line, severity, ruleId, column, fix }) => {
-            const textBuffer = textEditor.getBuffer()
-            let linterFix = null
-            if (fix) {
-              const fixRange = new Range(
-                textBuffer.positionForCharacterIndex(fix.range[0]),
-                textBuffer.positionForCharacterIndex(fix.range[1])
-              )
-              linterFix = {
-                range: fixRange,
-                newText: fix.text
-              }
-            }
-            let range
-            try {
-              range = Helpers.rangeFromLineNumber(
-                textEditor, line - 1, column ? column - 1 : column
-              )
-            } catch (err) {
-              throw new Error(
-                `Cannot mark location in editor for (${ruleId}) - (${message})` +
-                ` at line (${line}) column (${column})`
-              )
-            }
-            const ret = {
-              filePath,
-              type: severity === 1 ? 'Warning' : 'Error',
-              range
-            }
-            if (showRule) {
-              const elName = ruleId ? 'a' : 'span'
-              const href = ruleId ? ` href=${ruleURI(ruleId).url}` : ''
-              ret.html = `<${elName}${href} class="badge badge-flexible eslint">` +
-                `${ruleId || 'Fatal'}</${elName}> ${escapeHTML(message)}`
-            } else {
-              ret.text = message
-            }
-            if (linterFix) {
-              ret.fix = linterFix
-            }
-            return ret
-          })
-        )
+          rules,
+          filePath,
+          projectPath: atom.project.relativizePath(filePath)[0] || ''
+        }).then((response) => {
+          if (textEditor.getText() !== text) {
+            /*
+               The editor text has been modified since the lint was triggered,
+               as we can't be sure that the results will map properly back to
+               the new contents, simply return `null` to tell the
+               `provideLinter` consumer not to update the saved results.
+             */
+            return null
+          }
+          return processESLintMessages(response, textEditor, showRule, this.worker)
+        })
       }
     }
   }

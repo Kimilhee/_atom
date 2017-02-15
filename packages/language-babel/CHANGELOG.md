@@ -1,8 +1,123 @@
+### 2.54.1
+  - Fix incorrect generation of ttl grammars when using certain regex strings.
+  
+### 2.54.0
+  - Add scope of meta.conmments.flowtype to flowtype comment style.
+  - Use Oniguruma to parse taggedTemplateGrammar regex - allows use of backtracking.
+
+### 2.53.0
+  - Changed the status bar indicator to use a name of `Babel` rather than `Babel ES6 JavaScript`. Now ES2016 and ES2017 are being released it seems more appropriate and succinct. `Babel ES6 JavaScript` is still the internal grammar name as shown on the list of grammars to ensure compatibility with packages that use this keyword. e.g. atom-beautify.
+
+### 2.52.2
+  - Change styled-components auto-complete property values to position cursor after closing semi-colon.
+  - Allow pseudo selectors to appear at top level of styled-components string without implicit parent. css `::pseudo-value`
+
+### 2.52.0
+  - Add support for auto-completing styled-components CSS.
+
+### 2.51.0
+  - Add support for the new flow shorthand for importing types in the same declaration that imports values: import {someValue, type someType, typeof someOtherValue} from 'foo'
+  - Remove meta scope and tidy decorator support in grammar - Issue #320
+
+### 2.50.1
+  - Change regex for detecting flow type casts. Fixes Issue #317
+
+### 2.50.0
+  - Add support for TC39 dynamic import 'function'.
+  - Add support for Relay to use graphql as a tagged template name.
+  - Stop any autoIndentJSX from working inside embedded template literals.
+
+### 2.49.4
+  - Add additional closing space after auto-commenting styled-components. Issue #303
+  - Fix incorrect scope names for methods/functions called witrh more than one object arg. Issue #299
+  - Add additional scope name for start/end braces of object literals. Issue #301
+
+### 2.49.3
+  - Fix #296 Closing backtick terminates styled-component css property.
+  - Fix #297 for...of and for...in loops with let|const|var property grammar parsing.
+  - Fix #291 Add support for autoindenting and terminating styled-component backtick.
+
+### 2.49.2
+  - Fix styled componenet nested wrappper function tags Fixes #294
+  - Fix handling unit types after interpolation closures. Fixes #295
+
+### 2.49.1
+  - Fix #290
+
+### 2.49.0 (Atom >=1.13)
+  - Add support for Atom 1.13
+
+### 2.48.5
+  - Fix #296 Closing backtick terminates styled-component css property.
+  - Fix #297 for...of and for...in loops with let|const|var property grammar parsing.
+  - Fix #291 Add support for autoindenting and terminating styled-component backtick.
+
+### 2.48.4
+  - Fix styled componenet nested wrappper function tags Fixes #294
+  - Fix handling unit types after interpolation closures. Fixes #295
+
+### 2.48.3
+  - Fix #290 styled components interpolation.
+
+### 2.48.2
+  - Add support for indentation of paren blocks inside JSX as well as allowing addition indents on some contraints.
+
+### 2.48.0 (Atom <=1.12)
+  - Cease package support.
+  - Remove auto indent option as default.
+  - Add indent/outdent for Atom jsx
+  - Add option to export type {name} from 'module'
+
+### 2.47.0
+  - Fix bad regression in arrow function detections that also impacted performance. [Fixes #281](https://github.com/gandm/language-babel/issues/281)
+  - Change default autoIndentJSX to be on. See [PR #283](https://github.com/gandm/language-babel/issues/283)
+
+### 2.46.0
+  - Minor grammar improvements/fixes. Issues #272, #273, #274, #275, #276, #277 and #278
+  - Change keyword shortcut commenting in styled-components to return empty string in interpolations.
+
+### 2.45.0
+  - Support [styled-components](https://github.com/styled-components/styled-components) with own grammar rather than hacked language-css.
+  - Allow const uppercase variables to start with _ chars.
+
+### 2.44.1
+  - Fix issues with arrow functions caused by lost commit in 2.44.0!
+
+### 2.44.0
+  - Add styled components support.
+  - Fix Issue [#260](https://github.com/gandm/language-babel/issues/260)
+  - Fix Issue [#261](https://github.com/gandm/language-babel/issues/261)
+
+### 2.43.0
+  - Add ability to use a RegExp as a tagged template grammar extension.
+
+### 2.42.3
+  - Grammar object literals inside some arrays were incorrectly parsed as braced bodies [Fixes #257](https://github.com/gandm/language-babel/issues/257)
+
+### 2.42.2
+  - Fix grammar divide operator starting on a new line being treated as a RegExp. [Fixes #255](https://github.com/gandm/language-babel/issues/255)
+  - Fix grammar nested object literals not being handled correctly. [Fixes #256](https://github.com/gandm/language-babel/issues/256)
+
+### 2.42.0
+  - Add support for embedding other grammars to highlight template literals. Please refer to [the README](https://github.com/gandm/language-babel#javascript-tagged-template-literal-grammar-extensions)
+
+### 2.41.0
+  - Add references in README to `language-graphql-lb` that supports `.graphql` and `.gql` files.
+
+### 2.40.0
+  - Add support for `/* GraphQL */` to be used as a prefix to templates literals enclosing GraphQL. See the README for more info.
+
+### 2.39.0
+  - Add internal support for GraphQL templates so as to better support it.
+
+### 2.38.0
+  - Change ES decorator support that conforms to the new spec and also better supports ASI syntax.
+
 ### 2.37.1
   - Add fixes for classes where public class fields mixed typed and non-typed implementations.
   - Add support for autoIndentJSX where a return statement becomes an implicit else statement.
   - Add scope for `|` in flow's object 'only' syntax `{| prop: string |}`
-  
+
 ### 2.37.0
   - Add support for GraphQL template strings with tags of Relay.QL and gql. Also support # type comments
   - Add Additional scope class id for literal object shorthand properties. `.shorthandpropertyname`

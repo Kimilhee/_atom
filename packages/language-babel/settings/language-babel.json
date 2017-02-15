@@ -3,10 +3,16 @@
     "editor": {
       "commentStart": "// ",
       "foldEndPattern": "^\\s*\\}|^\\s*\\]|^\\s*\\)",
-      "increaseIndentPattern": "{[^}\"']*$|\\[[^\\]\"']*$|\\([^)\"']*$",
-      "decreaseIndentPattern": "^\\s*(\\s*/[*].*[*]/\\s*)*[}\\])]",
+      "increaseIndentPattern": "{[^}\"']*$|\\[[^\\]\"']*$|\\([^)\"']*$|<[a-zA-Z][^/]*$|^\\s*>$",
+      "decreaseIndentPattern": "^\\s*(\\s*/[*].*[*]/\\s*)*[}\\])]|^\\s*(</|/>)",
       "nonWordCharacters": "/\\()\"':,.;<>~!@#%^&*|+=[]{}`?-…"
     }
+  },
+  ".source.inside-js.css.styled": {
+  "editor": {
+    "commentStart": "${''/* ",
+    "commentEnd": " */}"
+  }
   },
   ".meta.tag.jsx": {
     "editor": {
@@ -31,7 +37,7 @@
       "commentEnd": " */}"
     }
   },
-  ".string.quoted.template.graphql.js": {
+  ".graphql": {
     "editor": {
       "commentStart": "# "
     }

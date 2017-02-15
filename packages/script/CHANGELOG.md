@@ -1,3 +1,63 @@
+## 3.14.1
+
+* Fix exception occuring during closing of output panel
+
+## 3.14.0
+
+* Support for `PureScript`
+* Support for `Robot Framework`
+* Fix exception in options view
+
+## 3.13.0
+
+* Support for `HTML`
+* Fix exception during profile saving
+
+## 3.12.2
+
+* Fix condition for detecting cwd.
+
+## 3.12.1
+
+* Fix `Cannot read property 'path' of undefined`
+
+## 3.12.0
+
+* Convert codebase to ES6 Javascript
+* Fix path to fixtures in tests
+* Support for `LAMMPS`
+* Support for `VBScript`
+
+## 3.11.1
+
+* Revert `Support java packages`
+
+## 3.11.0
+
+* Add ability to set how `current working directory` is calculated. See the package settings!
+* Support for `Ren'py`
+* Add a dummy runner for generic `SQL`
+* Support `c++14` standard for `c++`
+* Support `java` packages
+* Use `ts-node` as `typescript` runner
+* Tune `F*` run
+* Fix `MIPS` file-based run
+
+## 3.10.1
+
+* Fix `tsc` run
+
+## 3.10.0
+
+* Support for `BuckleScript`
+* Support for `F*`
+* Support for `Hy`
+* Support for `MIPS`
+* Support for `Oz`
+* Ignore first line check in scripts on Windows
+* Fix the `{FILE_ACTIVE_NAME_BASE}}` doesn't work
+* Fix run `tsc` on non amd or system module types
+
 ## 3.9.0
 
 * Support "Selection Based" run for `C#`
