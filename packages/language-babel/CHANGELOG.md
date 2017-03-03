@@ -1,6 +1,29 @@
+### 2.55.6
+  - Add some missing scopes from JSDdoc parsing.
+
+### 2.55.5
+  - Scope Obj literal shorthand property keys with all uppercase as constants.
+
+### 2.55.4
+  - Wow! that was a bad release.
+
+### 2.55.3
+  - Read bracket-matcer config to determine how to complete backticks. Issue #330
+
+### 2.55.2
+  - Fix cases where lines following a flow polymorph were incorrectly indented. Fixes Issue #329
+
+### 2.55.1
+  - Fix insert newline/tab after starting back-tick. Issue #328
+
+### 2.55.0
+  - Improve support for JSDoc highlighting.
+  - The Atom bracket-matcher package doesn't auto-close back-ticks following a function tag. This package now provides that functionality. This allows a more sensitive use of auto-indent when a new line is placed between consecutive back-ticks.
+  - The package configuration schema is now inside package.json.
+
 ### 2.54.1
   - Fix incorrect generation of ttl grammars when using certain regex strings.
-  
+
 ### 2.54.0
   - Add scope of meta.conmments.flowtype to flowtype comment style.
   - Use Oniguruma to parse taggedTemplateGrammar regex - allows use of backtracking.

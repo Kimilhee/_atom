@@ -25,6 +25,13 @@
                 $2
             }
         """
+    'Named function':
+        'prefix': 'fn'
+        'body': """
+            function $1($2) {
+                $3
+            }
+        """
 
     'setTimeout function':
         'prefix': 'timeout'
@@ -33,3 +40,7 @@
                 $2
             }, $1);
         """
+
+    'use strict':
+        'prefix': 'use'
+        'body': "'use strict';"

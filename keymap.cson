@@ -31,9 +31,9 @@
     'ctrl-;': 'custom:semicolonize'
     'cmd-alt-g': 'atom-ctags:rebuild'
 
-'atom-text-editor:not(.mini).vim-mode:not(.insert-mode):not(.jumpy-jump-mode)':
+'atom-text-editor:not(.mini).vim-mode-plus:not(.insert-mode):not(.jumpy-jump-mode)':
     ', ,': 'hee:my-copy'
-    ', m': 'hee:my-paste'
+    ',  m': 'hee:my-paste'
     'space': 'hee:my-space'
     'ctrl-o': 'hee:nospace-new-line'
     'ctrl-]': 'atom-ctags:go-to-declaration'

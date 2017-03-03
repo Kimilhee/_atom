@@ -2,43 +2,134 @@
   "_args": [
     [
       {
-        "raw": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117114-11123-18682il/package.tgz",
+        "raw": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-11723-82028-xuorzv/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117114-11123-18682il/package.tgz",
-        "spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117114-11123-18682il/package.tgz",
+        "rawSpec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-11723-82028-xuorzv/package.tgz",
+        "spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-11723-82028-xuorzv/package.tgz",
         "type": "local"
       },
-      "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/apm-install-dir-117114-11123-p7uic3"
+      "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/apm-install-dir-11723-82028-1oqi0kd"
     ]
   ],
-  "_from": "../d-117114-11123-18682il/package.tgz",
-  "_id": "language-babel@2.54.1",
+  "_from": "../d-11723-82028-xuorzv/package.tgz",
+  "_id": "language-babel@2.55.6",
   "_inCache": true,
   "_installable": true,
   "_location": "/language-babel",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117114-11123-18682il/package.tgz",
+    "raw": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-11723-82028-xuorzv/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117114-11123-18682il/package.tgz",
-    "spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117114-11123-18682il/package.tgz",
+    "rawSpec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-11723-82028-xuorzv/package.tgz",
+    "spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-11723-82028-xuorzv/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-117114-11123-18682il/package.tgz",
-  "_shasum": "771751017aed2f4dc41c2a61fe56a59d59748008",
+  "_resolved": "file:../d-11723-82028-xuorzv/package.tgz",
+  "_shasum": "da29028e96e19330682e743bba46e3203616335b",
   "_shrinkwrap": null,
-  "_spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117114-11123-18682il/package.tgz",
-  "_where": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/apm-install-dir-117114-11123-p7uic3",
+  "_spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-11723-82028-xuorzv/package.tgz",
+  "_where": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/apm-install-dir-11723-82028-1oqi0kd",
   "activationCommands": [],
   "bugs": {
     "url": "https://github.com/gandm/language-babel/issues"
+  },
+  "configSchema": {
+    "autoIndentJSX": {
+      "title": "Auto Indent JSX",
+      "description": "Auto Indent JSX using default or eslintrc rules",
+      "type": "boolean",
+      "default": false,
+      "order": 10
+    },
+    "taggedTemplateGrammar": {
+      "title": "JavaScript Tagged Template Literal Grammar Extensions",
+      "description": "Enter a list of comma separated tagged template literals/regex in the form tagname:scope.name.of.grammar",
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "order": 20
+    },
+    "allowLocalOverride": {
+      "description": "Allow .languagebabel files to overide the settings below. Useful for project based configurations.",
+      "type": "boolean",
+      "default": false,
+      "order": 30
+    },
+    "transpileOnSave": {
+      "description": "Check source code validity on file save. Use \"Create Transpiled Code\" option below to save file.",
+      "type": "boolean",
+      "default": false,
+      "order": 40
+    },
+    "createTranspiledCode": {
+      "description": "Save transpiled code to Babel Transpile Path below.",
+      "type": "boolean",
+      "default": false,
+      "order": 50
+    },
+    "disableWhenNoBabelrcFileInPath": {
+      "description": "Suppress transpile when no .babelrc file is in source file path.",
+      "type": "boolean",
+      "default": true,
+      "order": 60
+    },
+    "suppressTranspileOnSaveMessages": {
+      "description": "Suppress non-error notification messages on each save.",
+      "type": "boolean",
+      "default": true,
+      "order": 70
+    },
+    "suppressSourcePathMessages": {
+      "description": "Suppress messages about file not being inside Babel Source Path.",
+      "type": "boolean",
+      "default": true,
+      "order": 75
+    },
+    "createMap": {
+      "description": "Create separate map file.",
+      "type": "boolean",
+      "default": false,
+      "order": 80
+    },
+    "babelMapsAddUrl": {
+      "description": "Append map file name to transpiled output if \"Create separate map file\" is set.",
+      "type": "boolean",
+      "default": true,
+      "order": 90
+    },
+    "babelSourcePath": {
+      "description": "Babel Source Root based on Project root.",
+      "type": "string",
+      "default": "",
+      "order": 100
+    },
+    "babelTranspilePath": {
+      "description": "Babel Transpile Root based on Project root.",
+      "type": "string",
+      "default": "",
+      "order": 120
+    },
+    "babelMapsPath": {
+      "description": "Babel Maps Root based on Project root.",
+      "type": "string",
+      "default": "",
+      "order": 130
+    },
+    "createTargetDirectories": {
+      "description": "Create transpile output target directories.",
+      "type": "boolean",
+      "default": true,
+      "order": 140
+    }
   },
   "dependencies": {
     "babel-core": "^6.7.6",
@@ -103,5 +194,5 @@
     "type": "git",
     "url": "git+https://github.com/gandm/language-babel.git"
   },
-  "version": "2.54.1"
+  "version": "2.55.6"
 }

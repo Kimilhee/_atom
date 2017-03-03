@@ -4,7 +4,7 @@
       _analyticsUserId: "96b86dd8-3e97-4bfc-8e50-842a8f3f4da2"
     js: {}
   "atom-ctags":
-    cmdArgs: "--exclude=node_modules --exclude=lib --exclude=*.html --exclude=*.json --exclude=*.min.js --exclude=zzzz --exclude=migration-from-fork --exclude=dist --exclude=builds --exclude=webpack --exclude=uploads"
+    cmdArgs: "--exclude=node_modules --exclude=lib --exclude=*.html --exclude=*.json --exclude=*.min.js --exclude=zzzz --exclude=migration-from-fork --exclude=dist --exclude=builds --exclude=webpack --exclude=uploads --exclude=public --exclude=public-report --exclude=redis --exclude=report --exclude=test-main --exclude=migration_data --exclude=admin"
   "autocomplete-plus": {}
   core:
     disabledPackages: [
@@ -14,6 +14,7 @@
       "jscs-fixer"
       "linter-jscs"
       "linter-eslint"
+      "language-babel"
     ]
     ignoredNames: [
       ".git"
@@ -66,6 +67,7 @@
       "zeroclipboard"
     ]
     openEmptyEditorOnStart: false
+    reopenProjectMenuCount: 13
     telemetryConsent: "no"
     themes: [
       "seti-ui"
@@ -78,8 +80,6 @@
     nonWordCharacters: "/\\()\"':,.;<>~!@#%^&*|+=[]{}`?"
     preferredLineLength: 95
     showIndentGuide: true
-    showInvisibles: true
-    tabLength: 4
     tabType: "soft"
   emmet: {}
   "exception-reporting":
@@ -107,9 +107,10 @@
     verbose: false
   "linter-jshint":
     disableWhenNoJshintrcFileInPath: true
+    lintInlineJavaScript: true
   "linter-lua": {}
   "local-history":
-    historyStoragePath: "/Users/Naver/Documents/Backup/_atom/local-history"
+    historyStoragePath: "/Users/kimilhee/Documents/Backup/_atom/local-history"
   "markdown-preview": {}
   minimap:
     displayMinimapOnLeft: true
@@ -164,7 +165,6 @@
   editor:
     nonWordCharacters: "/\\()\"':,.;<>~!@#%^&*|+=[]{}`?-…"
     preferredLineLength: 95
-    tabLength: 4
 ".lua.source":
   editor:
     tabLength: 4
