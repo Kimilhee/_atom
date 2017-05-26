@@ -1,9 +1,5 @@
-_ = require 'underscore-plus'
 {Emitter, Range, CompositeDisposable, Disposable} = require 'atom'
-Base = require './base'
-swrap = require './selection-wrapper'
-{moveCursorLeft} = require './utils'
-settings = require './settings'
+moveCursorLeft = null
 
 class ModeManager
   mode: 'insert' # Native atom is not modal editor and its default is 'insert'
@@ -12,19 +8,14 @@ class ModeManager
 
   constructor: (@vimState) ->
     {@editor, @editorElement} = @vimState
-    @mode = 'insert'
+
     @emitter = new Emitter
-    @subscriptions = new CompositeDisposable
-    @subscriptions.add @vimState.onDidDestroy(@destroy.bind(this))
+    @vimState.onDidDestroy(@destroy.bind(this))
 
   destroy: ->
-    @subscriptions.dispose()
 
-  isMode: (mode, submodes) ->
-    if submodes?
-      (@mode is mode) and (@submode in [].concat(submodes))
-    else
-      @mode is mode
+  isMode: (mode, submode=null) ->
+    (mode is @mode) and (submode is @submode)
 
   # Event
   # -------------------------
@@ -43,7 +34,7 @@ class ModeManager
 
     @emitter.emit('will-activate-mode', mode: newMode, submode: newSubmode)
 
-    if (newMode is 'visual') and (newSubmode is @submode)
+    if (newMode is 'visual') and @submode? and (newSubmode is @submode)
       [newMode, newSubmode] = ['normal', null]
 
     @deactivate() if (newMode isnt @mode)
@@ -59,15 +50,21 @@ class ModeManager
 
     [@mode, @submode] = [newMode, newSubmode]
 
-    @editorElement.classList.add("#{@mode}-mode")
-    @editorElement.classList.add(@submode) if @submode?
-
     if @mode is 'visual'
       @updateNarrowedState()
       @vimState.updatePreviousSelection()
+    else
+      # Prevent swrap from loaded on initial mode-setup on startup.
+      @vimState.getProp('swrap')?.clearProperties(@editor)
+
+    @editorElement.classList.add("#{@mode}-mode")
+    @editorElement.classList.add(@submode) if @submode?
 
     @vimState.statusBarManager.update(@mode, @submode)
-    @vimState.updateCursorsVisibility()
+    if @mode is 'visual'
+      @vimState.cursorStyleManager.refresh()
+    else
+      @vimState.getProp('cursorStyleManager')?.refresh()
 
     @emitter.emit('did-activate-mode', {@mode, @submode})
 
@@ -85,8 +82,17 @@ class ModeManager
   # -------------------------
   activateNormalMode: ->
     @vimState.reset()
-    # [FIXME] Component is not necessary avaiable see #98.
+    # Component is not necessary avaiable see #98.
     @editorElement.component?.setInputEnabled(false)
+
+    # In visual-mode, cursor can place at EOL. move left if cursor is at EOL
+    # We should not do this in visual-mode deactivation phase.
+    # e.g. `A` directly shift from visua-mode to `insert-mode`, and cursor should remain at EOL.
+    for cursor in @editor.getCursors() when cursor.isAtEndOfLine() and not cursor.isAtBeginningOfLine()
+      # Don't use utils moveCursorLeft to skip require('./utils') for faster startup.
+      {goalColumn} = cursor
+      cursor.moveLeft()
+      cursor.goalColumn = goalColumn if goalColumn?
     new Disposable
 
   # Operator Pending
@@ -101,16 +107,18 @@ class ModeManager
     replaceModeDeactivator = @activateReplaceMode() if submode is 'replace'
 
     new Disposable =>
+      moveCursorLeft ?= require('./utils').moveCursorLeft
+
       replaceModeDeactivator?.dispose()
       replaceModeDeactivator = null
 
       # When escape from insert-mode, cursor move Left.
-      needSpecialCareToPreventWrapLine = atom.config.get('editor.atomicSoftTabs') ? true
+      needSpecialCareToPreventWrapLine = @editor.hasAtomicSoftTabs()
       for cursor in @editor.getCursors()
         moveCursorLeft(cursor, {needSpecialCareToPreventWrapLine})
 
   activateReplaceMode: ->
-    @replacedCharsBySelection = {}
+    @replacedCharsBySelection = new WeakMap
     subs = new CompositeDisposable
     subs.add @editor.onWillInsertText ({text, cancel}) =>
       cancel()
@@ -118,15 +126,19 @@ class ModeManager
         for char in text.split('') ? []
           if (char isnt "\n") and (not selection.cursor.isAtEndOfLine())
             selection.selectRight()
-          @replacedCharsBySelection[selection.id] ?= []
-          @replacedCharsBySelection[selection.id].push(swrap(selection).replace(char))
+          selectedText = selection.getText()
+          selection.insertText(char)
+
+          unless @replacedCharsBySelection.has(selection)
+            @replacedCharsBySelection.set(selection, [])
+          @replacedCharsBySelection.get(selection).push(selectedText)
 
     subs.add new Disposable =>
       @replacedCharsBySelection = null
     subs
 
   getReplacedCharForSelection: (selection) ->
-    @replacedCharsBySelection[selection.id]?.pop()
+    @replacedCharsBySelection.get(selection)?.pop()
 
   # Visual
   # -------------------------
@@ -143,29 +155,24 @@ class ModeManager
   # - normalized selection: One column left selcted at selection end position
   # - When selectRight at end position of normalized-selection, it become un-normalized selection
   #   which is the range in visual-mode.
-  #
-  activateVisualMode: (newSubmode) ->
-    @normalizeSelections()
-    swrap.applyWise(@editor, 'characterwise')
-
-    switch newSubmode
-      when 'linewise'
-        swrap.applyWise(@editor, 'linewise')
-      when 'blockwise'
-        @vimState.selectBlockwise()
-
-    new Disposable =>
-      @normalizeSelections()
-      selection.clear(autoscroll: false) for selection in @editor.getSelections()
-      @updateNarrowedState(false)
-
-  normalizeSelections: ->
-    if @submode is 'blockwise'
-      for bs in @vimState.getBlockwiseSelections()
-        bs.restoreCharacterwise()
-      @vimState.clearBlockwiseSelections()
+  activateVisualMode: (submode) ->
+    swrap = @vimState.swrap
+    for $selection in swrap.getSelections(@editor) when not $selection.hasProperties()
+      $selection.saveProperties()
 
     swrap.normalize(@editor)
+
+    $selection.applyWise(submode) for $selection in swrap.getSelections(@editor)
+
+    @vimState.getLastBlockwiseSelection().autoscroll() if submode is 'blockwise'
+
+    new Disposable =>
+      swrap.normalize(@editor)
+
+      if @submode is 'blockwise'
+        swrap.setReversedState(@editor, true)
+      selection.clear(autoscroll: false) for selection in @editor.getSelections()
+      @updateNarrowedState(false)
 
   # Narrow to selection
   # -------------------------
@@ -174,7 +181,7 @@ class ModeManager
       # [FIXME] why I need null guard here
       not @vimState.getLastBlockwiseSelection()?.isSingleRow()
     else
-      not swrap(@editor.getLastSelection()).isSingleRow()
+      not @vimState.swrap(@editor.getLastSelection()).isSingleRow()
 
   updateNarrowedState: (value=null) ->
     @editorElement.classList.toggle('is-narrowed', value ? @hasMultiLineSelection())

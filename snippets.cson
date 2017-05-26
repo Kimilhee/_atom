@@ -18,29 +18,48 @@
 # https://github.com/bevry/cson#what-is-cson
 
 '.source.js':
-    'Anonymous function':
-        'prefix': 'f'
-        'body': """
-            function($1) {
-                $2
-            }
-        """
-    'Named function':
-        'prefix': 'fn'
-        'body': """
-            function $1($2) {
-                $3
-            }
-        """
+  'Anonymous function':
+    'prefix': 'f'
+    'body': """
+      function($1) {
+        $2
+      }
+    """
+    
+  'Named function':
+    'prefix': 'fn'
+    'body': """
+      function $1($2) {
+        $3
+      }
+    """
 
-    'setTimeout function':
-        'prefix': 'timeout'
-        'body': """
-            setTimeout(function() {
-                $2
-            }, $1);
-        """
+  'setTimeout function':
+    'prefix': 'timeout'
+    'body': """
+      setTimeout(function() {
+        $2
+      }, $1);
+    """
 
-    'use strict':
-        'prefix': 'use'
-        'body': "'use strict';"
+  'use strict':
+    'prefix': 'use'
+    'body': "'use strict';"
+      
+  'Mocha Test Describe':
+    'prefix': 'desc'
+    'body': """
+      describe('$1', function () {
+        it('$2', function ($3) {
+          $4
+        });
+      });
+    """
+    
+  'Mocha Test It':
+    'prefix': 'it'
+    'body': """
+      it('$1', function ($2) {
+        $3
+      });
+    """

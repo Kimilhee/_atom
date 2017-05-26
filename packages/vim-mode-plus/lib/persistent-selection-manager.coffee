@@ -1,5 +1,6 @@
 _ = require 'underscore-plus'
-{CompositeDisposable} = require 'atom'
+
+decorationOptions = {type: 'highlight', class: 'vim-mode-plus-persistent-selection'}
 
 module.exports =
 class PersistentSelectionManager
@@ -7,20 +8,17 @@ class PersistentSelectionManager
 
   constructor: (@vimState) ->
     {@editor, @editorElement} = @vimState
-    @disposables = new CompositeDisposable
-    @disposables.add @vimState.onDidDestroy(@destroy.bind(this))
+    @vimState.onDidDestroy(@destroy)
 
     @markerLayer = @editor.addMarkerLayer()
-    options = {type: 'highlight', class: 'vim-mode-plus-persistent-selection'}
-    @decorationLayer = @editor.decorateMarkerLayer(@markerLayer, options)
+    @decorationLayer = @editor.decorateMarkerLayer(@markerLayer, decorationOptions)
 
     # Update css on every marker update.
     @markerLayer.onDidUpdate =>
       @editorElement.classList.toggle("has-persistent-selection", @hasMarkers())
 
-  destroy: ->
+  destroy: =>
     @decorationLayer.destroy()
-    @disposables.dispose()
     @markerLayer.destroy()
 
   select: ->
@@ -53,7 +51,7 @@ class PersistentSelectionManager
     @markerLayer.getMarkerCount()
 
   clearMarkers: ->
-    marker.destroy() for marker in @markerLayer.getMarkers()
+    @markerLayer.clear()
 
   getMarkerBufferRanges: ->
     @markerLayer.getMarkers().map (marker) ->

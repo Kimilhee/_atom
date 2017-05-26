@@ -17,11 +17,11 @@ cssDocsURL = "https://developer.mozilla.org/en-US/docs/Web/CSS"
 
 module.exports =
   selector: '.source.inside-js.css.styled, .source.css.styled'
-  disableForSelector: ".source.inside-js.css.styled .comment, .source.inside-js.css.styled .string, .source.inside-js .css.styled.entity.quasi.element.js, .source.css.styled .comment, .source.css.styled .string, .source.css.styled .css.styled.entity.quasi.element.js"
+  disableForSelector: ".source.inside-js.css.styled .comment, .source.inside-js.css.styled .string, .source.inside-js.css.styled .entity.quasi.element.js, .source.css.styled .comment, .source.css.styled .string, .source.css.styled .entity.quasi.element.js"
 
   filterSuggestions: true
   inclusionPriority: 10000
-  excludeLowerPriority: true
+  excludeLowerPriority: false
 
   getSuggestions: (request) ->
     completions = null
@@ -74,6 +74,7 @@ module.exports =
     return @isPropertyNamePrefix(prefix) and
      ((scope[0] is 'meta.property-list.css') or
       (scope[0] is 'source.css.styled') or
+      (scope[0] is 'entity.name.tag.css') or
       (scope[0] is 'source.inside-js.css.styled'))
 
   isCompletingPseudoSelector: ({editor, scopeDescriptor, bufferPosition}) ->

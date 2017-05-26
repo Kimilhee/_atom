@@ -1,25 +1,23 @@
 {Range, Point} = require 'atom'
 Base = require './base'
-swrap = require './selection-wrapper'
-settings = require './settings'
 _ = require 'underscore-plus'
 
 {
   moveCursorRight
   isLinewiseRange
   setBufferRow
-  pointIsAtEndOfLine
   sortRanges
   findRangeContainsPoint
-  mergeIntersectingRanges
   isSingleLineRange
-  isLinewiseRange
   isLeadingWhiteSpaceRange
   humanizeBufferRange
+  getFoldInfoByKind
+  limitNumber
 } = require './utils'
 
 class MiscCommand extends Base
   @extend(false)
+  @operationKind: 'misc-command'
   constructor: ->
     super
     @initialize()
@@ -38,9 +36,9 @@ class Mark extends MiscCommand
 class ReverseSelections extends MiscCommand
   @extend()
   execute: ->
-    swrap.setReversedState(@editor, not @editor.getLastSelection().isReversed())
+    @swrap.setReversedState(@editor, not @editor.getLastSelection().isReversed())
     if @isMode('visual', 'blockwise')
-      @getLastBlockwiseSelection().autoscrollIfReversed()
+      @getLastBlockwiseSelection().autoscroll()
 
 class BlockwiseOtherEnd extends ReverseSelections
   @extend()
@@ -87,7 +85,7 @@ class Undo extends MiscCommand
       ranges.length > 1 and ranges.every(isSingleLineRange)
 
     if newRanges.length > 0
-      return if @isMultipleAndAllRangeHaveSameColumnRanges(newRanges)
+      return if @isMultipleAndAllRangeHaveSameColumnAndConsecutiveRows(newRanges)
       newRanges = newRanges.map (range) => humanizeBufferRange(@editor, range)
       newRanges = @filterNonLeadingWhiteSpaceRange(newRanges)
 
@@ -96,7 +94,7 @@ class Undo extends MiscCommand
       else
         @flash(newRanges, type: 'undo-redo')
     else
-      return if @isMultipleAndAllRangeHaveSameColumnRanges(oldRanges)
+      return if @isMultipleAndAllRangeHaveSameColumnAndConsecutiveRows(oldRanges)
 
       if isMultipleSingleLineRanges(oldRanges)
         oldRanges = @filterNonLeadingWhiteSpaceRange(oldRanges)
@@ -106,12 +104,25 @@ class Undo extends MiscCommand
     ranges.filter (range) =>
       not isLeadingWhiteSpaceRange(@editor, range)
 
-  isMultipleAndAllRangeHaveSameColumnRanges: (ranges) ->
+  # [TODO] Improve further by checking oldText, newText?
+  # [Purpose of this is function]
+  # Suppress flash when undo/redoing toggle-comment while flashing undo/redo of occurrence operation.
+  # This huristic approach never be perfect.
+  # Ultimately cannnot distinguish occurrence operation.
+  isMultipleAndAllRangeHaveSameColumnAndConsecutiveRows: (ranges) ->
     return false if ranges.length <= 1
 
-    {start, end} = ranges[0]
-    startColumn = start.column
-    endColumn = end.column
+    {start: {column: startColumn}, end: {column: endColumn}} = ranges[0]
+    previousRow = null
+    for range in ranges
+      {start, end} = range
+      unless ((start.column is startColumn) and (end.column is endColumn))
+        return false
+
+      if previousRow? and (previousRow + 1 isnt start.row)
+        return false
+      previousRow = start.row
+    return true
 
     ranges.every ({start, end}) ->
       (start.column is startColumn) and (end.column is endColumn)
@@ -127,12 +138,12 @@ class Undo extends MiscCommand
     for selection in @editor.getSelections()
       selection.clear()
 
-    if settings.get('setCursorToStartOfChangeOnUndoRedo')
-      strategy = settings.get('setCursorToStartOfChangeOnUndoRedoStrategy')
+    if @getConfig('setCursorToStartOfChangeOnUndoRedo')
+      strategy = @getConfig('setCursorToStartOfChangeOnUndoRedoStrategy')
       @setCursorPosition({newRanges, oldRanges, strategy})
       @vimState.clearSelections()
 
-    if settings.get('flashOnUndoRedo')
+    if @getConfig('flashOnUndoRedo')
       @flashChanges({newRanges, oldRanges})
 
     @activateMode('normal')
@@ -145,11 +156,65 @@ class Redo extends Undo
   mutate: ->
     @editor.redo()
 
+# za
 class ToggleFold extends MiscCommand
   @extend()
   execute: ->
     point = @editor.getCursorBufferPosition()
     @editor.toggleFoldAtBufferRow(point.row)
+
+# zR
+class UnfoldAll extends MiscCommand
+  @extend()
+  execute: ->
+    @editor.unfoldAll()
+
+# zM
+class FoldAll extends MiscCommand
+  @extend()
+  execute: ->
+    {allFold} = getFoldInfoByKind(@editor)
+    if allFold?
+      @editor.unfoldAll()
+      for {indent, startRow, endRow} in allFold.rowRangesWithIndent
+        if indent <= @getConfig('maxFoldableIndentLevel')
+          @editor.foldBufferRowRange(startRow, endRow)
+
+# zr
+class UnfoldNextIndentLevel extends MiscCommand
+  @extend()
+  execute: ->
+    {folded} = getFoldInfoByKind(@editor)
+    if folded?
+      {minIndent, rowRangesWithIndent} = folded
+      count = limitNumber(@getCount() - 1, min: 0)
+      targetIndents = [minIndent..(minIndent + count)]
+      for {indent, startRow} in rowRangesWithIndent
+        if indent in targetIndents
+          @editor.unfoldBufferRow(startRow)
+
+# zm
+class FoldNextIndentLevel extends MiscCommand
+  @extend()
+  execute: ->
+    {unfolded, allFold} = getFoldInfoByKind(@editor)
+    if unfolded?
+      # FIXME: Why I need unfoldAll()? Why can't I just fold non-folded-fold only?
+      # Unless unfoldAll() here, @editor.unfoldAll() delete foldMarker but fail
+      # to render unfolded rows correctly.
+      # I believe this is bug of text-buffer's markerLayer which assume folds are
+      # created **in-order** from top-row to bottom-row.
+      @editor.unfoldAll()
+
+      maxFoldable = @getConfig('maxFoldableIndentLevel')
+      fromLevel = Math.min(unfolded.maxIndent, maxFoldable)
+      count = limitNumber(@getCount() - 1, min: 0)
+      fromLevel = limitNumber(fromLevel - count, min: 0)
+      targetIndents = [fromLevel..maxFoldable]
+
+      for {indent, startRow, endRow} in allFold.rowRangesWithIndent
+        if indent in targetIndents
+          @editor.foldBufferRowRange(startRow, endRow)
 
 class ReplaceModeBackspace extends MiscCommand
   @commandScope: 'atom-text-editor.vim-mode-plus.insert-mode.replace'
@@ -286,9 +351,13 @@ class ScrollCursorToRight extends ScrollCursorToLeft
   execute: ->
     @editorElement.setScrollRight(@getCursorPixel().left)
 
-class ActivateNormalModeOnce extends MiscCommand
-  @extend()
+# insert-mode specific commands
+# -------------------------
+class InsertMode extends MiscCommand
   @commandScope: 'atom-text-editor.vim-mode-plus.insert-mode'
+
+class ActivateNormalModeOnce extends InsertMode
+  @extend()
   thisCommandName: @getCommandName()
 
   execute: ->
@@ -300,3 +369,69 @@ class ActivateNormalModeOnce extends MiscCommand
       disposable.dispose()
       disposable = null
       @vimState.activate('insert')
+
+class InsertRegister extends InsertMode
+  @extend()
+  requireInput: true
+
+  initialize: ->
+    super
+    @focusInput()
+
+  execute: ->
+    @editor.transact =>
+      for selection in @editor.getSelections()
+        text = @vimState.register.getText(@input, selection)
+        selection.insertText(text)
+
+class InsertLastInserted extends InsertMode
+  @extend()
+  @description: """
+  Insert text inserted in latest insert-mode.
+  Equivalent to *i_CTRL-A* of pure Vim
+  """
+  execute: ->
+    text = @vimState.register.getText('.')
+    @editor.insertText(text)
+
+class CopyFromLineAbove extends InsertMode
+  @extend()
+  @description: """
+  Insert character of same-column of above line.
+  Equivalent to *i_CTRL-Y* of pure Vim
+  """
+  rowDelta: -1
+
+  execute: ->
+    translation = [@rowDelta, 0]
+    @editor.transact =>
+      for selection in @editor.getSelections()
+        point = selection.cursor.getBufferPosition().translate(translation)
+        range = Range.fromPointWithDelta(point, 0, 1)
+        if text = @editor.getTextInBufferRange(range)
+          selection.insertText(text)
+
+class CopyFromLineBelow extends CopyFromLineAbove
+  @extend()
+  @description: """
+  Insert character of same-column of above line.
+  Equivalent to *i_CTRL-E* of pure Vim
+  """
+  rowDelta: +1
+
+class NextTab extends MiscCommand
+  @extend()
+  defaultCount: 0
+  execute: ->
+    count = @getCount()
+    pane = atom.workspace.paneForItem(@editor)
+    if count
+      pane.activateItemAtIndex(count - 1)
+    else
+      pane.activateNextItem()
+
+class PreviousTab extends MiscCommand
+  @extend()
+  execute: ->
+    pane = atom.workspace.paneForItem(@editor)
+    pane.activatePreviousItem()

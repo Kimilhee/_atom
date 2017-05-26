@@ -15,23 +15,40 @@ if (!localHistoryPath) {
 }
 
 const utils = {
+  normalizeFileName(filePath, defaultValue) {
+    if (typeof filePath === 'string' && filePath.length) {
+      return filePath;
+    }
+
+    if (typeof filePath === 'number') {
+      return String(filePath);
+    }
+
+    return defaultValue;
+  },
+
   getFileDate(filePath) {
     let basePath  = path.basename(filePath);
     let splitPath = basePath.split('_');
     let date      = splitPath[0];
-    let time      = splitPath[1].split('-');
+    let time      = splitPath[1] ? splitPath[1].split('-') : ['00', '00', '00'];
 
     time = time[0] + ':' + time[1]  + ':' + time[2];
     return date + ' ' + time;
   },
 
   getOriginBaseName(filePath) {
+    if (this.normalizeFileName(filePath) === undefined) {
+      return;
+    }
+
     let basePath = path.basename(filePath);
+
     return basePath.substr(basePath.split('_', 2).join('_').length + 1);
   },
 
   getFileRevisionList(filePath) {
-    let isItsRev, files, fileBaseName, pathDirName, list;
+    let isItsRev, originBaseName, files, fileBaseName, pathDirName, list;
 
     files        = [];
     fileBaseName = path.basename(filePath);
@@ -48,7 +65,12 @@ const utils = {
     ));
 
     for (let i in list) {
-      isItsRev = (path.basename(this.getOriginBaseName(list[i])) === fileBaseName);
+      originBaseName = this.getOriginBaseName(list[i]);
+
+      isItsRev = (
+        typeof originBaseName === 'string'
+        && path.basename(originBaseName) === fileBaseName
+      );
 
       if (isItsRev && fs.isFileSync(list[i])) {
         files.push(list[i]);

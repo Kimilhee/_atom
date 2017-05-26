@@ -1,38 +1,60 @@
 {
-  "name": "last-cursor-position",
-  "main": "./lib/last-cursor-position",
-  "version": "0.9.0",
+  "_args": [
+    [
+      {
+        "raw": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117328-11301-pbhn3x/package.tgz",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117328-11301-pbhn3x/package.tgz",
+        "spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117328-11301-pbhn3x/package.tgz",
+        "type": "local"
+      },
+      "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/apm-install-dir-117328-11301-1hsl5xa"
+    ]
+  ],
+  "_from": "../d-117328-11301-pbhn3x/package.tgz",
+  "_id": "last-cursor-position@0.9.2",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/last-cursor-position",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117328-11301-pbhn3x/package.tgz",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117328-11301-pbhn3x/package.tgz",
+    "spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117328-11301-pbhn3x/package.tgz",
+    "type": "local"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "file:../d-117328-11301-pbhn3x/package.tgz",
+  "_shasum": "863a22e0c64fab6f9cc678271a77849c6ef5833f",
+  "_shrinkwrap": null,
+  "_spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117328-11301-pbhn3x/package.tgz",
+  "_where": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/apm-install-dir-117328-11301-1hsl5xa",
+  "bugs": {
+    "url": "https://github.com/fcharron/last-cursor-position/issues"
+  },
+  "dependencies": {},
   "description": "Keeps a history of past cursor position to travel back to",
+  "devDependencies": {},
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "homepage": "https://github.com/fcharron/last-cursor-position#readme",
+  "license": "MIT",
+  "main": "./lib/last-cursor-position",
+  "name": "last-cursor-position",
+  "optionalDependencies": {},
+  "readme": "# last-cursor-position package\n\nThis package keeps a history of past cursor positions and allows to travel\nback to them.\n\n* `alt--` to travel to previous cursor position\n* `alt-_` to undo previous travel\n\n![](http://i.imgur.com/NjtH1SJ.gif)\n",
+  "readmeFilename": "README.md",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fcharron/last-cursor-position.git"
   },
-  "license": "MIT",
-  "engines": {
-    "atom": ">0.50.0"
-  },
-  "dependencies": {},
-  "readme": "# last-cursor-position package\n\nThis package keeps a history of past cursor positions and allows to travel\nback to them.\n\n* `alt--` to travel to previous cursor position\n* `alt-_` to undo previous travel\n\n![](http://i.imgur.com/NjtH1SJ.gif)\n",
-  "readmeFilename": "README.md",
-  "bugs": {
-    "url": "https://github.com/fcharron/last-cursor-position/issues"
-  },
-  "homepage": "https://github.com/fcharron/last-cursor-position#readme",
-  "_id": "last-cursor-position@0.9.0",
-  "_shasum": "5508cda13eb58af3f9cf53f262ef73a589ebbba4",
-  "_resolved": "file:../d-116621-83470-1w8qt96/package.tgz",
-  "_from": "../d-116621-83470-1w8qt96/package.tgz",
-  "_atomModuleCache": {
-    "version": 1,
-    "dependencies": [],
-    "extensions": {
-      ".coffee": [
-        "lib/last-cursor-position.coffee"
-      ],
-      ".json": [
-        "package.json"
-      ]
-    },
-    "folders": []
-  }
+  "version": "0.9.2"
 }

@@ -1,5 +1,5 @@
 _ = require 'underscore-plus'
-{isNotEmpty} = require './utils'
+{isNotEmpty, replaceDecorationClassBy} = require './utils'
 
 flashTypes =
   operator:
@@ -47,11 +47,9 @@ flashTypes =
     decorationOptions:
       type: 'highlight'
       class: 'vim-mode-plus-flash undo-redo-multiple-delete'
-  'screen-line': # unused.
-    allowMultiple: false
-    decorationOptions:
-      type: 'line'
-      class: 'vim-mode-plus-flash-screen-line'
+
+addDemoSuffix = replaceDecorationClassBy.bind(null, (text) -> text + '-demo')
+removeDemoSuffix = replaceDecorationClassBy.bind(null, (text) -> text.replace(/-demo$/, ''))
 
 module.exports =
 class FlashManager
@@ -59,12 +57,23 @@ class FlashManager
     {@editor} = @vimState
     @markersByType = new Map
     @vimState.onDidDestroy(@destroy.bind(this))
+    @postponedDestroyMarkersTasks = []
 
   destroy: ->
     @markersByType.forEach (markers) ->
       marker.destroy() for marker in markers
     @markersByType.clear()
 
+  destroyDemoModeMarkers: ->
+    for resolve in @postponedDestroyMarkersTasks
+      resolve()
+    @postponedDestroyMarkersTasks = []
+
+  destroyMarkersAfter: (markers, timeout) ->
+    setTimeout ->
+      for marker in markers
+        marker.destroy()
+    , timeout
 
   flash: (ranges, options, rangeType='buffer') ->
     ranges = [ranges] unless _.isArray(ranges)
@@ -88,12 +97,15 @@ class FlashManager
         marker.destroy() for marker in @markersByType.get(type)
       @markersByType.set(type, markers)
 
-    @editor.decorateMarker(marker, decorationOptions) for marker in markers
+    decorations = markers.map (marker) => @editor.decorateMarker(marker, decorationOptions)
 
-    setTimeout ->
-      for marker in markers
-        marker.destroy()
-    , timeout
+    if @vimState.globalState.get('demoModeIsActive')
+      decorations.map(addDemoSuffix)
+      @postponedDestroyMarkersTasks.push =>
+        decorations.map(removeDemoSuffix)
+        @destroyMarkersAfter(markers, timeout)
+    else
+      @destroyMarkersAfter(markers, timeout)
 
   flashScreenRange: (args...) ->
     @flash(args.concat('screen')...)

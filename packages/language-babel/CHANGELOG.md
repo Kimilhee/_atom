@@ -1,3 +1,66 @@
+### 2.64.0
+ - Change parsing of possible multiline arrow functions.
+ 
+### 2.63.0
+  - Changed format for shortcut commenting inside styled-components. Prettier used a template commenting format that was different to language-babel. We have agreed to use a common format that allows co-existence. i.e. \`{'' /&ast; color: red; &ast;/}\`. This will cause issues for already commented lines inside styled-component tags that need to be uncommented which is regrettable. Also prettier-atom has yet to be updated to have this new format.
+  - Add support for styled-components V2.
+
+### 2.62.0
+  - Support interpolations inside css url(). #368
+  - Allow backtick insertion to wrap selected text. #370
+
+### 2.61.0
+  - Add support for CSS grid [linename] values.
+  - Fix 2.59.1
+
+### 2.60.0
+  - Allow non-css snippets inside styled-componenets tags.
+
+### 2.59.1
+  - Fix Flow function arrow parameters when on same line as declaration. Issue #361
+
+### 2.59.0
+  - Add class implements support for flow.
+
+### 2.58.0
+  - Add new template syntax for Relay.
+
+### 2.57.7
+  - ASI grammar also missing terminators for default.
+
+### 2.57.6
+  - ASI grammar was missing terminators for break and case keywords. Issue #354
+
+### 2.57.5
+  - Fixing grammar in 2.57.4 [commit](https://github.com/gandm/language-babel/commit/6db89e3c13415a17382962fe1aa5064a271725c7) caused some themes to highlight non-constant shorthand object keys as constants.
+
+### 2.57.4
+  - Flow type definition not highlighting arrow operator. Fixes #351
+
+### 2.57.3
+  - Grammar incorrectly parsed object key expression containing array. Fixes #349
+
+### 2.57.2
+  - Bump depedency to Atom 1.15 to fix fs-plus now on v3 needing Node 6. (#343)
+  - PR #343 from AlexyRaspopov to support yield returning JSX expression.
+  - Remove grammar regex detecting certain comment types inside JSX. Fixes #345 .
+
+### 2.57.1
+  - Fix multiline arrow functions containing flow types. Issue #342
+
+### 2.57.0
+  - Add support for SVG attributes used as CSS properties inside styled-components. Issue #339
+  - Remove grammar 1000 character/line parsing restriction introduced in Atom 1.15 for this grammar. Issue #340
+
+### 2.56.2
+  - Allow tagged template grammar extension grammars to override object properties named template which are currently handled by language-mustache as no default Atom grammar exists for Angular.
+
+### 2.56.1
+  - Fix issue #337 closing backtick was assumed to be a escaped backtick if preceded by a escaped backslash
+
+### 2.56.0
+  - Allow autocomplete-plus to work inside styled-component css templates containing embedded JS. language-css stopped this from happening.
+
 ### 2.55.6
   - Add some missing scopes from JSDdoc parsing.
 

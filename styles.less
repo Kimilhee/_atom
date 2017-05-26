@@ -18,16 +18,10 @@ atom-text-editor {
 
 }
 
-// To style other content in the text editor's shadow DOM, use the ::shadow
-// expression
-atom-text-editor::shadow .cursor {
-
-}
-
 // ------------------------------------------
 // 탭과 Tree의 font 크기 변경.
 // ------------------------------------------
-@tab-font-size: 13px;
+@tab-font-size: 12px;
 @tree-font-size: 12px;
 html, body, .tab-bar .tab {
   font-size: @tab-font-size;
@@ -51,29 +45,6 @@ atom-text-editor.editor .jumpy {
 }
 
 // ------------------------------------------
-// Jumpy 를 vim-mode와 함께 쓸 때, 쓰면 좋은 세팅.
-// ------------------------------------------
-// with react:
-.atom-text-editor.vim-mode.command-mode::shadow {
-    .cursors .cursor, .cursors.blink-off .cursor {
-        // background-color: #00ff44; // bright green
-        background-color: #a4c4ff; // bright sky blue // 61 132 203
-        visibility: visible;
-        opacity: .6;
-        border-style: solid;
-        border-width: 1px;
-        //border-color: #ff0000; // bright red
-        color: #FFFFFF; // white
-        border-color: #FFFFFF; // white
-    }
-    .cursors.blink-off .cursor {
-        //visibilaity: hidden; // make hidden for complete blink
-        opacity: .63; // weird subtle little pulse, almost can't see it.
-    }
-}
-
-
-// ------------------------------------------
 // script plugin output style
 // ------------------------------------------
 .script-view {
@@ -85,3 +56,27 @@ atom-text-editor.editor .jumpy {
 .script-view .line {
   font-size: 13px;
 }
+
+// atom scroll bar 잘보이게
+.tree-view-resizer, atom-text-editor.editor  {
+  ::-webkit-scrollbar {
+    background-color: #262626;
+
+    &-track {}
+
+    &-thumb {
+      background-color: #404040;
+
+      &:window-inactive {
+        background-color: rgb(116, 115, 105);
+      }
+    }
+
+    &-corner {
+      background-color: #262626;
+    }
+  }
+}
+
+// UI text: status-bar
+.status-bar { font-size: 12px; }

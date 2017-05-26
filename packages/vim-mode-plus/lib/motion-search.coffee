@@ -2,17 +2,7 @@ _ = require 'underscore-plus'
 
 {saveEditorState, getNonWordCharactersForCursor, searchByProjectFind} = require './utils'
 SearchModel = require './search-model'
-settings = require './settings'
 Motion = require('./base').getClass('Motion')
-
-getCaseSensitivity = (searchName) ->
-  # [TODO] deprecate old setting and auto-migrate to caseSensitivityForXXX
-  if settings.get("useSmartcaseFor#{searchName}")
-    'smartcase'
-  else if settings.get("ignoreCaseFor#{searchName}")
-    'insensitive'
-  else
-    'sensitive'
 
 class SearchBase extends Motion
   @extend(false)
@@ -29,7 +19,7 @@ class SearchBase extends Motion
     @backwards
 
   isIncrementalSearch: ->
-    @instanceof('Search') and not @isRepeated() and settings.get('incrementalSearch')
+    @instanceof('Search') and not @repeated and @getConfig('incrementalSearch')
 
   initialize: ->
     super
@@ -43,14 +33,22 @@ class SearchBase extends Motion
     else
       count
 
+  getCaseSensitivity: ->
+    if @getConfig("useSmartcaseFor#{@configScope}")
+      'smartcase'
+    else if @getConfig("ignoreCaseFor#{@configScope}")
+      'insensitive'
+    else
+      'sensitive'
+
   isCaseSensitive: (term) ->
-    switch getCaseSensitivity(@configScope)
+    switch @getCaseSensitivity()
       when 'smartcase' then term.search('[A-Z]') isnt -1
       when 'insensitive' then false
       when 'sensitive' then true
 
   finish: ->
-    if @isIncrementalSearch() and settings.get('showHoverSearchCounter')
+    if @isIncrementalSearch() and @getConfig('showHoverSearchCounter')
       @vimState.hoverSearchCounter.reset()
     @relativeIndex = null
     @searchModel?.destroy()
@@ -74,13 +72,13 @@ class SearchBase extends Motion
     point
 
   moveCursor: (cursor) ->
-    input = @getInput()
+    input = @input
     return unless input
 
     if point = @getPoint(cursor)
       cursor.setBufferPosition(point, autoscroll: false)
 
-    unless @isRepeated()
+    unless @repeated
       @globalState.set('currentSearch', this)
       @vimState.searchHistory.save(input)
 
@@ -130,7 +128,7 @@ class Search extends SearchBase
     switch commandEvent.name
       when 'visit'
         {direction} = commandEvent
-        if @isBackwards() and settings.get('incrementalSearchVisitDirection') is 'relative'
+        if @isBackwards() and @getConfig('incrementalSearchVisitDirection') is 'relative'
           direction = switch direction
             when 'next' then 'prev'
             when 'prev' then 'next'
@@ -156,7 +154,7 @@ class Search extends SearchBase
         searchByProjectFind(@editor, input)
 
   handleCancelSearch: ->
-    @vimState.resetNormalMode() unless @isMode('visual') or @isMode('insert')
+    @vimState.resetNormalMode() unless @mode in ['visual', 'insert']
     @restoreEditorState?()
     @vimState.reset()
     @finish()
@@ -210,7 +208,7 @@ class SearchCurrentWord extends SearchBase
   @extend()
   configScope: "SearchCurrentWord"
 
-  getInput: ->
+  moveCursor: (cursor) ->
     @input ?= (
       wordRange = @getCurrentWordBufferRange()
       if wordRange?
@@ -219,6 +217,7 @@ class SearchCurrentWord extends SearchBase
       else
         ''
     )
+    super
 
   getPattern: (term) ->
     modifiers = if @isCaseSensitive(term) then 'g' else 'gi'

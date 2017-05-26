@@ -1,18 +1,19 @@
-fs = require 'fs-plus'
+fs = null
 settings = require './settings'
 
 {Disposable, Range, Point} = require 'atom'
 _ = require 'underscore-plus'
 
-getParent = (obj) ->
-  obj.__super__?.constructor
+assertWithException = (condition, message, fn) ->
+  atom.assert condition, message, (error) ->
+    throw new Error(error.message)
 
 getAncestors = (obj) ->
   ancestors = []
   current = obj
   loop
     ancestors.push(current)
-    current = getParent(current)
+    current = current.__super__?.constructor
     break unless current
   ancestors
 
@@ -40,6 +41,7 @@ debug = (messages...) ->
     when 'console'
       console.log messages...
     when 'file'
+      fs ?= require 'fs-plus'
       filePath = fs.normalize settings.get('debugOutputFilePath')
       if fs.existsSync(filePath)
         fs.appendFileSync filePath, messages + "\n"
@@ -55,25 +57,6 @@ saveEditorState = (editor) ->
       editor.foldBufferRow(row)
     editorElement.setScrollTop(scrollTop)
 
-getKeystrokeForEvent = (event) ->
-  keyboardEvent = event.originalEvent.originalEvent ? event.originalEvent
-  atom.keymaps.keystrokeForKeyboardEvent(keyboardEvent)
-
-keystrokeToCharCode =
-  backspace: 8
-  tab: 9
-  enter: 13
-  escape: 27
-  space: 32
-  delete: 127
-
-getCharacterForEvent = (event) ->
-  keystroke = getKeystrokeForEvent(event)
-  if charCode = keystrokeToCharCode[keystroke]
-    String.fromCharCode(charCode)
-  else
-    keystroke
-
 isLinewiseRange = ({start, end}) ->
   (start.row isnt end.row) and (start.column is end.column is 0)
 
@@ -81,16 +64,8 @@ isEndsWithNewLineForBufferRow = (editor, row) ->
   {start, end} = editor.bufferRangeForBufferRow(row, includeNewline: true)
   start.row isnt end.row
 
-haveSomeNonEmptySelection = (editor) ->
-  editor.getSelections().some(isNotEmpty)
-
-sortComparable = (collection) ->
+sortRanges = (collection) ->
   collection.sort (a, b) -> a.compare(b)
-
-sortRanges = sortComparable
-
-sortRangesByEndPosition = (ranges, fn) ->
-  ranges.sort((a, b) -> a.end.compare(b.end))
 
 # Return adjusted index fit whitin given list's length
 # return -1 if list is empty.
@@ -105,15 +80,6 @@ getIndex = (index, list) ->
     else
       length + index
 
-withVisibleBufferRange = (editor, fn) ->
-  if range = getVisibleBufferRange(editor)
-    fn(range)
-  else
-    disposable = editor.element.onDidAttach ->
-      disposable.dispose()
-      range = getVisibleBufferRange(editor)
-      fn(range)
-
 # NOTE: endRow become undefined if @editorElement is not yet attached.
 # e.g. Beging called immediately after open file.
 getVisibleBufferRange = (editor) ->
@@ -124,22 +90,7 @@ getVisibleBufferRange = (editor) ->
   new Range([startRow, 0], [endRow, Infinity])
 
 getVisibleEditors = ->
-  for pane in atom.workspace.getPanes() when editor = pane.getActiveEditor()
-    editor
-
-findIndexBy = (list, fn) ->
-  for item, i in list when fn(item)
-    return i
-  null
-
-mergeIntersectingRanges = (ranges) ->
-  result = []
-  for range, i in ranges
-    if index = findIndexBy(result, (r) -> r.intersectsWith(range))
-      result[index] = result[index].union(range)
-    else
-      result.push(range)
-  result
+  (editor for pane in atom.workspace.getPanes() when editor = pane.getActiveEditor())
 
 getEndOfLineForBufferRow = (editor, row) ->
   editor.bufferRangeForBufferRow(row).end
@@ -151,7 +102,8 @@ pointIsAtEndOfLine = (editor, point) ->
   getEndOfLineForBufferRow(editor, point.row).isEqual(point)
 
 pointIsOnWhiteSpace = (editor, point) ->
-  isAllWhiteSpaceText(getRightCharacterForBufferPosition(editor, point))
+  char = getRightCharacterForBufferPosition(editor, point)
+  not /\S/.test(char)
 
 pointIsAtEndOfLineAtNonEmptyRow = (editor, point) ->
   point = Point.fromObject(point)
@@ -163,15 +115,6 @@ pointIsAtVimEndOfFile = (editor, point) ->
 isEmptyRow = (editor, row) ->
   editor.bufferRangeForBufferRow(row).isEmpty()
 
-# Cursor state validateion
-# -------------------------
-cursorIsAtEndOfLineAtNonEmptyRow = (cursor) ->
-  pointIsAtEndOfLineAtNonEmptyRow(cursor.editor, cursor.getBufferPosition())
-
-cursorIsAtVimEndOfFile = (cursor) ->
-  pointIsAtVimEndOfFile(cursor.editor, cursor.getBufferPosition())
-
-# -------------------------
 getRightCharacterForBufferPosition = (editor, point, amount=1) ->
   editor.getTextInBufferRange(Range.fromPointWithDelta(point, 0, amount))
 
@@ -239,16 +182,6 @@ getLastVisibleScreenRow = (editor) -> editor.element.getLastVisibleScreenRow()
 getFirstCharacterPositionForBufferRow = (editor, row) ->
   range = findRangeInBufferRow(editor, /\S/, row)
   range?.start ? new Point(row, 0)
-
-getFirstCharacterBufferPositionForScreenRow = (editor, screenRow) ->
-  start = editor.clipScreenPosition([screenRow, 0], skipSoftWrapIndentation: true)
-  end = [screenRow, Infinity]
-
-  point = null
-  scanRange = editor.bufferRangeForScreenRange([start, end])
-  editor.scanInBufferRange /\S/, scanRange, ({range}) ->
-    point = range.start
-  point ? scanRange.start
 
 trimRange = (editor, scanRange) ->
   pattern = /\S/
@@ -323,18 +256,6 @@ moveCursorDownScreen = (cursor, options={}) ->
     motion = (cursor) -> cursor.moveDown()
     moveCursor(cursor, options, motion)
 
-# FIXME
-moveCursorDownBuffer = (cursor) ->
-  point = cursor.getBufferPosition()
-  unless getVimLastBufferRow(cursor.editor) is point.row
-    cursor.setBufferPosition(point.translate([+1, 0]))
-
-# FIXME
-moveCursorUpBuffer = (cursor) ->
-  point = cursor.getBufferPosition()
-  unless point.row is 0
-    cursor.setBufferPosition(point.translate([-1, 0]))
-
 moveCursorToFirstCharacterAtRow = (cursor, row) ->
   cursor.setBufferPosition([row, 0])
   cursor.moveToFirstCharacterOfLine()
@@ -353,9 +274,6 @@ getLineTextToBufferPosition = (editor, {row, column}, {exclusive}={}) ->
 getIndentLevelForBufferRow = (editor, row) ->
   editor.indentLevelForLine(editor.lineTextForBufferRow(row))
 
-isAllWhiteSpaceText = (text) ->
-  not /\S/.test(text)
-
 getCodeFoldRowRanges = (editor) ->
   [0..editor.getLastBufferRow()]
     .map (row) ->
@@ -363,6 +281,7 @@ getCodeFoldRowRanges = (editor) ->
     .filter (rowRange) ->
       rowRange? and rowRange[0]? and rowRange[1]?
 
+# Used in vmp-jasmine-increase-focus
 getCodeFoldRowRangesContainesForRow = (editor, bufferRow, {includeStartRow}={}) ->
   includeStartRow ?= true
   getCodeFoldRowRanges(editor).filter ([startRow, endRow]) ->
@@ -370,6 +289,44 @@ getCodeFoldRowRangesContainesForRow = (editor, bufferRow, {includeStartRow}={}) 
       startRow <= bufferRow <= endRow
     else
       startRow < bufferRow <= endRow
+
+getFoldRowRanges = (editor) ->
+  seen = {}
+  [0..editor.getLastBufferRow()]
+    .map (row) ->
+      editor.languageMode.rowRangeForCodeFoldAtBufferRow(row)
+    .filter (rowRange) ->
+      rowRange? and rowRange[0]? and rowRange[1]?
+    .filter (rowRange) ->
+      if seen[rowRange]
+        false
+      else
+        seen[rowRange] = true
+
+getFoldRangesWithIndent = (editor) ->
+  getFoldRowRanges(editor)
+    .map ([startRow, endRow]) ->
+      indent = editor.indentationForBufferRow(startRow)
+      {startRow, endRow, indent}
+
+getFoldInfoByKind = (editor) ->
+  foldInfoByKind = {}
+
+  updateFoldInfo = (kind, rowRangeWithIndent) ->
+    foldInfo = (foldInfoByKind[kind] ?= {})
+    foldInfo.rowRangesWithIndent ?= []
+    foldInfo.rowRangesWithIndent.push(rowRangeWithIndent)
+    indent = rowRangeWithIndent.indent
+    foldInfo.minIndent = Math.min(foldInfo.minIndent ? indent, indent)
+    foldInfo.maxIndent = Math.max(foldInfo.maxIndent ? indent, indent)
+
+  for rowRangeWithIndent in getFoldRangesWithIndent(editor)
+    updateFoldInfo('allFold', rowRangeWithIndent)
+    if editor.isFoldedAtBufferRow(rowRangeWithIndent.startRow)
+      updateFoldInfo('folded', rowRangeWithIndent)
+    else
+      updateFoldInfo('unfolded', rowRangeWithIndent)
+  foldInfoByKind
 
 getBufferRangeForRowRange = (editor, rowRange) ->
   [startRange, endRange] = rowRange.map (row) ->
@@ -520,9 +477,14 @@ getWordPatternAtBufferPosition = (editor, point, options={}) ->
   boundarizeForWord = options.boundarizeForWord ? true
   delete options.boundarizeForWord
   {range, kind} = getWordBufferRangeAndKindAtBufferPosition(editor, point, options)
-  pattern = _.escapeRegExp(editor.getTextInBufferRange(range))
+  text = editor.getTextInBufferRange(range)
+  pattern = _.escapeRegExp(text)
+
   if kind is 'word' and boundarizeForWord
-    pattern = "\\b" + pattern + "\\b"
+    # Set word-boundary( \b ) anchor only when it's effective #689
+    startBoundary = if /^\w/.test(text) then "\\b" else ''
+    endBoundary = if /\w$/.test(text) then "\\b" else ''
+    pattern = startBoundary + pattern + endBoundary
   new RegExp(pattern, 'g')
 
 getSubwordPatternAtBufferPosition = (editor, point, options={}) ->
@@ -534,9 +496,6 @@ buildWordPatternByCursor = (cursor, {wordRegex}) ->
   nonWordCharacters = getNonWordCharactersForCursor(cursor)
   wordRegex ?= new RegExp("^[\t ]*$|[^\\s#{_.escapeRegExp(nonWordCharacters)}]+")
   {wordRegex, nonWordCharacters}
-
-getCurrentWordBufferRangeAndKind = (cursor, options={}) ->
-  getWordBufferRangeAndKindAtBufferPosition(cursor.editor, cursor.getBufferPosition(), options)
 
 getBeginningOfWordBufferPosition = (editor, point, {wordRegex}={}) ->
   scanRange = [[point.row, 0], point]
@@ -571,17 +530,6 @@ getWordBufferRangeAtBufferPosition = (editor, position, options={}) ->
   startPosition = getBeginningOfWordBufferPosition(editor, endPosition, options)
   new Range(startPosition, endPosition)
 
-adjustRangeToRowRange = ({start, end}, options={}) ->
-  # when linewise, end row is at column 0 of NEXT line
-  # So need adjust to actually selected row in same way as Seleciton::getBufferRowRange()
-  endRow = end.row
-  if end.column is 0
-    endRow = limitNumber(end.row - 1, min: start.row)
-  if options.endOnly ? false
-    new Range(start, [endRow, Infinity])
-  else
-    new Range([start.row, 0], [endRow, Infinity])
-
 # When range is linewise range, range end have column 0 of NEXT row.
 # Which is very unintuitive and unwanted result.
 shrinkRangeEndToBeforeNewLine = (range) ->
@@ -591,26 +539,6 @@ shrinkRangeEndToBeforeNewLine = (range) ->
     new Range(start, [endRow, Infinity])
   else
     range
-
-scanInRanges = (editor, pattern, scanRanges, {includeIntersects, exclusiveIntersects}={}) ->
-  if includeIntersects
-    originalScanRanges = scanRanges.slice()
-
-    # We need to scan each whole row to find intersects.
-    scanRanges = scanRanges.map(adjustRangeToRowRange)
-    isIntersects = ({range, scanRange}) ->
-      # exclusiveIntersects set true in visual-mode
-      scanRange.intersectsWith(range, exclusiveIntersects)
-
-  ranges = []
-  for scanRange, i in scanRanges
-    editor.scanInBufferRange pattern, scanRange, ({range}) ->
-      if includeIntersects
-        if isIntersects({range, scanRange: originalScanRanges[i]})
-          ranges.push(range)
-      else
-        ranges.push(range)
-  ranges
 
 scanEditor = (editor, pattern) ->
   ranges = []
@@ -636,15 +564,6 @@ findRangeInBufferRow = (editor, pattern, row, {direction}={}) ->
   editor[scanFunctionName] pattern, scanRange, (event) -> range = event.range
   range
 
-isRangeContainsSomePoint = (range, points, {exclusive}={}) ->
-  exclusive ?= false
-  points.some (point) ->
-    range.containsPoint(point, exclusive)
-
-destroyNonLastSelection = (editor) ->
-  for selection in editor.getSelections() when not selection.isLastSelection()
-    selection.destroy()
-
 getLargestFoldRangeContainsBufferRow = (editor, row) ->
   markers = editor.displayLayer.foldsMarkerLayer.findMarkers(intersectsRow: row)
 
@@ -665,29 +584,29 @@ getLargestFoldRangeContainsBufferRow = (editor, row) ->
   if startPoint? and endPoint?
     new Range(startPoint, endPoint)
 
-translatePointAndClip = (editor, point, direction, {translate}={}) ->
-  translate ?= true
+# take bufferPosition
+translatePointAndClip = (editor, point, direction) ->
   point = Point.fromObject(point)
 
   dontClip = false
   switch direction
     when 'forward'
-      point = point.translate([0, +1]) if translate
+      point = point.translate([0, +1])
       eol = editor.bufferRangeForBufferRow(point.row).end
 
       if point.isEqual(eol)
         dontClip = true
-
-      if point.isGreaterThan(eol)
-        point = new Point(point.row + 1, 0)
+      else if point.isGreaterThan(eol)
         dontClip = true
+        point = new Point(point.row + 1, 0) # move point to new-line selected point
 
       point = Point.min(point, editor.getEofBufferPosition())
 
     when 'backward'
-      point = point.translate([0, -1]) if translate
+      point = point.translate([0, -1])
 
       if point.column < 0
+        dontClip = true
         newRow = point.row - 1
         eol = editor.bufferRangeForBufferRow(newRow).end
         point = new Point(newRow, eol.column)
@@ -700,24 +619,13 @@ translatePointAndClip = (editor, point, direction, {translate}={}) ->
     screenPoint = editor.screenPositionForBufferPosition(point, clipDirection: direction)
     editor.bufferPositionForScreenPosition(screenPoint)
 
-getRangeByTranslatePointAndClip = (editor, range, which, direction, options) ->
-  newPoint = translatePointAndClip(editor, range[which], direction, options)
+getRangeByTranslatePointAndClip = (editor, range, which, direction) ->
+  newPoint = translatePointAndClip(editor, range[which], direction)
   switch which
     when 'start'
       new Range(newPoint, range.end)
     when 'end'
       new Range(range.start, newPoint)
-
-# Reloadable registerElement
-registerElement = (name, options) ->
-  element = document.createElement(name)
-  # if constructor is HTMLElement, we haven't registerd yet
-  if element.constructor is HTMLElement
-    Element = document.registerElement(name, options)
-  else
-    Element = element.constructor
-    Element.prototype = options.prototype if options.prototype?
-  Element
 
 getPackage = (name, fn) ->
   new Promise (resolve) ->
@@ -766,21 +674,20 @@ isEscapedCharRange = (editor, range) ->
   chars = getLeftCharacterForBufferPosition(editor, range.start, 2)
   chars.endsWith('\\') and not chars.endsWith('\\\\')
 
-setTextAtBufferPosition = (editor, point, text) ->
+insertTextAtBufferPosition = (editor, point, text) ->
   editor.setTextInBufferRange([point, point], text)
 
 ensureEndsWithNewLineForBufferRow = (editor, row) ->
   unless isEndsWithNewLineForBufferRow(editor, row)
     eol = getEndOfLineForBufferRow(editor, row)
-    setTextAtBufferPosition(editor, eol, "\n")
+    insertTextAtBufferPosition(editor, eol, "\n")
 
-forEachPaneAxis = (fn, base) ->
-  base ?= atom.workspace.getActivePane().getContainer().getRoot()
+forEachPaneAxis = (base, fn) ->
   if base.children?
     fn(base)
 
     for child in base.children
-      forEachPaneAxis(fn, child)
+      forEachPaneAxis(child, fn)
 
 modifyClassList = (action, element, classNames...) ->
   element.classList[action](classNames...)
@@ -801,6 +708,10 @@ splitTextByNewLine = (text) ->
     text.trimRight().split(/\r?\n/g)
   else
     text.split(/\r?\n/g)
+
+replaceDecorationClassBy = (fn, decoration) ->
+  props = decoration.getProperties()
+  decoration.setProperties(_.defaults({class: fn(props.class)}, props))
 
 # Modify range used for undo/redo flash highlight to make it feel naturally for human.
 #  - Trim starting new line("\n")
@@ -851,6 +762,137 @@ expandRangeToWhiteSpaces = (editor, range) ->
 
   return range # fallback
 
+# Split and join after mutate item by callback with keep original separator unchanged.
+#
+# 1. Trim leading and trainling white spaces and remember
+# 1. Split text with given pattern and remember original separators.
+# 2. Change order by callback
+# 3. Join with original spearator and concat with remembered leading and trainling white spaces.
+#
+splitAndJoinBy = (text, pattern, fn) ->
+  leadingSpaces = trailingSpaces = ''
+  start = text.search(/\S/)
+  end = text.search(/\s*$/)
+  leadingSpaces = trailingSpaces = ''
+  leadingSpaces = text[0...start] if start isnt -1
+  trailingSpaces = text[end...] if end isnt -1
+  text = text[start...end]
+
+  flags = 'g'
+  flags += 'i' if pattern.ignoreCase
+  regexp = new RegExp("(#{pattern.source})", flags)
+  # e.g.
+  # When text = "a, b, c", pattern = /,?\s+/
+  #   items = ['a', 'b', 'c'], spearators = [', ', ', ']
+  # When text = "a b\n c", pattern = /,?\s+/
+  #   items = ['a', 'b', 'c'], spearators = [' ', '\n ']
+  items = []
+  separators = []
+  for segment, i in text.split(regexp)
+    if i % 2 is 0
+      items.push(segment)
+    else
+      separators.push(segment)
+  separators.push('')
+  items = fn(items)
+  result = ''
+  for [item, separator] in _.zip(items, separators)
+    result += item + separator
+  leadingSpaces + result + trailingSpaces
+
+class ArgumentsSplitter
+  constructor: ->
+    @allTokens = []
+    @currentSection = null
+
+  settlePending: ->
+    if @pendingToken
+      @allTokens.push({text: @pendingToken, type: @currentSection})
+      @pendingToken = ''
+
+  changeSection: (newSection) ->
+    if @currentSection isnt newSection
+      @settlePending() if @currentSection
+      @currentSection = newSection
+
+splitArguments = (text, joinSpaceSeparatedToken) ->
+  joinSpaceSeparatedToken ?= true
+  separatorChars = "\t, \r\n"
+  quoteChars = "\"'`"
+  closeCharToOpenChar = {
+    ")": "("
+    "}": "{"
+    "]": "["
+  }
+  closePairChars = _.keys(closeCharToOpenChar).join('')
+  openPairChars = _.values(closeCharToOpenChar).join('')
+  escapeChar = "\\"
+
+  pendingToken = ''
+  inQuote = false
+  isEscaped = false
+  # Parse text as list of tokens which is commma separated or white space separated.
+  # e.g. 'a, fun1(b, c), d' => ['a', 'fun1(b, c), 'd']
+  # Not perfect. but far better than simple string split by regex pattern.
+  allTokens = []
+  currentSection = null
+
+  settlePending = ->
+    if pendingToken
+      allTokens.push({text: pendingToken, type: currentSection})
+      pendingToken = ''
+
+  changeSection = (newSection) ->
+    if currentSection isnt newSection
+      settlePending() if currentSection
+      currentSection = newSection
+
+  pairStack = []
+  for char in text
+    if (pairStack.length is 0) and (char in separatorChars)
+      changeSection('separator')
+    else
+      changeSection('argument')
+      if isEscaped
+        isEscaped = false
+      else if char is escapeChar
+        isEscaped = true
+      else if inQuote
+        if (char in quoteChars) and _.last(pairStack) is char
+          pairStack.pop()
+          inQuote = false
+      else if char in quoteChars
+        inQuote = true
+        pairStack.push(char)
+      else if char in openPairChars
+        pairStack.push(char)
+      else if char in closePairChars
+        pairStack.pop() if _.last(pairStack) is closeCharToOpenChar[char]
+
+    pendingToken += char
+  settlePending()
+
+  if joinSpaceSeparatedToken and allTokens.some(({type, text}) -> type is 'separator' and ',' in text)
+    # When some separator contains `,` treat white-space separator is just part of token.
+    # So we move white-space only sparator into tokens by joining mis-separatoed tokens.
+    newAllTokens = []
+    while allTokens.length
+      token = allTokens.shift()
+      switch token.type
+        when 'argument'
+          newAllTokens.push(token)
+        when 'separator'
+          if ',' in token.text
+            newAllTokens.push(token)
+          else
+            # 1. Concatnate white-space-separator and next-argument
+            # 2. Then join into latest argument
+            lastArg = newAllTokens.pop() ? {text: '', 'argument'}
+            lastArg.text += token.text + (allTokens.shift()?.text ? '') # concat with next-argument
+            newAllTokens.push(lastArg)
+    allTokens = newAllTokens
+  allTokens
+
 scanEditorInDirection = (editor, direction, pattern, options={}, fn) ->
   {allowNextLine, from, scanRange} = options
   if not from? and not scanRange?
@@ -875,31 +917,68 @@ scanEditorInDirection = (editor, direction, pattern, options={}, fn) ->
       return
     fn(event)
 
+adjustIndentWithKeepingLayout = (editor, range) ->
+  # Adjust indentLevel with keeping original layout of pasting text.
+  # Suggested indent level of range.start.row is correct as long as range.start.row have minimum indent level.
+  # But when we paste following already indented three line text, we have to adjust indent level
+  #  so that `varFortyTwo` line have suggestedIndentLevel.
+  #
+  #        varOne: value # suggestedIndentLevel is determined by this line
+  #   varFortyTwo: value # We need to make final indent level of this row to be suggestedIndentLevel.
+  #      varThree: value
+  #
+  # So what we are doing here is apply suggestedIndentLevel with fixing issue above.
+  # 1. Determine minimum indent level among pasted range(= range ) excluding empty row
+  # 2. Then update indentLevel of each rows to final indentLevel of minimum-indented row have suggestedIndentLevel.
+  suggestedLevel = editor.suggestedIndentForBufferRow(range.start.row)
+  minLevel = null
+  rowAndActualLevels = []
+  for row in [range.start.row...range.end.row]
+    actualLevel = getIndentLevelForBufferRow(editor, row)
+    rowAndActualLevels.push([row, actualLevel])
+    unless isEmptyRow(editor, row)
+      minLevel = Math.min(minLevel ? Infinity, actualLevel)
+
+  if minLevel? and (deltaToSuggestedLevel = suggestedLevel - minLevel)
+    for [row, actualLevel] in rowAndActualLevels
+      newLevel = actualLevel + deltaToSuggestedLevel
+      editor.setIndentationForBufferRow(row, newLevel)
+
+# Check point containment with end position exclusive
+rangeContainsPointWithEndExclusive = (range, point) ->
+  range.start.isLessThanOrEqual(point) and
+    range.end.isGreaterThan(point)
+
+traverseTextFromPoint = (point, text) ->
+  point.traverse(getTraversalForText(text))
+
+getTraversalForText = (text) ->
+  row = 0
+  column = 0
+  for char in text
+    if char is "\n"
+      row++
+      column = 0
+    else
+      column++
+  [row, column]
+
 module.exports = {
-  getParent
+  assertWithException
   getAncestors
   getKeyBindingForCommand
   include
   debug
   saveEditorState
-  getKeystrokeForEvent
-  getCharacterForEvent
   isLinewiseRange
-  isEndsWithNewLineForBufferRow
-  haveSomeNonEmptySelection
   sortRanges
-  sortRangesByEndPosition
   getIndex
   getVisibleBufferRange
-  withVisibleBufferRange
   getVisibleEditors
-  findIndexBy
-  mergeIntersectingRanges
   pointIsAtEndOfLine
   pointIsOnWhiteSpace
   pointIsAtEndOfLineAtNonEmptyRow
   pointIsAtVimEndOfFile
-  cursorIsAtVimEndOfFile
   getVimEofBufferPosition
   getVimEofScreenPosition
   getVimLastBufferRow
@@ -918,46 +997,32 @@ module.exports = {
   moveCursorToFirstCharacterAtRow
   getLineTextToBufferPosition
   getIndentLevelForBufferRow
-  isAllWhiteSpaceText
   getTextInScreenRange
   moveCursorToNextNonWhitespace
   isEmptyRow
-  cursorIsAtEndOfLineAtNonEmptyRow
   getCodeFoldRowRanges
   getCodeFoldRowRangesContainesForRow
+  getFoldRowRanges
+  getFoldRangesWithIndent
+  getFoldInfoByKind
   getBufferRangeForRowRange
   trimRange
   getFirstCharacterPositionForBufferRow
-  getFirstCharacterBufferPositionForScreenRow
-  isFunctionScope
   isIncludeFunctionScopeForRow
-  getTokenizedLineForRow
-  getScopesForTokenizedLine
-  scanForScopeStart
   detectScopeStartPositionForScope
   getBufferRows
-  registerElement
-  sortComparable
   smartScrollToBufferPosition
   matchScopes
-  moveCursorDownBuffer
-  moveCursorUpBuffer
   isSingleLineText
-  getCurrentWordBufferRangeAndKind
-  buildWordPatternByCursor
   getWordBufferRangeAtBufferPosition
   getWordBufferRangeAndKindAtBufferPosition
   getWordPatternAtBufferPosition
   getSubwordPatternAtBufferPosition
   getNonWordCharactersForCursor
-  adjustRangeToRowRange
   shrinkRangeEndToBeforeNewLine
-  scanInRanges
   scanEditor
   collectRangeInBufferRow
   findRangeInBufferRow
-  isRangeContainsSomePoint
-  destroyNonLastSelection
   getLargestFoldRangeContainsBufferRow
   translatePointAndClip
   getRangeByTranslatePointAndClip
@@ -969,7 +1034,7 @@ module.exports = {
   isEmpty, isNotEmpty
   isSingleLineRange, isNotSingleLineRange
 
-  setTextAtBufferPosition
+  insertTextAtBufferPosition
   ensureEndsWithNewLineForBufferRow
   isLeadingWhiteSpaceRange
   isNotLeadingWhiteSpaceRange
@@ -981,9 +1046,13 @@ module.exports = {
   toggleClassList
   toggleCaseForCharacter
   splitTextByNewLine
+  replaceDecorationClassBy
   humanizeBufferRange
   expandRangeToWhiteSpaces
-  getRightCharacterForBufferPosition
-  getLeftCharacterForBufferPosition
+  splitAndJoinBy
+  splitArguments
   scanEditorInDirection
+  adjustIndentWithKeepingLayout
+  rangeContainsPointWithEndExclusive
+  traverseTextFromPoint
 }

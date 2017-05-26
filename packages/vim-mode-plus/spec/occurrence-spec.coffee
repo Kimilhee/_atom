@@ -21,9 +21,6 @@ describe "Occurrence", ->
     runs ->
       jasmine.attachToDOM(editorElement)
 
-  afterEach ->
-    vimState.resetNormalMode()
-
   describe "operator-modifier-occurrence", ->
     beforeEach ->
       set
@@ -126,53 +123,33 @@ describe "Occurrence", ->
     describe "apply various operator to occurrence in various target", ->
       beforeEach ->
         set
-          text: """
-          ooo: xxx: ooo:
-          |||: ooo: xxx: ooo:
-          ooo: xxx: |||: xxx: ooo:
-          xxx: |||: ooo: ooo:
+          textC: """
+          ooo: xxx: o!oo:
+          ===: ooo: xxx: ooo:
+          ooo: xxx: ===: xxx: ooo:
+          xxx: ===: ooo: ooo:
           """
       it "upper case inner-word", ->
-        set cursor: [0, 11]
-        ensure "g U o i l", ->
-          text: """
-          OOO: xxx: OOO:
-          |||: ooo: xxx: ooo:
-          ooo: xxx: |||: xxx: ooo:
-          xxx: |||: ooo: ooo:
+        ensure "g U o i l",
+          textC: """
+          OOO: xxx: O!OO:
+          ===: ooo: xxx: ooo:
+          ooo: xxx: ===: xxx: ooo:
+          xxx: ===: ooo: ooo:
           """
-          cursor: [0, 0]
-        ensure "2 j .", ->
-          text: """
+        ensure "2 j .",
+          textC: """
           OOO: xxx: OOO:
-          |||: ooo: xxx: ooo:
-          OOO: xxx: |||: xxx: OOO:
-          xxx: |||: ooo: ooo:
+          ===: ooo: xxx: ooo:
+          OOO: xxx: =!==: xxx: OOO:
+          xxx: ===: ooo: ooo:
           """
-          cursor: [2, 0]
-        ensure "j .", ->
-          text: """
+        ensure "j .",
+          textC: """
           OOO: xxx: OOO:
-          |||: ooo: xxx: ooo:
-          OOO: xxx: |||: xxx: OOO:
-          xxx: |||: OOO: OOO:
-          """
-          cursor: [2, 0]
-      it "lower case with motion", ->
-        set
-          text: """
-          OOO: XXX: OOO:
-          |||: OOO: XXX: OOO:
-          OOO: XXX: |||: XXX: OOO:
-          XXX: |||: OOO: OOO:
-          """
-          cursor: [0, 6]
-        ensure "g u o 2 j", # lowercase xxx only
-          text: """
-          OOO: xxx: OOO:
-          |||: OOO: xxx: OOO:
-          OOO: xxx: |||: xxx: OOO:
-          XXX: |||: OOO: OOO:
+          ===: ooo: xxx: ooo:
+          OOO: xxx: ===: xxx: OOO:
+          xxx: ===: O!OO: OOO:
           """
 
       describe "clip to mutation end behavior", ->
@@ -284,7 +261,7 @@ describe "Occurrence", ->
 
     describe "when true (= default)", ->
       it "keep cursor position after operation finished", ->
-        ensure 'g U o p', ->
+        ensure 'g U o p',
           textC: """
 
           AAA, bbb, ccc
@@ -297,7 +274,7 @@ describe "Occurrence", ->
         settings.set('stayOnOccurrence', false)
 
       it "move cursor to start of target as like non-ocurrence operator", ->
-        ensure 'g U o p', ->
+        ensure 'g U o p',
           textC: """
 
           |AAA, bbb, ccc
@@ -628,6 +605,34 @@ describe "Occurrence", ->
             # But operator modifier not update lastOccurrencePattern
             ensure 'g U o $', textC: "This text |HAVE 3 instance of 'text' in the whole text"
             expect(vimState.globalState.get('lastOccurrencePattern')).toEqual(/te/g)
+
+        describe "restore last occurrence marker by add-preset-occurrence-from-last-occurrence-pattern", ->
+          beforeEach ->
+            set
+              textC: """
+              camel
+              camelCase
+              camels
+              camel
+              """
+          it "can restore occurrence-marker added by `g o` in normal-mode", ->
+            set cursor: [0, 0]
+            ensure "g o", occurrenceText: ['camel', 'camel']
+            ensure 'escape', occurrenceCount: 0
+            ensure "g .", occurrenceText: ['camel', 'camel']
+
+          it "can restore occurrence-marker added by `g o` in visual-mode", ->
+            set cursor: [0, 0]
+            ensure "v i w", selectedText: "camel"
+            ensure "g o", occurrenceText: ['camel', 'camel', 'camel', 'camel']
+            ensure 'escape', occurrenceCount: 0
+            ensure "g .", occurrenceText: ['camel', 'camel', 'camel', 'camel']
+
+          it "can restore occurrence-marker added by `g O` in normal-mode", ->
+            set cursor: [0, 0]
+            ensure "g O", occurrenceText: ['camel', 'camel', 'camel']
+            ensure 'escape', occurrenceCount: 0
+            ensure "g .", occurrenceText: ['camel', 'camel', 'camel']
 
         describe "css class has-occurrence", ->
           describe "manually toggle by toggle-preset-occurrence command", ->

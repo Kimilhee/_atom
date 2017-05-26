@@ -11,9 +11,6 @@ describe "VimState", ->
       {editor, editorElement} = vimState
       {set, ensure, keystroke} = vim
 
-  beforeEach ->
-    vimState.resetNormalMode()
-
   describe "initialization", ->
     it "puts the editor in normal-mode initially by default", ->
       ensure mode: 'normal'
@@ -394,10 +391,44 @@ describe "VimState", ->
       beforeEach ->
         cursorPosition = [0, 4]
         set
-          text: "line one\nline two\nline three\n"
+          text: """
+            line one
+            line two
+            line three\n
+            """
           cursor: cursorPosition
 
         ensure 'escape', mode: 'normal'
+
+      describe "restore characterwise from linewise", ->
+        beforeEach ->
+          ensure 'v', mode: ['visual', 'characterwise']
+          ensure '2 j V',
+            selectedText: """
+              line one
+              line two
+              line three\n
+              """
+            mode: ['visual', 'linewise']
+            selectionIsReversed: false
+          ensure 'o',
+            selectedText: """
+              line one
+              line two
+              line three\n
+              """
+            mode: ['visual', 'linewise']
+            selectionIsReversed: true
+
+        it "v after o", ->
+          ensure 'v',
+            selectedText: " one\nline two\nline "
+            mode: ['visual', 'characterwise']
+            selectionIsReversed: true
+        it "escape after o", ->
+          ensure 'escape',
+            cursor: [0, 4]
+            mode: 'normal'
 
       describe "activateVisualMode with same type puts the editor into normal mode", ->
         describe "characterwise: vv", ->
@@ -447,12 +478,12 @@ describe "VimState", ->
             cursor: [0, 0]
 
         it "keep goalColumn when shift linewise to characterwise", ->
-          ensure 'V', selectedText: text.getLines([0]), characterwiseHead: [0, 0], mode: ['visual', 'linewise']
-          ensure '$', selectedText: text.getLines([0]), characterwiseHead: [0, 15], mode: ['visual', 'linewise']
-          ensure 'j', selectedText: text.getLines([0, 1]), characterwiseHead: [1, 9], mode: ['visual', 'linewise']
-          ensure 'j', selectedText: text.getLines([0..2]), characterwiseHead: [2, 6], mode: ['visual', 'linewise']
-          ensure 'v', selectedText: text.getLines([0..2], chomp: true), characterwiseHead: [2, 6], mode: ['visual', 'characterwise']
-          ensure 'j', selectedText: text.getLines([0..3], chomp: true), cursor: [3, 11], mode: ['visual', 'characterwise']
+          ensure 'V', selectedText: text.getLines([0]), propertyHead: [0, 0], mode: ['visual', 'linewise']
+          ensure '$', selectedText: text.getLines([0]), propertyHead: [0, 16], mode: ['visual', 'linewise']
+          ensure 'j', selectedText: text.getLines([0, 1]), propertyHead: [1, 10], mode: ['visual', 'linewise']
+          ensure 'j', selectedText: text.getLines([0..2]), propertyHead: [2, 7], mode: ['visual', 'linewise']
+          ensure 'v', selectedText: text.getLines([0..2]), propertyHead: [2, 7], mode: ['visual', 'characterwise']
+          ensure 'j', selectedText: text.getLines([0..3]), propertyHead: [3, 11], mode: ['visual', 'characterwise']
           ensure 'v', cursor: [3, 10], mode: 'normal'
           ensure 'j', cursor: [4, 15], mode: 'normal'
 
@@ -470,8 +501,9 @@ describe "VimState", ->
         ensure 'v', mode: ['visual', 'characterwise'], cursor: [0, 8]
       it "adjust cursor position 1 column left when deactivated", ->
         ensure 'v escape', mode: 'normal', cursor: [0, 7]
-      it "[CHANGED from vim-mode] can not select new line in characterwise visual mode", ->
-        ensure 'v l l', cursor: [0, 8]
+      it "can select new line in visual mode", ->
+        ensure 'v', cursor: [0, 8], propertyHead: [0, 7]
+        ensure 'l', cursor: [1, 0], propertyHead: [0, 8]
         ensure 'escape', mode: 'normal', cursor: [0, 7]
 
     describe "deactivating visual mode on blank line", ->
@@ -552,7 +584,7 @@ describe "VimState", ->
     describe "visual-mode.characterwise", ->
       it "[single row] is narrowed", ->
         ensure 'v $',
-          selectedText: '1:-----'
+          selectedText: '1:-----\n'
           mode: ['visual', 'characterwise']
           selectionIsNarrowed: false
         ensureNormalModeState()

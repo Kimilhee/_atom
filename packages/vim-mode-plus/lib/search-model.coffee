@@ -1,13 +1,14 @@
 {Emitter, CompositeDisposable} = require 'atom'
 {
-  scanInRanges
   getVisibleBufferRange
   smartScrollToBufferPosition
   getIndex
+  replaceDecorationClassBy
 } = require './utils'
-settings = require './settings'
 
 hoverCounterTimeoutID = null
+removeCurrentClassForDecoration = null
+addCurrentClassForDecoration = null
 
 module.exports =
 class SearchModel
@@ -28,12 +29,12 @@ class SearchModel
     @onDidChangeCurrentMatch =>
       @vimState.hoverSearchCounter.reset()
       unless @currentMatch?
-        if settings.get('flashScreenOnSearchHasNoMatch')
+        if @vimState.getConfig('flashScreenOnSearchHasNoMatch')
           @vimState.flash(getVisibleBufferRange(@editor), type: 'screen')
           atom.beep()
         return
 
-      if settings.get('showHoverSearchCounter')
+      if @vimState.getConfig('showHoverSearchCounter')
         text = String(@currentMatchIndex + 1) + '/' + @matches.length
         point = @currentMatch.start
         classList = @classNamesForRange(@currentMatch)
@@ -42,13 +43,13 @@ class SearchModel
         @vimState.hoverSearchCounter.set(text, point, {classList})
 
         unless @options.incrementalSearch
-          timeout = settings.get('showHoverSearchCounterDuration')
+          timeout = @vimState.getConfig('showHoverSearchCounterDuration')
           hoverCounterTimeoutID = setTimeout(@resetHover.bind(this), timeout)
 
       @editor.unfoldBufferRow(@currentMatch.start.row)
       smartScrollToBufferPosition(@editor, @currentMatch.start)
 
-      if settings.get('flashOnSearch')
+      if @vimState.getConfig('flashOnSearch')
         @vimState.flash(@currentMatch, type: 'search')
 
   resetHover: ->
@@ -66,8 +67,7 @@ class SearchModel
     @decoationByRange = null
 
   clearMarkers: ->
-    for marker in @markerLayer.getMarkers()
-      marker.destroy()
+    @markerLayer.clear()
     @decoationByRange = {}
 
   classNamesForRange: (range) ->
@@ -84,7 +84,7 @@ class SearchModel
 
   refreshMarkers: ->
     @clearMarkers()
-    for range in @getVisibleMatchRanges()
+    for range in @getVisibleMatchRanges() when not range.isEmpty()
       @decoationByRange[range.toString()] = @decorateRange(range)
 
   getVisibleMatchRanges: ->
@@ -143,16 +143,17 @@ class SearchModel
     @updateCurrentMatch(relativeIndex)
     newDecoration = @decoationByRange[@currentMatch.toString()]
 
+    removeCurrentClassForDecoration ?= replaceDecorationClassBy.bind null , (text) ->
+      text.replace(/\s+current(\s+)?$/, '$1')
+
+    addCurrentClassForDecoration ?= replaceDecorationClassBy.bind null , (text) ->
+      text.replace(/\s+current(\s+)?$/, '$1') + ' current'
+
     if oldDecoration?
-      oldClass = oldDecoration.getProperties().class
-      oldClass = oldClass.replace(/\s+current(\s+)?$/, '$1')
-      oldDecoration.setProperties(type: 'highlight', class: oldClass)
+      removeCurrentClassForDecoration(oldDecoration)
 
     if newDecoration?
-      newClass = newDecoration.getProperties().class
-      newClass = newClass.replace(/\s+current(\s+)?$/, '$1')
-      newClass += ' current'
-      newDecoration.setProperties(type: 'highlight', class: newClass)
+      addCurrentClassForDecoration(newDecoration)
 
   getRelativeIndex: ->
     @currentMatchIndex - @initialCurrentMatchIndex
