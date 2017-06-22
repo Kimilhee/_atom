@@ -8,6 +8,17 @@
       indent_size: 2
   "atom-ctags":
     cmdArgs: "--exclude=node_modules --exclude=*.html --exclude=*.json --exclude=*.min.js --exclude=zzzz --exclude=migration-from-fork --exclude=dist --exclude=builds --exclude=webpack --exclude=uploads --exclude=public --exclude=public-report --exclude=redis --exclude=report --exclude=test-main --exclude=migration_data --exclude=admin"
+  "atom-material-ui":
+    colors:
+      abaseColor: "#ffd54f"
+      accentColor: "#a28832"
+      predefinedColor: "Amber"
+    fonts: {}
+    tabs:
+      compactTabs: true
+    ui:
+      panelContrast: true
+      panelShadows: true
   "autocomplete-plus":
     strictMatching: true
   core:
@@ -21,6 +32,7 @@
       "autocomplete-atom-api"
       "symbols-view"
       "emmet"
+      "atom-jade"
     ]
     ignoredNames: [
       ".git"
@@ -76,7 +88,7 @@
     reopenProjectMenuCount: 13
     telemetryConsent: "no"
     themes: [
-      "seti-ui"
+      "atom-material-ui"
       "base16-tomorrow-dark-theme"
     ]
   "easy-motion-redux": {}
@@ -115,8 +127,10 @@
     disableWhenNoJshintrcFileInPath: true
     lintInlineJavaScript: true
   "linter-lua": {}
-  "linter-ui-default": {}
+  "linter-ui-default":
+    panelHeight: 56
   "local-history":
+    autoPurge: true
     historyStoragePath: "/Users/kimilhee/Documents/Backup/_atom/local-history"
   "markdown-preview": {}
   minimap:

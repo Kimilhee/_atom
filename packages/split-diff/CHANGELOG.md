@@ -1,3 +1,11 @@
+## 1.4.2 - 2017-06-21
+* Changed toggle keybinding back to ctrl-alt-t for windows and mac #117 - thanks ooJerryLeeoo!
+
+## 1.4.1 - 2017-06-11
+* Fixed ctrl-alt-t keybinding conflict in Linux with terminal shortcut (changed to ctrl-alt-d) #98
+* Fixed uncaught type error for "Diff With Active File" when using Nuclide package #85
+* Fixed error for "Diff With Active File" when selected for a tab not saved on disk
+
 ## 1.4.0 - 2017-05-17
 * Added option to override diff highlight colors #78
 * Added service hook to diff two editors with the ability to override a user's settings without overwriting them (to be used from other packages) #69
@@ -192,6 +200,9 @@
 ## 0.3.0 - 2015-09-23
 * Fixed scroll sync misalignment upon initial diff
 * Added ability to ignore whitespace
+
+## 0.2.0 - 2015-09-17
+* Updated package description
 
 ## 0.1.0 - First Release
 * Every feature added

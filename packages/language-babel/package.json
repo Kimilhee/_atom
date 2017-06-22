@@ -2,40 +2,39 @@
   "_args": [
     [
       {
-        "raw": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117426-63461-uprly3.nm5l3gcik9/package.tgz",
+        "raw": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117522-54612-1rsy27t.wnkecxflxr/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117426-63461-uprly3.nm5l3gcik9/package.tgz",
-        "spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117426-63461-uprly3.nm5l3gcik9/package.tgz",
+        "rawSpec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117522-54612-1rsy27t.wnkecxflxr/package.tgz",
+        "spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117522-54612-1rsy27t.wnkecxflxr/package.tgz",
         "type": "local"
       },
-      "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/apm-install-dir-117426-63461-1m4xxad.ggysct0529"
+      "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/apm-install-dir-117522-54612-1hx07qv.f3x8o20529"
     ]
   ],
-  "_from": "../d-117426-63461-uprly3.nm5l3gcik9/package.tgz",
-  "_id": "language-babel@2.64.0",
+  "_from": "../d-117522-54612-1rsy27t.wnkecxflxr/package.tgz",
+  "_id": "language-babel@2.66.0",
   "_inCache": true,
-  "_installable": true,
   "_location": "/language-babel",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117426-63461-uprly3.nm5l3gcik9/package.tgz",
+    "raw": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117522-54612-1rsy27t.wnkecxflxr/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117426-63461-uprly3.nm5l3gcik9/package.tgz",
-    "spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117426-63461-uprly3.nm5l3gcik9/package.tgz",
+    "rawSpec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117522-54612-1rsy27t.wnkecxflxr/package.tgz",
+    "spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117522-54612-1rsy27t.wnkecxflxr/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-117426-63461-uprly3.nm5l3gcik9/package.tgz",
-  "_shasum": "c0c9ee981f3d54d91ed9c4faa5a2754ad12d6ffd",
+  "_resolved": "file:../d-117522-54612-1rsy27t.wnkecxflxr/package.tgz",
+  "_shasum": "e883e0fb2609d2171058ca2b896d486a99651a2f",
   "_shrinkwrap": null,
-  "_spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117426-63461-uprly3.nm5l3gcik9/package.tgz",
-  "_where": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/apm-install-dir-117426-63461-1m4xxad.ggysct0529",
+  "_spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117522-54612-1rsy27t.wnkecxflxr/package.tgz",
+  "_where": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/apm-install-dir-117522-54612-1hx07qv.f3x8o20529",
   "activationCommands": [],
   "bugs": {
     "url": "https://github.com/gandm/language-babel/issues"
@@ -194,7 +193,7 @@
     "type": "git",
     "url": "git+https://github.com/gandm/language-babel.git"
   },
-  "version": "2.64.0",
+  "version": "2.66.0",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
@@ -225,12 +224,12 @@
       },
       {
         "name": "babel-core",
-        "version": "6.24.1",
+        "version": "6.25.0",
         "path": "node_modules/babel-core/index.js"
       },
       {
         "name": "babel-generator",
-        "version": "6.24.1",
+        "version": "6.25.0",
         "path": "node_modules/babel-generator/lib/index.js"
       },
       {
@@ -250,32 +249,32 @@
       },
       {
         "name": "babel-template",
-        "version": "6.24.1",
+        "version": "6.25.0",
         "path": "node_modules/babel-template/lib/index.js"
       },
       {
         "name": "babel-traverse",
-        "version": "6.24.1",
+        "version": "6.25.0",
         "path": "node_modules/babel-traverse/lib/index.js"
       },
       {
         "name": "babel-types",
-        "version": "6.24.1",
+        "version": "6.25.0",
         "path": "node_modules/babel-types/lib/index.js"
       },
       {
         "name": "babylon",
-        "version": "6.17.1",
+        "version": "6.17.4",
         "path": "node_modules/babylon/lib/index.js"
       },
       {
         "name": "balanced-match",
-        "version": "0.4.2",
+        "version": "1.0.0",
         "path": "node_modules/balanced-match/index.js"
       },
       {
         "name": "brace-expansion",
-        "version": "1.1.7",
+        "version": "1.1.8",
         "path": "node_modules/brace-expansion/index.js"
       },
       {
@@ -325,7 +324,7 @@
       },
       {
         "name": "fs-plus",
-        "version": "3.0.0",
+        "version": "3.0.1",
         "path": "node_modules/fs-plus/lib/fs-plus.js"
       },
       {
@@ -345,7 +344,7 @@
       },
       {
         "name": "globals",
-        "version": "9.17.0",
+        "version": "9.18.0",
         "path": "node_modules/globals/index.js"
       },
       {
@@ -3598,15 +3597,15 @@
         ],
         "dependencies": {
           "babel-code-frame": "^6.22.0",
-          "babel-generator": "^6.24.1",
+          "babel-generator": "^6.25.0",
           "babel-helpers": "^6.24.1",
           "babel-messages": "^6.23.0",
           "babel-register": "^6.24.1",
           "babel-runtime": "^6.22.0",
-          "babel-template": "^6.24.1",
-          "babel-traverse": "^6.24.1",
-          "babel-types": "^6.24.1",
-          "babylon": "^6.11.0",
+          "babel-template": "^6.25.0",
+          "babel-traverse": "^6.25.0",
+          "babel-types": "^6.25.0",
+          "babylon": "^6.17.2",
           "convert-source-map": "^1.1.0",
           "debug": "^2.1.1",
           "json5": "^0.5.0",
@@ -3628,7 +3627,7 @@
         "dependencies": {
           "babel-messages": "^6.23.0",
           "babel-runtime": "^6.22.0",
-          "babel-types": "^6.24.1",
+          "babel-types": "^6.25.0",
           "detect-indent": "^4.0.0",
           "jsesc": "^1.3.0",
           "lodash": "^4.2.0",
@@ -3700,9 +3699,9 @@
         ],
         "dependencies": {
           "babel-runtime": "^6.22.0",
-          "babel-traverse": "^6.24.1",
-          "babel-types": "^6.24.1",
-          "babylon": "^6.11.0",
+          "babel-traverse": "^6.25.0",
+          "babel-types": "^6.25.0",
+          "babylon": "^6.17.2",
           "lodash": "^4.2.0"
         }
       },
@@ -3720,8 +3719,8 @@
           "babel-code-frame": "^6.22.0",
           "babel-messages": "^6.23.0",
           "babel-runtime": "^6.22.0",
-          "babel-types": "^6.24.1",
-          "babylon": "^6.15.0",
+          "babel-types": "^6.25.0",
+          "babylon": "^6.17.2",
           "debug": "^2.2.0",
           "globals": "^9.0.0",
           "invariant": "^2.2.0",
@@ -3746,7 +3745,7 @@
           "node_modules/brace-expansion"
         ],
         "dependencies": {
-          "balanced-match": "^0.4.1",
+          "balanced-match": "^1.0.0",
           "concat-map": "0.0.1"
         }
       },

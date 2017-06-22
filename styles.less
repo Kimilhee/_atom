@@ -58,25 +58,44 @@ atom-text-editor.editor .jumpy {
 }
 
 // atom scroll bar 잘보이게
-.tree-view-resizer, atom-text-editor.editor  {
-  ::-webkit-scrollbar {
-    background-color: #262626;
-
-    &-track {}
-
-    &-thumb {
-      background-color: #404040;
-
-      &:window-inactive {
-        background-color: rgb(116, 115, 105);
-      }
-    }
-
-    &-corner {
-      background-color: #262626;
-    }
-  }
-}
+// .tree-view-resizer, atom-text-editor.editor  {
+//   ::-webkit-scrollbar {
+//     background-color: #262626;
+// 
+//     &-track {}
+// 
+//     &-thumb {
+//       background-color: #404040;
+// 
+//       &:window-inactive {
+//         background-color: rgb(116, 115, 105);
+//       }
+//     }
+// 
+//     &-corner {
+//       background-color: #262626;
+//     }
+//   }
+// }
 
 // UI text: status-bar
 .status-bar { font-size: 12px; }
+
+
+// ------------------------------------------
+// Compact atom-material-ui tree-view
+// ------------------------------------------
+.list-tree.has-collapsable-children .list-nested-item > .list-tree > li {
+   padding-left: 0.8rem;
+ }
+.compact-tree-view {
+  .tree-view {
+    .name.icon::before {
+      margin-right: 0.5rem;
+    }
+
+    li:not(.list-nested-item), li.list-nested-item > .list-item {
+      line-height: 1.5rem;
+    }
+  }
+}
