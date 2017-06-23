@@ -7,7 +7,8 @@
     json:
       indent_size: 2
   "atom-ctags":
-    cmdArgs: "--exclude=node_modules --exclude=*.html --exclude=*.json --exclude=*.min.js --exclude=zzzz --exclude=migration-from-fork --exclude=dist --exclude=builds --exclude=webpack --exclude=uploads --exclude=public --exclude=public-report --exclude=redis --exclude=report --exclude=test-main --exclude=migration_data --exclude=admin"
+    buildTimeout: 110000
+    cmdArgs: "--exclude=node_modules --exclude=*.html --exclude=*.json --exclude=*.min.js --exclude=zzzz --exclude=migration-from-fork --exclude=dist --exclude=builds --exclude=webpack --exclude=uploads --exclude=public --exclude=public-report --exclude=redis --exclude=report --exclude=test-main --exclude=migration_data --exclude=admin --exclude=test-*.js --exculde=lib"
   "atom-material-ui":
     colors:
       abaseColor: "#ffd54f"
@@ -135,6 +136,8 @@
   "markdown-preview": {}
   minimap:
     displayMinimapOnLeft: true
+  script:
+    enableExecTime: false
   "seti-ui":
     compactView: true
     font: "Default Atom Font"
