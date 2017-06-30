@@ -34,6 +34,7 @@
       "symbols-view"
       "emmet"
       "atom-jade"
+      "atom-keyboard-macros-vim"
     ]
     ignoredNames: [
       ".git"
@@ -130,14 +131,14 @@
   "linter-lua": {}
   "linter-ui-default":
     panelHeight: 56
+    showPanel: true
   "local-history":
     autoPurge: true
     historyStoragePath: "/Users/kimilhee/Documents/Backup/_atom/local-history"
   "markdown-preview": {}
   minimap:
     displayMinimapOnLeft: true
-  script:
-    enableExecTime: false
+  script: {}
   "seti-ui":
     compactView: true
     font: "Default Atom Font"
