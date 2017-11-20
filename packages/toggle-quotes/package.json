@@ -2,40 +2,39 @@
   "_args": [
     [
       {
-        "raw": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117213-8977-ngyin7/package.tgz",
+        "raw": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117813-49239-oc4nof.dfh9wzh0k9/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117213-8977-ngyin7/package.tgz",
-        "spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117213-8977-ngyin7/package.tgz",
+        "rawSpec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117813-49239-oc4nof.dfh9wzh0k9/package.tgz",
+        "spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117813-49239-oc4nof.dfh9wzh0k9/package.tgz",
         "type": "local"
       },
-      "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/apm-install-dir-117213-8977-1rh3av6"
+      "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/apm-install-dir-117813-49239-1lkroqq.eb955t57b9"
     ]
   ],
-  "_from": "../d-117213-8977-ngyin7/package.tgz",
+  "_from": "../d-117813-49239-oc4nof.dfh9wzh0k9/package.tgz",
   "_id": "toggle-quotes@1.0.1",
   "_inCache": true,
-  "_installable": true,
   "_location": "/toggle-quotes",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117213-8977-ngyin7/package.tgz",
+    "raw": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117813-49239-oc4nof.dfh9wzh0k9/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117213-8977-ngyin7/package.tgz",
-    "spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117213-8977-ngyin7/package.tgz",
+    "rawSpec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117813-49239-oc4nof.dfh9wzh0k9/package.tgz",
+    "spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117813-49239-oc4nof.dfh9wzh0k9/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-117213-8977-ngyin7/package.tgz",
+  "_resolved": "file:../d-117813-49239-oc4nof.dfh9wzh0k9/package.tgz",
   "_shasum": "56b41a357dec8dd99ca82ce6eb8eaafd1cb29b02",
   "_shrinkwrap": null,
-  "_spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117213-8977-ngyin7/package.tgz",
-  "_where": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/apm-install-dir-117213-8977-1rh3av6",
+  "_spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117813-49239-oc4nof.dfh9wzh0k9/package.tgz",
+  "_where": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/apm-install-dir-117813-49239-1lkroqq.eb955t57b9",
   "activationCommands": {
     "atom-text-editor": [
       "toggle-quotes:toggle"
@@ -79,5 +78,21 @@
       "waitsForPromise"
     ]
   },
-  "version": "1.0.1"
+  "version": "1.0.1",
+  "_atomModuleCache": {
+    "version": 1,
+    "dependencies": [],
+    "extensions": {
+      ".json": [
+        "lib/config-schema.json",
+        "package.json"
+      ],
+      ".js": [
+        "lib/main.js",
+        "lib/string-helper.js",
+        "lib/toggle-quotes.js"
+      ]
+    },
+    "folders": []
+  }
 }

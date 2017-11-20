@@ -2,40 +2,39 @@
   "_args": [
     [
       {
-        "raw": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117426-63471-1mum2sh.betxbnjyvi/package.tgz",
+        "raw": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117826-56474-cjtu2s.dfedsra4i/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117426-63471-1mum2sh.betxbnjyvi/package.tgz",
-        "spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117426-63471-1mum2sh.betxbnjyvi/package.tgz",
+        "rawSpec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117826-56474-cjtu2s.dfedsra4i/package.tgz",
+        "spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117826-56474-cjtu2s.dfedsra4i/package.tgz",
         "type": "local"
       },
-      "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/apm-install-dir-117426-63471-1tpz2gd.r0k40lik9"
+      "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/apm-install-dir-117826-56474-14d3lao.qy421hh0k9"
     ]
   ],
-  "_from": "../d-117426-63471-1mum2sh.betxbnjyvi/package.tgz",
-  "_id": "linter-jshint@3.1.2",
+  "_from": "../d-117826-56474-cjtu2s.dfedsra4i/package.tgz",
+  "_id": "linter-jshint@3.1.6",
   "_inCache": true,
-  "_installable": true,
   "_location": "/linter-jshint",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117426-63471-1mum2sh.betxbnjyvi/package.tgz",
+    "raw": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117826-56474-cjtu2s.dfedsra4i/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117426-63471-1mum2sh.betxbnjyvi/package.tgz",
-    "spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117426-63471-1mum2sh.betxbnjyvi/package.tgz",
+    "rawSpec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117826-56474-cjtu2s.dfedsra4i/package.tgz",
+    "spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117826-56474-cjtu2s.dfedsra4i/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-117426-63471-1mum2sh.betxbnjyvi/package.tgz",
-  "_shasum": "3f5562cea823e6964ff9ad22995650b96d892aec",
+  "_resolved": "file:../d-117826-56474-cjtu2s.dfedsra4i/package.tgz",
+  "_shasum": "d7909c992ae1f4003645b278d23b5e180bc0fb7d",
   "_shrinkwrap": null,
-  "_spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117426-63471-1mum2sh.betxbnjyvi/package.tgz",
-  "_where": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/apm-install-dir-117426-63471-1tpz2gd.r0k40lik9",
+  "_spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117826-56474-cjtu2s.dfedsra4i/package.tgz",
+  "_where": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/apm-install-dir-117826-56474-14d3lao.qy421hh0k9",
   "bugs": {
     "url": "https://github.com/AtomLinter/linter-jshint/issues"
   },
@@ -77,18 +76,22 @@
   "dependencies": {
     "atom-linter": "^10.0.0",
     "atom-package-deps": "^4.6.0",
-    "jshint": "2.9.4",
+    "jshint": "2.9.5",
     "jshint-json": "^1.0.0",
-    "minimatch": "^3.0.3"
+    "minimatch": "^3.0.3",
+    "shelljs": "^0.7.8"
   },
   "description": "Linter plugin for JavaScript, using jshint",
   "devDependencies": {
-    "babel-eslint": "^7.2.3",
-    "eslint": "^3.12.0",
-    "eslint-config-airbnb-base": "^11.0.0",
-    "eslint-plugin-import": "^2.2.0",
-    "flow-bin": "^0.46.0",
-    "jasmine-fix": "^1.0.1"
+    "babel-eslint": "^8.0.0",
+    "eslint": "^4.6.0",
+    "eslint-config-airbnb-base": "^12.0.0",
+    "eslint-plugin-import": "^2.7.0",
+    "flow-bin": "^0.55.0",
+    "jasmine-fix": "^1.3.0"
+  },
+  "engines": {
+    "atom": ">=1.7.0 <2.0.0"
   },
   "eslintConfig": {
     "parser": "babel-eslint",
@@ -137,7 +140,7 @@
     "lint": "eslint lib spec decls && flow check",
     "test": "apm test"
   },
-  "version": "3.1.2",
+  "version": "3.1.6",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
@@ -163,12 +166,12 @@
       },
       {
         "name": "balanced-match",
-        "version": "0.4.2",
+        "version": "1.0.0",
         "path": "node_modules/balanced-match/index.js"
       },
       {
         "name": "brace-expansion",
-        "version": "1.1.7",
+        "version": "1.1.8",
         "path": "node_modules/brace-expansion/index.js"
       },
       {
@@ -183,7 +186,7 @@
       },
       {
         "name": "consistent-env",
-        "version": "1.3.0",
+        "version": "1.3.1",
         "path": "node_modules/consistent-env/lib/index.js"
       },
       {
@@ -267,6 +270,11 @@
         "path": "node_modules/inherits/inherits.js"
       },
       {
+        "name": "interpret",
+        "version": "1.0.4",
+        "path": "node_modules/interpret/index.js"
+      },
+      {
         "name": "is-utf8",
         "version": "0.2.1",
         "path": "node_modules/is-utf8/is-utf8.js"
@@ -278,8 +286,13 @@
       },
       {
         "name": "jshint",
-        "version": "2.9.4",
+        "version": "2.9.5",
         "path": "node_modules/jshint/src/jshint.js"
+      },
+      {
+        "name": "shelljs",
+        "version": "0.3.0",
+        "path": "node_modules/jshint/node_modules/shelljs/shell.js"
       },
       {
         "name": "jshint-json",
@@ -303,7 +316,7 @@
       },
       {
         "name": "named-js-regexp",
-        "version": "1.3.2",
+        "version": "1.3.3",
         "path": "node_modules/named-js-regexp/lib/named-js-regexp.js"
       },
       {
@@ -322,9 +335,24 @@
         "path": "node_modules/path-is-absolute/index.js"
       },
       {
+        "name": "path-parse",
+        "version": "1.0.5",
+        "path": "node_modules/path-parse/index.js"
+      },
+      {
         "name": "readable-stream",
         "version": "1.1.14",
         "path": "node_modules/readable-stream/readable.js"
+      },
+      {
+        "name": "rechoir",
+        "version": "0.6.2",
+        "path": "node_modules/rechoir/index.js"
+      },
+      {
+        "name": "resolve",
+        "version": "1.4.0",
+        "path": "node_modules/resolve/index.js"
       },
       {
         "name": "sb-callsite",
@@ -358,12 +386,12 @@
       },
       {
         "name": "semver",
-        "version": "5.3.0",
+        "version": "5.4.1",
         "path": "node_modules/semver/semver.js"
       },
       {
         "name": "shelljs",
-        "version": "0.3.0",
+        "version": "0.7.8",
         "path": "node_modules/shelljs/shell.js"
       },
       {
@@ -383,7 +411,7 @@
       },
       {
         "name": "tmp",
-        "version": "0.0.31",
+        "version": "0.0.33",
         "path": "node_modules/tmp/lib/tmp.js"
       },
       {
@@ -422,7 +450,6 @@
         "node_modules/cli/index.js",
         "node_modules/concat-map/example/map.js",
         "node_modules/concat-map/index.js",
-        "node_modules/consistent-env/decls/jasmine.js",
         "node_modules/consistent-env/lib/helpers.js",
         "node_modules/consistent-env/lib/index.js",
         "node_modules/console-browserify/index.js",
@@ -469,6 +496,7 @@
         "node_modules/inflight/inflight.js",
         "node_modules/inherits/inherits.js",
         "node_modules/inherits/inherits_browser.js",
+        "node_modules/interpret/index.js",
         "node_modules/is-utf8/is-utf8.js",
         "node_modules/isarray/build/build.js",
         "node_modules/isarray/index.js",
@@ -477,6 +505,36 @@
         "node_modules/jshint/data/non-ascii-identifier-start.js",
         "node_modules/jshint/dist/jshint-rhino.js",
         "node_modules/jshint/dist/jshint.js",
+        "node_modules/jshint/node_modules/shelljs/global.js",
+        "node_modules/jshint/node_modules/shelljs/make.js",
+        "node_modules/jshint/node_modules/shelljs/scripts/generate-docs.js",
+        "node_modules/jshint/node_modules/shelljs/scripts/run-tests.js",
+        "node_modules/jshint/node_modules/shelljs/shell.js",
+        "node_modules/jshint/node_modules/shelljs/src/cat.js",
+        "node_modules/jshint/node_modules/shelljs/src/cd.js",
+        "node_modules/jshint/node_modules/shelljs/src/chmod.js",
+        "node_modules/jshint/node_modules/shelljs/src/common.js",
+        "node_modules/jshint/node_modules/shelljs/src/cp.js",
+        "node_modules/jshint/node_modules/shelljs/src/dirs.js",
+        "node_modules/jshint/node_modules/shelljs/src/echo.js",
+        "node_modules/jshint/node_modules/shelljs/src/error.js",
+        "node_modules/jshint/node_modules/shelljs/src/exec.js",
+        "node_modules/jshint/node_modules/shelljs/src/find.js",
+        "node_modules/jshint/node_modules/shelljs/src/grep.js",
+        "node_modules/jshint/node_modules/shelljs/src/ln.js",
+        "node_modules/jshint/node_modules/shelljs/src/ls.js",
+        "node_modules/jshint/node_modules/shelljs/src/mkdir.js",
+        "node_modules/jshint/node_modules/shelljs/src/mv.js",
+        "node_modules/jshint/node_modules/shelljs/src/popd.js",
+        "node_modules/jshint/node_modules/shelljs/src/pushd.js",
+        "node_modules/jshint/node_modules/shelljs/src/pwd.js",
+        "node_modules/jshint/node_modules/shelljs/src/rm.js",
+        "node_modules/jshint/node_modules/shelljs/src/sed.js",
+        "node_modules/jshint/node_modules/shelljs/src/tempdir.js",
+        "node_modules/jshint/node_modules/shelljs/src/test.js",
+        "node_modules/jshint/node_modules/shelljs/src/to.js",
+        "node_modules/jshint/node_modules/shelljs/src/toEnd.js",
+        "node_modules/jshint/node_modules/shelljs/src/which.js",
         "node_modules/jshint/src/cli.js",
         "node_modules/jshint/src/jshint.js",
         "node_modules/jshint/src/lex.js",
@@ -899,6 +957,10 @@
         "node_modules/once/once.js",
         "node_modules/os-tmpdir/index.js",
         "node_modules/path-is-absolute/index.js",
+        "node_modules/path-parse/index.js",
+        "node_modules/path-parse/index.min.js",
+        "node_modules/path-parse/test.js",
+        "node_modules/path-parse/test.min.js",
         "node_modules/readable-stream/duplex.js",
         "node_modules/readable-stream/lib/_stream_duplex.js",
         "node_modules/readable-stream/lib/_stream_passthrough.js",
@@ -909,6 +971,18 @@
         "node_modules/readable-stream/readable.js",
         "node_modules/readable-stream/transform.js",
         "node_modules/readable-stream/writable.js",
+        "node_modules/rechoir/index.js",
+        "node_modules/rechoir/lib/extension.js",
+        "node_modules/rechoir/lib/normalize.js",
+        "node_modules/rechoir/lib/register.js",
+        "node_modules/resolve/example/async.js",
+        "node_modules/resolve/example/sync.js",
+        "node_modules/resolve/index.js",
+        "node_modules/resolve/lib/async.js",
+        "node_modules/resolve/lib/caller.js",
+        "node_modules/resolve/lib/core.js",
+        "node_modules/resolve/lib/node-modules-paths.js",
+        "node_modules/resolve/lib/sync.js",
         "node_modules/sb-callsite/lib/main.js",
         "node_modules/sb-exec/lib/helpers.js",
         "node_modules/sb-exec/lib/index.js",
@@ -920,10 +994,10 @@
         "node_modules/sb-npm-path/lib/index.js",
         "node_modules/sb-promisify/lib/index.js",
         "node_modules/semver/semver.js",
+        "node_modules/shelljs/commands.js",
         "node_modules/shelljs/global.js",
         "node_modules/shelljs/make.js",
-        "node_modules/shelljs/scripts/generate-docs.js",
-        "node_modules/shelljs/scripts/run-tests.js",
+        "node_modules/shelljs/plugin.js",
         "node_modules/shelljs/shell.js",
         "node_modules/shelljs/src/cat.js",
         "node_modules/shelljs/src/cd.js",
@@ -936,6 +1010,7 @@
         "node_modules/shelljs/src/exec.js",
         "node_modules/shelljs/src/find.js",
         "node_modules/shelljs/src/grep.js",
+        "node_modules/shelljs/src/head.js",
         "node_modules/shelljs/src/ln.js",
         "node_modules/shelljs/src/ls.js",
         "node_modules/shelljs/src/mkdir.js",
@@ -945,10 +1020,15 @@
         "node_modules/shelljs/src/pwd.js",
         "node_modules/shelljs/src/rm.js",
         "node_modules/shelljs/src/sed.js",
+        "node_modules/shelljs/src/set.js",
+        "node_modules/shelljs/src/sort.js",
+        "node_modules/shelljs/src/tail.js",
         "node_modules/shelljs/src/tempdir.js",
         "node_modules/shelljs/src/test.js",
         "node_modules/shelljs/src/to.js",
         "node_modules/shelljs/src/toEnd.js",
+        "node_modules/shelljs/src/touch.js",
+        "node_modules/shelljs/src/uniq.js",
         "node_modules/shelljs/src/which.js",
         "node_modules/string_decoder/index.js",
         "node_modules/strip-bom-buf/index.js",
@@ -997,9 +1077,12 @@
         "node_modules/htmlparser2/package.json",
         "node_modules/inflight/package.json",
         "node_modules/inherits/package.json",
+        "node_modules/interpret/package.json",
         "node_modules/is-utf8/package.json",
         "node_modules/isarray/component.json",
         "node_modules/isarray/package.json",
+        "node_modules/jshint/node_modules/shelljs/.documentup.json",
+        "node_modules/jshint/node_modules/shelljs/package.json",
         "node_modules/jshint/package.json",
         "node_modules/jshint-json/package.json",
         "node_modules/lodash/package.json",
@@ -1009,7 +1092,11 @@
         "node_modules/once/package.json",
         "node_modules/os-tmpdir/package.json",
         "node_modules/path-is-absolute/package.json",
+        "node_modules/path-parse/package.json",
         "node_modules/readable-stream/package.json",
+        "node_modules/rechoir/package.json",
+        "node_modules/resolve/lib/core.json",
+        "node_modules/resolve/package.json",
         "node_modules/sb-callsite/package.json",
         "node_modules/sb-exec/.eslintrc.json",
         "node_modules/sb-exec/package.json",
@@ -1020,7 +1107,6 @@
         "node_modules/sb-npm-path/package.json",
         "node_modules/sb-promisify/package.json",
         "node_modules/semver/package.json",
-        "node_modules/shelljs/.documentup.json",
         "node_modules/shelljs/package.json",
         "node_modules/string_decoder/package.json",
         "node_modules/strip-bom-buf/package.json",
@@ -1040,14 +1126,16 @@
           "spec/fixtures/bitwise",
           "spec/fixtures",
           "spec/fixtures/ignore",
+          "spec/fixtures/ignore-relative/js",
           "spec/fixtures/syntax"
         ],
         "dependencies": {
           "atom-linter": "^10.0.0",
           "atom-package-deps": "^4.6.0",
-          "jshint": "2.9.4",
+          "jshint": "2.9.5",
           "jshint-json": "^1.0.0",
-          "minimatch": "^3.0.3"
+          "minimatch": "^3.0.3",
+          "shelljs": "^0.7.8"
         }
       },
       {
@@ -1101,7 +1189,7 @@
           "node_modules/brace-expansion"
         ],
         "dependencies": {
-          "balanced-match": "^0.4.1",
+          "balanced-match": "^1.0.0",
           "concat-map": "0.0.1"
         }
       },
@@ -1118,7 +1206,6 @@
       {
         "paths": [
           "node_modules/consistent-env",
-          "node_modules/consistent-env/decls",
           "node_modules/consistent-env/lib"
         ],
         "dependencies": {
@@ -1256,6 +1343,50 @@
       },
       {
         "paths": [
+          "node_modules/rechoir",
+          "node_modules/rechoir/lib"
+        ],
+        "dependencies": {
+          "resolve": "^1.1.6"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/resolve/example",
+          "node_modules/resolve",
+          "node_modules/resolve/lib",
+          "node_modules/resolve/test",
+          "node_modules/resolve/test/dotdot/abc",
+          "node_modules/resolve/test/dotdot",
+          "node_modules/resolve/test/module_dir/xmodules/aaa",
+          "node_modules/resolve/test/module_dir/ymodules/aaa",
+          "node_modules/resolve/test/module_dir/zmodules/bbb",
+          "node_modules/resolve/test/node_path/x/aaa",
+          "node_modules/resolve/test/node_path/x/ccc",
+          "node_modules/resolve/test/node_path/y/bbb",
+          "node_modules/resolve/test/node_path/y/ccc",
+          "node_modules/resolve/test/pathfilter/deep_ref",
+          "node_modules/resolve/test/precedence/aaa",
+          "node_modules/resolve/test/precedence",
+          "node_modules/resolve/test/precedence/bbb",
+          "node_modules/resolve/test/resolver/baz",
+          "node_modules/resolve/test/resolver",
+          "node_modules/resolve/test/resolver/dot_main",
+          "node_modules/resolve/test/resolver/dot_slash_main",
+          "node_modules/resolve/test/resolver/incorrect_main",
+          "node_modules/resolve/test/resolver/other_path/lib",
+          "node_modules/resolve/test/resolver/other_path",
+          "node_modules/resolve/test/resolver/quux/foo",
+          "node_modules/resolve/test/resolver/same_names/foo",
+          "node_modules/resolve/test/resolver/same_names",
+          "node_modules/resolve/test/resolver/without_basedir"
+        ],
+        "dependencies": {
+          "path-parse": "^1.0.5"
+        }
+      },
+      {
+        "paths": [
           "node_modules/sb-exec",
           "node_modules/sb-exec/lib"
         ],
@@ -1288,6 +1419,17 @@
       },
       {
         "paths": [
+          "node_modules/shelljs",
+          "node_modules/shelljs/src"
+        ],
+        "dependencies": {
+          "glob": "^7.0.0",
+          "interpret": "^1.0.0",
+          "rechoir": "^0.6.2"
+        }
+      },
+      {
+        "paths": [
           "node_modules/strip-bom-buf"
         ],
         "dependencies": {
@@ -1300,7 +1442,7 @@
           "node_modules/tmp"
         ],
         "dependencies": {
-          "os-tmpdir": "~1.0.1"
+          "os-tmpdir": "~1.0.2"
         }
       }
     ]

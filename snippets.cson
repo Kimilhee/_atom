@@ -13,9 +13,12 @@
 #     'prefix': 'log'
 #     'body': 'console.log $1'
 #
+# Each scope (e.g. '.source.coffee' above) can only be declared once.
+#
 # This file uses CoffeeScript Object Notation (CSON).
-# If you are unfamiliar with CSON, you can read more about it here:
-# https://github.com/bevry/cson#what-is-cson
+# If you are unfamiliar with CSON, you can read more about it in the
+# Atom Flight Manual:
+# http://flight-manual.atom.io/using-atom/sections/basic-customization/#_cson
 
 '.source.js':
   'Anonymous function':
@@ -25,7 +28,7 @@
         $2
       }
     """
-    
+
   'Named function':
     'prefix': 'fn'
     'body': """
@@ -45,7 +48,7 @@
   'use strict':
     'prefix': 'use'
     'body': "'use strict';"
-      
+
   'Mocha Test Describe':
     'prefix': 'desc'
     'body': """
@@ -55,7 +58,7 @@
         });
       });
     """
-    
+
   'Mocha Test It':
     'prefix': 'it'
     'body': """

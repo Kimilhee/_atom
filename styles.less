@@ -2,82 +2,119 @@
  * Your Stylesheet
  *
  * This stylesheet is loaded when Atom starts up and is reloaded automatically
- * when it is changed.
+ * when it is changed and saved.
  *
- * If you are unfamiliar with LESS, you can read more about it here:
- * http://www.lesscss.org
+ * Add your own CSS or Less to fully customize Atom.
+ * If you are unfamiliar with Less, you can read more about it here:
+ * http://lesscss.org
  */
 
+
+/*
+ * Examples
+ * (To see them, uncomment and save)
+ */
+
+// style the background color of the tree view
 .tree-view {
-
+  // background-color: whitesmoke;
 }
 
-// style the background and foreground colors on the atom-text-editor-element
-// itself
+// style the background and foreground colors on the atom-text-editor-element itself
 atom-text-editor {
-
+  // color: white;
+  // background-color: hsl(180, 24%, 12%);
 }
+
+// style UI elements inside atom-text-editor
+atom-text-editor .cursor {
+  // border-color: red;
+}
+
+// ------------------------------------------
+// reduce line number spacing
+// ------------------------------------------
+// atom-text-editor.editor .gutter .line-numbers {
+//   letter-spacing: -1px;
+// }
+
+
+// ------------------------------------------
+// Tree View 간격 줄이기
+// ------------------------------------------
+.list-group li:not(.list-nested-item), .list-tree li:not(.list-nested-item), .list-group li.list-nested-item > .list-item, .list-tree li.list-nested-item > .list-item {
+  line-height:19px;
+}
+
+.list-group .selected:before, .list-tree .selected:before {
+  height:19px;
+}
+
+.list-tree.has-collapsable-children .list-nested-item > .list-tree > li, .list-tree.has-collapsable-children .list-nested-item > .list-group > li {
+  padding-left:10px;
+}
+
 
 // ------------------------------------------
 // 탭과 Tree의 font 크기 변경.
 // ------------------------------------------
 @tab-font-size: 12px;
-@tree-font-size: 12px;
 html, body, .tab-bar .tab {
   font-size: @tab-font-size;
 }
 
-html, body, .tree-view {
-  font-size: @tree-font-size;
-}
+// UI text: status-bar
+.status-bar { font-size: 12px; }
 
 // ------------------------------------------
 // script plugin output style
 // ------------------------------------------
 .script-view .line {
-  font-size: 18px;
+  font-size: 16px;
   color: white !important;
 }
 
-// atom scroll bar 잘보이게
-// .tree-view-resizer, atom-text-editor.editor  {
-//   ::-webkit-scrollbar {
-//     background-color: #262626;
-// 
-//     &-track {}
-// 
-//     &-thumb {
-//       background-color: #404040;
-// 
-//       &:window-inactive {
-//         background-color: rgb(116, 115, 105);
-//       }
-//     }
-// 
-//     &-corner {
-//       background-color: #262626;
-//     }
-//   }
-// }
+atom scroll bar 잘보이게
+.tree-view-resizer, atom-text-editor.editor  {
+  ::-webkit-scrollbar {
+    background-color: #262626;
 
-// UI text: status-bar
-.status-bar { font-size: 13px; }
+    &-track {}
 
+    &-thumb {
+      background-color: #404040;
 
-// ------------------------------------------
-// Compact atom-material-ui tree-view
-// ------------------------------------------
-.list-tree.has-collapsable-children .list-nested-item > .list-tree > li {
-   padding-left: 0.8rem;
- }
-.compact-tree-view {
-  .tree-view {
-    .name.icon::before {
-      margin-right: 0.5rem;
+      &:window-inactive {
+        background-color: rgb(116, 115, 105);
+      }
     }
 
-    li:not(.list-nested-item), li.list-nested-item > .list-item {
-      line-height: 1.5rem;
+    &-corner {
+      background-color: #262626;
     }
+  }
+}
+
+// ------------------------------------------
+// syntax highlight override.
+// ------------------------------------------
+@light-gray: #8999a3;
+@green: #89c78d;
+@orange: #ffc83f;
+@light-orange: #feef6d;
+
+.syntax--comment {
+  color: @light-gray;
+}
+
+.syntax--string {
+  color: @green;
+}
+
+.syntax--constant {
+  color: @orange;
+
+  &.syntax--numeric {
+    color: @light-orange;
   }
 }

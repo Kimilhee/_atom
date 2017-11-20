@@ -1,6 +1,24 @@
 # Next
 - ...
 
+# v0.30.6 (2017-10-30)
+- See [#645](https://github.com/Glavin001/atom-beautify/issues/645). Add support for Terraform fmt.
+- See [#881](https://github.com/Glavin001/atom-beautify/issues/881). Update to Prettydiff version 2!
+- Fix for [#1888](https://github.com/Glavin001/atom-beautify/issues/1888). Allow 0 for minor and patch versions of Docker
+- Add Atom-Beautify package settings menu item to Packages menu [#1869](https://github.com/Glavin001/atom-beautify/issues/1869)
+- Add `.ttslua` file extension to Lua language
+- Fix [#1638]. Update TypeScript Formatter dependency
+- Fix [#1833] `os.tmpDir` deprecation warning
+
+# v0.30.5 (2017-08-11)
+- Fix for [#1721](https://github.com/Glavin001/atom-beautify/issues/1721). Changes required due to TextBuffer.save becoming async in Atom 1.19
+- Fixes [#1638](https://github.com/Glavin001/atom-beautify/issues/1638). Update type-formatter and Fixes indent size not supported
+- See [#358](https://github.com/Glavin001/atom-beautify/issues/358). Add support for rustfmt-nightly
+
+# v0.30.4 (2017-07-14)
+- Fixes #1732. Improve deprecation message for old options for new Executables
+- Fixes #1751. Fix for latexindent v3
+
 # v0.30.3 (2017-06-21)
 - Improve command not found error message
 - Add goimports beautifier for Go language
@@ -21,6 +39,8 @@
 # v0.30.0 (2017-06-17)
 - Close [#1687](https://github.com/Glavin001/atom-beautify/issues/1687). Introducing Executables with Docker support! Executables wrap any non-preinstalled application, check if it is installed, and provide additional configuration options, including Docker support! See [#1687](https://github.com/Glavin001/atom-beautify/issues/1687) for more information.
 - Fix [#1652](https://github.com/Glavin001/atom-beautify/issues/1652) and [#1653](https://github.com/Glavin001/atom-beautify/issues/1653). Add `.rb` to temp files passed in to the `rubocop` executable so they are not excluded.
+- Fixes [#1361](https://github.com/Glavin001/atom-beautify/issues/1361). Add file extension to temporary files for Uncrustify beautifier
+- Fixed #1613 and #1588. Add EOL, scientific notation, and adjust whitespace support for Lua Beautifier
 
 # v0.29.26 (2017-05-28)
 - Fix #116. Switch from setText to setTextViaDiff, preserve folds

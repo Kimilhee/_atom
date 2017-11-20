@@ -1,40 +1,18 @@
 "*":
   "atom-beautify":
     general:
-      _analyticsUserId: "96b86dd8-3e97-4bfc-8e50-842a8f3f4da2"
-    js:
-      indent_size: 2
-    json:
-      indent_size: 2
-  "atom-ctags":
-    buildTimeout: 110000
-    cmdArgs: "--exclude=node_modules --exclude=*.html --exclude=*.json --exclude=*.min.js --exclude=zzzz --exclude=migration-from-fork --exclude=dist --exclude=builds --exclude=webpack --exclude=uploads --exclude=public --exclude=public-report --exclude=redis --exclude=report --exclude=test-main --exclude=migration_data --exclude=admin --exclude=test-*.js --exculde=lib"
-  "atom-material-ui":
-    colors:
-      abaseColor: "#ffd54f"
-      accentColor: "#a28832"
-      predefinedColor: "Amber"
-    fonts: {}
-    tabs:
-      compactTabs: true
-    ui:
-      panelContrast: true
-      panelShadows: true
-  "autocomplete-plus":
-    strictMatching: true
+      _analyticsUserId: "04c5b61b-1f06-49e1-bc0e-0403b3c7288f"
   core:
     disabledPackages: [
-      "eslint"
-      "highlight-selected"
-      "jscs-fixer"
-      "linter-jscs"
-      "linter-eslint"
-      "language-babel"
-      "autocomplete-atom-api"
-      "symbols-view"
-      "emmet"
-      "atom-jade"
-      "atom-keyboard-macros-vim"
+      "language-clojure"
+      "language-gfm"
+      "language-go"
+      "language-csharp"
+      "language-java"
+      "language-objective-c"
+      "language-perl"
+      "language-toml"
+      "language-xml"
     ]
     ignoredNames: [
       ".git"
@@ -43,8 +21,6 @@
       ".DS_Store"
       "Thumbs.db"
       ".codekit-cache"
-      "bower_components"
-      "node_modules"
       "*.svg"
       "*.ttf"
       "*.eot"
@@ -54,158 +30,43 @@
       ".tags"
       ".tags1"
       ".swp"
-      "Collision-Detection-for-EaselJS"
-      "EaselJS"
-      "EntryArduino"
-      "PreloadJS"
       "Snap.svg"
-      "SoundJS"
-      "acorn"
-      "angular"
-      "angular-*"
-      "animate"
-      "bootstrap"
-      "closure-compiler"
-      "closure-library"
-      "codemirror"
-      "components-webfontloader"
-      "d3"
-      "es5-shim"
-      "fadeSlider"
-      "html5shiv"
-      "jquery"
-      "jquery-*"
-      "ng-blockUI"
-      "ngStorage"
-      "ngUpload"
-      "requirejs"
-      "socket.io-client"
-      "spinkit"
-      "ui-sortable"
-      "underscore"
-      "velocity"
-      "zeroclipboard"
+      "bower_components"
+      "node_modules"
+      "components"
+      "vendor"
+      "public"
     ]
-    openEmptyEditorOnStart: false
-    reopenProjectMenuCount: 13
-    telemetryConsent: "no"
+    packagesWithKeymapsDisabled: [
+      "sort-lines"
+    ]
+    telemetryConsent: "limited"
     themes: [
-      "atom-material-ui"
-      "base16-tomorrow-dark-theme"
+      "seti-ui"
+      "atom-dark-syntax"
     ]
-  "easy-motion-redux": {}
   editor:
-    fontFamily: "Monaco"
-    fontSize: 13
-    invisibles: {}
-    nonWordCharacters: "/\\()\"':,.;<>~!@#%^&*|+=[]{}`?"
-    preferredLineLength: 95
-    showIndentGuide: true
-    tabType: "soft"
-  emmet: {}
+    scrollPastEnd: true
   "exception-reporting":
-    userId: "8feaf66b-4b91-6219-1188-d36daba8ec5a"
-  "fuzzy-finder": {}
-  "git-plus": {}
-  "highlight-column": {}
-  "highlight-line": {}
-  "highlight-selected": {}
-  "jscs-fixer": {}
-  jumpy:
-    fontSize: 0.85
-    highContrast: true
-  linter:
-    lintOnChange: false
-    lintOnChangeInterval: 500
-    subtleLinterErrors: [
-      "jshint"
+    userId: "b0fbf597-afd2-422c-9acf-071b11fe0475"
+  goto:
+    moreIgnoredNames: "bower_components, node_modules, components, vendor, zzzz, migration-from-fork, dist, builds, webpack, uploads, public, redis, report, test-main, migration_data, admin, lib, test, *.json"
+  "goto-definition":
+    disableScopeNames: [
+      "test-*.js"
     ]
-  "linter-eslint":
-    eslintRulesDir: "."
-    useGlobalEslint: true
-  "linter-jscs":
-    verbose: false
-  "linter-jshint":
-    disableWhenNoJshintrcFileInPath: true
-    lintInlineJavaScript: true
-  "linter-lua": {}
+    performanceMode: true
   "linter-ui-default":
-    panelHeight: 56
-    showPanel: true
-  "local-history":
-    autoPurge: true
-    historyStoragePath: "/Users/kimilhee/Documents/Backup/_atom/local-history"
-  "markdown-preview": {}
-  minimap:
-    displayMinimapOnLeft: true
-  script: {}
+    panelHeight: 89
+  "local-history": {}
+  narrow:
+    Search:
+      searcher: "rg"
+    notifiedVimModePlusSpecificDefaultKeymap: true
   "seti-ui":
     compactView: true
-    font: "Default Atom Font"
-  "spell-check": {}
-  "toggle-quotes": {}
-  "tree-view":
-    hideIgnoredNames: true
-  "vim-mode":
-    useClipboardAsDefaultRegister: false
+  "tab-foldername-index": {}
   "vim-mode-plus":
-    useClipboardAsDefaultRegister: false
+    notifiedCoffeeScriptNoLongerSupportedToExtendVMP: true
   welcome:
     showOnStartup: false
-  whitespace:
-    removeTrailingWhitespace: false
-".babel.regexp.source":
-  editor:
-    nonWordCharacters: "/\\()\"':,.;<>~!@#%^&*|+=[]{}`?"
-    preferredLineLength: 95
-    tabLength: 4
-".diff.source":
-  editor:
-    nonWordCharacters: "/\\()\"':,.;<>~!@#%^&*|+=[]{}`?"
-    preferredLineLength: 95
-".git-commit.text":
-  editor:
-    nonWordCharacters: "/\\()\"':,.;<>~!@#%^&*|+=[]{}`?"
-    preferredLineLength: 95
-    tabLength: 4
-".git-config.source":
-  editor:
-    nonWordCharacters: "/\\()\"':,.;<>~!@#%^&*|+=[]{}`?"
-    preferredLineLength: 95
-    tabLength: 4
-".git-rebase.text":
-  editor:
-    nonWordCharacters: "/\\()\"':,.;<>~!@#%^&*|+=[]{}`?"
-    preferredLineLength: 95
-    tabLength: 4
-".go.source":
-  editor:
-    nonWordCharacters: "/\\()\"':,.;<>~!@#%^&*|+=[]{}`?"
-    preferredLineLength: 95
-".gohtml.html.text":
-  editor:
-    nonWordCharacters: "/\\()\"':,.;<>~!@#%^&*|+=[]{}`?"
-    preferredLineLength: 95
-".gotemplate.source":
-  editor:
-    nonWordCharacters: "/\\()\"':,.;<>~!@#%^&*|+=[]{}`?"
-    preferredLineLength: 95
-".js.jsx.source":
-  editor:
-    nonWordCharacters: "/\\()\"':,.;<>~!@#%^&*|+=[]{}`?-…"
-    preferredLineLength: 95
-".lua.source":
-  editor:
-    tabLength: 4
-".source.toml":
-  editor:
-    nonWordCharacters: "/\\()\"':,.;<>~!@#%^&*|+=[]{}`?"
-    preferredLineLength: 95
-dash:
-  grammars:
-    JavaScript: [
-      "nodejs"
-      "angularjs"
-      "jquery"
-      "javascript"
-    ]

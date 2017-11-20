@@ -54,23 +54,23 @@ describe "dirty work for fast package activation", ->
 
       ensureRequiredFiles = (files) ->
         should = files.map((file) -> packPath + file)
+
+        # console.log "# should", should.join("\n")
+        # console.log "# actual", getRequiredLibOrNodeModulePaths().join("\n")
+
         expect(getRequiredLibOrNodeModulePaths()).toEqual(should)
 
   # * To reduce IO and compile-evaluation of js file on startup
   describe "requrie as minimum num of file as possible on startup", ->
     shouldRequireFilesInOrdered = [
-      "lib/main.coffee"
-      "lib/base.coffee"
-      "node_modules/delegato/lib/delegator.js"
-      "node_modules/mixto/lib/mixin.js"
-      "lib/settings.coffee"
-      "lib/global-state.coffee"
-      "lib/vim-state.coffee"
-      "lib/mode-manager.coffee"
-      "lib/command-table.coffee"
+      "lib/main.js"
+      "lib/base.js"
+      "lib/settings.js"
+      "lib/vim-state.js"
+      "lib/command-table.json"
     ]
     if atom.inDevMode()
-      shouldRequireFilesInOrdered.push('lib/developer.coffee')
+      shouldRequireFilesInOrdered.push('lib/developer.js')
 
     it "THIS IS WORKAROUND FOR Travis-CI's", ->
       # HACK:
@@ -91,7 +91,7 @@ describe "dirty work for fast package activation", ->
         waitsForPromise ->
           atom.workspace.open()
         runs ->
-          files = shouldRequireFilesInOrdered.concat('lib/status-bar-manager.coffee')
+          files = shouldRequireFilesInOrdered.concat('lib/status-bar-manager.js')
           ensureRequiredFiles(files)
 
     it "[after motion executed] require minimum set of files", ->
@@ -101,15 +101,13 @@ describe "dirty work for fast package activation", ->
             atom.commands.dispatch(e.element, 'vim-mode-plus:move-right')
         runs ->
           extraShouldRequireFilesInOrdered = [
-            "lib/status-bar-manager.coffee"
-            "lib/operation-stack.coffee"
-            "lib/selection-wrapper.coffee"
-            "lib/utils.coffee"
+            "lib/status-bar-manager.js"
+            "lib/operation-stack.js"
+            "lib/motion.js"
             "node_modules/underscore-plus/lib/underscore-plus.js"
             "node_modules/underscore/underscore.js"
-            "lib/blockwise-selection.coffee"
-            "lib/motion.coffee"
-            "lib/cursor-style-manager.coffee"
+            "lib/utils.js"
+            "lib/cursor-style-manager.js"
           ]
           files = shouldRequireFilesInOrdered.concat(extraShouldRequireFilesInOrdered)
           ensureRequiredFiles(files)
@@ -127,30 +125,28 @@ describe "dirty work for fast package activation", ->
           Base = pack.mainModule.provideVimModePlus().Base
           classRegistry = Base.getClassRegistry()
           keys = Object.keys(classRegistry)
-          expect(keys).toHaveLength(1)
-          expect(keys[0]).toBe("Base")
-          expect(classRegistry[keys[0]]).toBe(Base)
+          expect(keys).toHaveLength(0)
 
     describe "fully populated classRegistry", ->
-      it "generateCommandTableByEagerLoad populate all registry eagerly", ->
+      it "buildCommandTable populate all registry eagerly", ->
         withCleanActivation (pack) ->
           Base = pack.mainModule.provideVimModePlus().Base
           oldRegistries = Base.getClassRegistry()
           oldRegistriesLength = Object.keys(oldRegistries).length
-          expect(Object.keys(oldRegistries)).toHaveLength(1)
+          expect(Object.keys(oldRegistries)).toHaveLength(0)
 
-          Base.generateCommandTableByEagerLoad()
+          Base.buildCommandTable()
           newRegistriesLength = Object.keys(Base.getClassRegistry()).length
           expect(newRegistriesLength).toBeGreaterThan(oldRegistriesLength)
 
     describe "make sure cmd-table is NOT out-of-date", ->
-      it "generateCommandTableByEagerLoad return table which is equals to initially loaded command table", ->
+      it "buildCommandTable return table which is equals to initially loaded command table", ->
         withCleanActivation (pack) ->
           Base = pack.mainModule.provideVimModePlus().Base
           [oldCommandTable, newCommandTable] = []
 
           oldCommandTable = Base.commandTable
-          newCommandTable = Base.generateCommandTableByEagerLoad()
+          newCommandTable = Base.buildCommandTable()
           loadedCommandTable = require('../lib/command-table')
 
           expect(oldCommandTable).not.toBe(newCommandTable)

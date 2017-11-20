@@ -11,7 +11,6 @@ import type { TextEditor } from 'atom';
 // Dependencies
 let helpers;
 let atomlinter;
-let minimatch;
 let Reporter;
 
 function loadDeps() {
@@ -20,9 +19,6 @@ function loadDeps() {
   }
   if (!atomlinter) {
     atomlinter = require('atom-linter');
-  }
-  if (!minimatch) {
-    minimatch = require('minimatch');
   }
   if (!Reporter) {
     Reporter = require('jshint-json');
@@ -73,10 +69,10 @@ module.exports = {
           this.scopes.splice(this.scopes.indexOf(scopeEmbedded), 1);
         }
       }),
-    );
-    // NOTE: Separating this out from the others to ensure lintInlineJavaScript is set
-    this.subscriptions.add(
       atom.config.observe('linter-jshint.scopes', (value) => {
+        // NOTE: Subscriptions are created in the order given to add() so this
+        // is safe at the end.
+
         // Remove any old scopes
         this.scopes.splice(0, this.scopes.length);
         // Add the current scopes
@@ -86,9 +82,6 @@ module.exports = {
           this.scopes.push(scopeEmbedded);
         }
       }),
-    );
-
-    this.subscriptions.add(
       atom.commands.add('atom-text-editor', {
         'linter-jshint:debug': async () => {
           loadDeps();
@@ -130,14 +123,12 @@ module.exports = {
           return results;
         }
 
+        // JSHint completely ignores .jshintignore files for STDIN on it's own
+        // so we must re-implement the functionality
         const ignoreFile = await atomlinter.findCachedAsync(fileDir, this.jshintignoreFilename);
-
         if (ignoreFile) {
-          // JSHint completely ignores .jshintignore files for STDIN on it's own
-          // so we must re-implement the functionality
-          const ignoreList = await helpers.readIgnoreList(ignoreFile);
-          if (ignoreList.some(pattern => minimatch(filePath, pattern))) {
-            // The file is ignored by one of the patterns
+          const isIgnored = await helpers.isIgnored(filePath, ignoreFile);
+          if (isIgnored) {
             return [];
           }
         }
@@ -154,9 +145,7 @@ module.exports = {
           ignoreExitCode: true,
           cwd: fileDir,
         };
-        const result = await atomlinter.execNode(
-          this.executablePath, parameters, execOpts,
-        );
+        const result = await atomlinter.execNode(this.executablePath, parameters, execOpts);
 
         if (textEditor.getText() !== fileContents) {
           // File has changed since the lint was triggered, tell Linter not to update
@@ -169,17 +158,18 @@ module.exports = {
         } catch (_) {
           // eslint-disable-next-line no-console
           console.error('[Linter-JSHint]', _, result);
-          atom.notifications.addWarning('[Linter-JSHint]',
+          atom.notifications.addWarning(
+            '[Linter-JSHint]',
             { detail: 'JSHint return an invalid response, check your console for more info' },
           );
           return results;
         }
 
-        Object.keys(parsed.result).forEach(async (entryID) => {
+        Object.keys(parsed.result).forEach((entryID) => {
           let message;
           const entry = parsed.result[entryID];
 
-          const error = entry.error;
+          const { error } = entry;
           const errorType = error.code.substr(0, 1);
           let severity = 'info';
           if (errorType === 'E') {
@@ -200,13 +190,14 @@ module.exports = {
               },
             };
           } catch (e) {
-            message = await helpers.generateInvalidTrace(
-              line, character, filePath, textEditor, error);
+            message = helpers.generateInvalidTrace(line, character, filePath, textEditor, error);
           }
 
           results.push(message);
         });
-        return results;
+
+        // Make sure any invalid traces have resolved
+        return Promise.all(results);
       },
     };
   },

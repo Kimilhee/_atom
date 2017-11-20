@@ -2,40 +2,39 @@
   "_args": [
     [
       {
-        "raw": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117426-63485-m3hsrm.e9anwdygb9/package.tgz",
+        "raw": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-1171013-95281-130goar.624eu3di/package.tgz",
         "scope": null,
         "escapedName": null,
         "name": null,
-        "rawSpec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117426-63485-m3hsrm.e9anwdygb9/package.tgz",
-        "spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117426-63485-m3hsrm.e9anwdygb9/package.tgz",
+        "rawSpec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-1171013-95281-130goar.624eu3di/package.tgz",
+        "spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-1171013-95281-130goar.624eu3di/package.tgz",
         "type": "local"
       },
-      "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/apm-install-dir-117426-63485-1wo4yke.zjl77m0a4i"
+      "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/apm-install-dir-1171013-95281-1outm1f.of082gldi"
     ]
   ],
-  "_from": "../d-117426-63485-m3hsrm.e9anwdygb9/package.tgz",
-  "_id": "local-history@4.3.0",
+  "_from": "../d-1171013-95281-130goar.624eu3di/package.tgz",
+  "_id": "local-history@4.3.1",
   "_inCache": true,
-  "_installable": true,
   "_location": "/local-history",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117426-63485-m3hsrm.e9anwdygb9/package.tgz",
+    "raw": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-1171013-95281-130goar.624eu3di/package.tgz",
     "scope": null,
     "escapedName": null,
     "name": null,
-    "rawSpec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117426-63485-m3hsrm.e9anwdygb9/package.tgz",
-    "spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117426-63485-m3hsrm.e9anwdygb9/package.tgz",
+    "rawSpec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-1171013-95281-130goar.624eu3di/package.tgz",
+    "spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-1171013-95281-130goar.624eu3di/package.tgz",
     "type": "local"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "file:../d-117426-63485-m3hsrm.e9anwdygb9/package.tgz",
-  "_shasum": "448f6a0f1d2b217d4603ffac9199f546aad6b39e",
+  "_resolved": "file:../d-1171013-95281-130goar.624eu3di/package.tgz",
+  "_shasum": "7e8e327c0a4714f4baa3d7d811c6853fafd012ab",
   "_shrinkwrap": null,
-  "_spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-117426-63485-m3hsrm.e9anwdygb9/package.tgz",
-  "_where": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/apm-install-dir-117426-63485-1wo4yke.zjl77m0a4i",
+  "_spec": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/d-1171013-95281-130goar.624eu3di/package.tgz",
+  "_where": "/private/var/folders/zt/drbqq3_j1n76j02yh_3v10xh0000gn/T/apm-install-dir-1171013-95281-1outm1f.of082gldi",
   "author": {
     "name": "Nicolas Tallefourtane",
     "url": "http://nicolab.net"
@@ -72,7 +71,7 @@
     "type": "git",
     "url": "git+https://github.com/Nicolab/atom-local-history.git"
   },
-  "version": "4.3.0",
+  "version": "4.3.1",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
@@ -98,7 +97,7 @@
       },
       {
         "name": "balanced-match",
-        "version": "0.4.2",
+        "version": "1.0.0",
         "path": "node_modules/balanced-match/index.js"
       },
       {
@@ -108,7 +107,7 @@
       },
       {
         "name": "brace-expansion",
-        "version": "1.1.7",
+        "version": "1.1.8",
         "path": "node_modules/brace-expansion/index.js"
       },
       {
@@ -128,7 +127,7 @@
       },
       {
         "name": "es5-ext",
-        "version": "0.10.21",
+        "version": "0.10.35",
         "path": "node_modules/es5-ext/index.js"
       },
       {
@@ -138,7 +137,7 @@
       },
       {
         "name": "es6-iterator",
-        "version": "2.0.1",
+        "version": "2.0.3",
         "path": "node_modules/es5-ext/node_modules/es6-iterator/index.js"
       },
       {
@@ -243,7 +242,7 @@
       },
       {
         "name": "rimraf",
-        "version": "2.6.1",
+        "version": "2.6.2",
         "path": "node_modules/rimraf/rimraf.js"
       },
       {
@@ -393,6 +392,7 @@
         "node_modules/es5-ext/array/#/indexes-of.js",
         "node_modules/es5-ext/array/#/intersection.js",
         "node_modules/es5-ext/array/#/is-copy.js",
+        "node_modules/es5-ext/array/#/is-empty.js",
         "node_modules/es5-ext/array/#/is-uniq.js",
         "node_modules/es5-ext/array/#/keys/implement.js",
         "node_modules/es5-ext/array/#/keys/index.js",
@@ -609,6 +609,7 @@
         "node_modules/es5-ext/object/assign/index.js",
         "node_modules/es5-ext/object/assign/is-implemented.js",
         "node_modules/es5-ext/object/assign/shim.js",
+        "node_modules/es5-ext/object/assign-deep.js",
         "node_modules/es5-ext/object/clear.js",
         "node_modules/es5-ext/object/compact.js",
         "node_modules/es5-ext/object/compare.js",
@@ -616,6 +617,8 @@
         "node_modules/es5-ext/object/copy.js",
         "node_modules/es5-ext/object/count.js",
         "node_modules/es5-ext/object/create.js",
+        "node_modules/es5-ext/object/ensure-array.js",
+        "node_modules/es5-ext/object/ensure-finite-number.js",
         "node_modules/es5-ext/object/ensure-natural-number-value.js",
         "node_modules/es5-ext/object/ensure-natural-number.js",
         "node_modules/es5-ext/object/ensure-promise.js",
@@ -634,8 +637,10 @@
         "node_modules/es5-ext/object/is-copy-deep.js",
         "node_modules/es5-ext/object/is-copy.js",
         "node_modules/es5-ext/object/is-empty.js",
+        "node_modules/es5-ext/object/is-finite-number.js",
         "node_modules/es5-ext/object/is-number-value.js",
         "node_modules/es5-ext/object/is-object.js",
+        "node_modules/es5-ext/object/is-plain-function.js",
         "node_modules/es5-ext/object/is-plain-object.js",
         "node_modules/es5-ext/object/is-promise.js",
         "node_modules/es5-ext/object/is-value.js",
@@ -667,6 +672,7 @@
         "node_modules/es5-ext/object/validate-array-like.js",
         "node_modules/es5-ext/object/validate-stringifiable-value.js",
         "node_modules/es5-ext/object/validate-stringifiable.js",
+        "node_modules/es5-ext/optional-chaining.js",
         "node_modules/es5-ext/reg-exp/#/index.js",
         "node_modules/es5-ext/reg-exp/#/is-sticky.js",
         "node_modules/es5-ext/reg-exp/#/is-unicode.js",
@@ -749,6 +755,7 @@
         "node_modules/es5-ext/string/raw/index.js",
         "node_modules/es5-ext/string/raw/is-implemented.js",
         "node_modules/es5-ext/string/raw/shim.js",
+        "node_modules/es5-ext/to-short-string-representation.js",
         "node_modules/es6-iterator/#/chain.js",
         "node_modules/es6-iterator/array.js",
         "node_modules/es6-iterator/for-of.js",
@@ -979,7 +986,7 @@
           "node_modules/brace-expansion"
         ],
         "dependencies": {
-          "balanced-match": "^0.4.1",
+          "balanced-match": "^1.0.0",
           "concat-map": "0.0.1"
         }
       },
@@ -1162,8 +1169,8 @@
           "node_modules/es5-ext/test/string/raw"
         ],
         "dependencies": {
-          "es6-iterator": "2",
-          "es6-symbol": "~3.1"
+          "es6-iterator": "~2.0.1",
+          "es6-symbol": "~3.1.1"
         }
       },
       {
@@ -1184,8 +1191,8 @@
         ],
         "dependencies": {
           "d": "1",
-          "es5-ext": "^0.10.14",
-          "es6-symbol": "^3.1"
+          "es5-ext": "^0.10.35",
+          "es6-symbol": "^3.1.1"
         }
       },
       {
